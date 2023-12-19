@@ -1,0 +1,40 @@
+﻿using AutoMapper;
+using backend.Core.Dtos.Employee;
+using backend.Core.Dtos.Project;
+using backend.Core.Dtos.Role;
+using backend.Core.Dtos.Ticket;
+using backend.Core.Entities;
+using Microsoft.AspNetCore.Authorization.Infrastructure;
+
+namespace backend.Core.AutoMapperConfig
+{
+    public class AutoMapperConfigProfile: Profile
+    {
+        public AutoMapperConfigProfile()
+        {
+            // Role
+            CreateMap<RoleCreateDto, Role>();
+            CreateMap<Role, RoleGetDto>();
+
+            //Employee
+            CreateMap<EmployeeCreateDto, Employee>();
+            CreateMap<Employee, EmployeeGetDto>()
+                .ForMember(dest => dest.RoleName, opt=> opt.MapFrom(src=> src.Role.Name));
+
+            //Project
+            CreateMap<ProjectCreateDto, Project>();
+            CreateMap<Project, ProjectGetDto>()
+                .ForMember(dest => dest.ManagerName, opt => opt.MapFrom(src => src.Manager.Name));
+
+            //Ticket
+            CreateMap<TicketCreateDto, Ticket>();
+            CreateMap<Ticket, TicketGetDto>()
+                .ForMember(dest=> dest.ProjectName, opt => opt.MapFrom(src=> src.Project.Name));
+            //TicketAttachment
+
+            //TicketComment
+
+            //TicketHistory
+        }
+    }
+}

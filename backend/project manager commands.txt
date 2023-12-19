@@ -1,0 +1,11 @@
+add-migration initial-migration
+
+
+update-database
+
+
+
+Errors
+
+Introducing FOREIGN KEY constraint 'FK_ProjectMember_Projects_ProjectsId' on table 'ProjectMember' may cause cycles or multiple cascade paths. Specify ON DELETE NO ACTION or ON UPDATE NO ACTION, or modify other FOREIGN KEY constraints.
+Could not create constraint or index. See previous errors.
