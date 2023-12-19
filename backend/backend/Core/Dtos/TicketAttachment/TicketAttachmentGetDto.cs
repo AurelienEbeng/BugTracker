@@ -9,7 +9,7 @@
 
       
         public int TicketId { get; set; }
-        public string TicketName { get; set; }
+        public string TicketTitle { get; set; }
 
         public int UploaderId { get; set; }
         public string UploaderName { get; set; }

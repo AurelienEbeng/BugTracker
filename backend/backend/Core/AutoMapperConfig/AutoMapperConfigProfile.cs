@@ -5,6 +5,7 @@ using backend.Core.Dtos.Role;
 using backend.Core.Dtos.Ticket;
 using backend.Core.Dtos.TicketAttachment;
 using backend.Core.Dtos.TicketComment;
+using backend.Core.Dtos.TicketHistory;
 using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 
@@ -36,13 +37,17 @@ namespace backend.Core.AutoMapperConfig
             //TicketAttachment
             CreateMap<TicketAttachmentCreateDto,TicketAttachment>();
             CreateMap<TicketAttachment, TicketAttachmentGetDto>()
-                .ForMember(dest => dest.TicketName, opt => opt.MapFrom(src => src.Ticket.Title));
+                .ForMember(dest => dest.TicketTitle, opt => opt.MapFrom(src => src.Ticket.Title));
 
             //TicketComment
             CreateMap<TicketCommentCreateDto, TicketComment>();
             CreateMap<TicketComment, TicketCommentGetDto>()
                 .ForMember(dest => dest.TicketTitle, opt => opt.MapFrom(src => src.Ticket.Title));
             //TicketHistory
+            CreateMap<TicketHistoryCreateDto,TicketHistory>();
+            CreateMap<TicketHistory, TicketHistoryGetDto>()
+                .ForMember(dest => dest.TicketTitle, opt => opt.MapFrom(src => src.Ticket.Title))
+                .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.Employee.Name));
         }
     }
 }

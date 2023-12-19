@@ -27,7 +27,7 @@ namespace backend.Controllers
         //Create
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> CreateTicketComment([FromBody] ProjectCreateDto dto)
+        public async Task<IActionResult> CreateTicketComment([FromBody] TicketCommentCreateDto dto)
         {
             var newTicketComment = _mapper.Map<TicketComment>(dto);
             await _context.TicketComments.AddAsync(newTicketComment);

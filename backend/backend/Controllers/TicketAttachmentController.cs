@@ -27,7 +27,7 @@ namespace backend.Controllers
         //Create
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> CreateTicketAttachment([FromBody] ProjectCreateDto dto)
+        public async Task<IActionResult> CreateTicketAttachment([FromBody] TicketAttachmentCreateDto dto)
         {
             var newTicketAttachment = _mapper.Map<TicketAttachment>(dto);
             await _context.TicketAttachments.AddAsync(newTicketAttachment);
