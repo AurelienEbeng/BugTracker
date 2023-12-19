@@ -19,7 +19,6 @@
 
   <ItemGroup>
     <Folder Include="Core\Dtos\TicketHistory\" />
-    <Folder Include="Core\Dtos\TicketComment\" />
   </ItemGroup>
 
 </Project>
