@@ -3,6 +3,7 @@ using backend.Core.Dtos.Employee;
 using backend.Core.Dtos.Project;
 using backend.Core.Dtos.Role;
 using backend.Core.Dtos.Ticket;
+using backend.Core.Dtos.TicketAttachment;
 using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
 
@@ -31,7 +32,9 @@ namespace backend.Core.AutoMapperConfig
             CreateMap<Ticket, TicketGetDto>()
                 .ForMember(dest=> dest.ProjectName, opt => opt.MapFrom(src=> src.Project.Name));
             //TicketAttachment
-
+            CreateMap<TicketAttachmentCreateDto,TicketAttachment>();
+            CreateMap<TicketAttachment, TicketAttachmentGetDto>()
+                .ForMember(dest => dest.TicketName, opt => opt.MapFrom(src => src.Ticket.Title));
             //TicketComment
 
             //TicketHistory

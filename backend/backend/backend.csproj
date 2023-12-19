@@ -20,7 +20,6 @@
   <ItemGroup>
     <Folder Include="Core\Dtos\TicketHistory\" />
     <Folder Include="Core\Dtos\TicketComment\" />
-    <Folder Include="Core\Dtos\TicketAttachment\" />
   </ItemGroup>
 
 </Project>
