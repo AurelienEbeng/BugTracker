@@ -37,7 +37,8 @@ namespace backend.Core.AutoMapperConfig
             //TicketAttachment
             CreateMap<TicketAttachmentCreateDto,TicketAttachment>();
             CreateMap<TicketAttachment, TicketAttachmentGetDto>()
-                .ForMember(dest => dest.TicketTitle, opt => opt.MapFrom(src => src.Ticket.Title));
+                .ForMember(dest => dest.TicketTitle, opt => opt.MapFrom(src => src.Ticket.Title))
+                .ForMember(dest => dest.UploaderName, opt => opt.MapFrom(src => src.Uploader.Name));
 
             //TicketComment
             CreateMap<TicketCommentCreateDto, TicketComment>();

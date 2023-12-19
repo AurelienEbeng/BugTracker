@@ -27,9 +27,27 @@ namespace backend.Controllers
         //Create
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> CreateTicketAttachment([FromBody] TicketAttachmentCreateDto dto)
+        public async Task<IActionResult> CreateTicketAttachment([FromForm] TicketAttachmentCreateDto dto, IFormFile pdfFile)
         {
+            //First => save pdf to server
+            // Then => save url into our entity
+            var fiveMegaByte = 5 * 1024 * 1024;
+            var pdfMimeType = "application/pdf";
+            if(pdfFile.Length> fiveMegaByte || pdfFile.ContentType != pdfMimeType)
+            {
+                return BadRequest("File is not valid");
+            }
+
+            var fileUrl = Guid.NewGuid().ToString() + ".pdf";
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(),"Documents","pdfs", fileUrl);
+            using (var stream = new FileStream(filePath, FileMode.Create))
+            {
+                await pdfFile.CopyToAsync(stream);
+            }
+
             var newTicketAttachment = _mapper.Map<TicketAttachment>(dto);
+            newTicketAttachment.fileUrl = fileUrl;
+            newTicketAttachment.DateUploaded = DateTime.Now;
             await _context.TicketAttachments.AddAsync(newTicketAttachment);
             await _context.SaveChangesAsync();
             return Ok("Ticket Attachment Created successfully");
@@ -40,7 +58,8 @@ namespace backend.Controllers
         [Route("Get")]
         public async Task<ActionResult<IEnumerable<TicketAttachmentGetDto>>> GetTicketAttachments()
         {
-            var ticketAttachments = await _context.TicketAttachments.Include(ticketAttachment => ticketAttachment.Ticket).ToListAsync();
+            var ticketAttachments = await _context.TicketAttachments.Include(ticketAttachment => ticketAttachment.Ticket)
+                                                                    .Include(ticketAttachment => ticketAttachment.Uploader).ToListAsync();
             var convertedTicketAttachments = _mapper.Map<IEnumerable<TicketAttachmentGetDto>>(ticketAttachments);
             return Ok(convertedTicketAttachments);
         }
