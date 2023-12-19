@@ -64,7 +64,22 @@ namespace backend.Controllers
             return Ok(convertedTicketAttachments);
         }
 
+        //Read (Download Pdf File)
+        [HttpGet]
+        [Route("download/{url}")]
+        public IActionResult DownloadPdfFile(string url)
+        {
+            var filePath = Path.Combine(Directory.GetCurrentDirectory(), "Documents", "pdfs", url);
 
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound("File Not Found");
+            }
+
+            var pdfBytes = System.IO.File.ReadAllBytes(filePath);
+            var file = File(pdfBytes, "application/pdf", url);
+            return file;
+        }
         //Update
         //Delete
     }
