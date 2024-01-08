@@ -3,9 +3,10 @@ import { ThemeContext } from "./context/theme.context";
 import Navbar from "./components/navbar/Navbar.component";
 import { Routes, Route } from "react-router-dom";
 import CustomLinearProgress from "./components/custom linear progress/CustomLinearProgress.component";
-//import Home from "./pages/home/Home.page";
+
 const Home = lazy(() => import("./pages/home/Home.page"));
 const Roles = lazy(() => import("./pages/roles/Roles.page"));
+const AddRoles = lazy(() => import("./pages/roles/AddRoles.page"));
 
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -21,6 +22,7 @@ const App = () => {
             <Route path="/" element={<Home />} />
             <Route path="/roles">
               <Route index element={<Roles />} />
+              <Route path="add" element={<AddRoles />} />
             </Route>
           </Routes>
         </Suspense>

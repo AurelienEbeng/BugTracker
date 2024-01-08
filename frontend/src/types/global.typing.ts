@@ -3,3 +3,7 @@ export interface IRole{
     name: string;
 }
 
+export interface ICreateRoleDto{
+    name: string;
+}
+
