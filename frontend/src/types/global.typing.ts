@@ -18,6 +18,5 @@ export interface IEmployee {
 export interface ICreateEmployeeDto {
   name: string;
   email: string;
-  dateJoined: string;
   roleId: string;
 }
