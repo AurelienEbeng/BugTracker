@@ -10,10 +10,10 @@ const links = [
   { href: "/employees", label: "Employees" },
   { href: "/projects", label: "Projects" },
   { href: "/roles", label: "Roles" },
-  { href: "/Tickets", label: "Tickets" },
-  { href: "/TicketAttachments", label: "TicketAttachments" },
-  { href: "/TicketComments", label: "TicketComments" },
-  { href: "/TicketHistories", label: "TicketHistories" },
+  { href: "/tickets", label: "Tickets" },
+  { href: "/ticketAttachments", label: "TicketAttachments" },
+  { href: "/ticketComments", label: "TicketComments" },
+  { href: "/ticketHistories", label: "TicketHistories" },
 ];
 const Navbar = () => {
   const [open, setOpen] = useState<boolean>(false);

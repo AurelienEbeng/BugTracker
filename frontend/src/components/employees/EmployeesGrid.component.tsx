@@ -6,8 +6,8 @@ import moment from "moment";
 
 const column: GridColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
-  { field: "name", headerName: "name", width: 200 },
-  { field: "email", headerName: "email", width: 200 },
+  { field: "name", headerName: "Name", width: 200 },
+  { field: "email", headerName: "Email", width: 200 },
   {
     field: "dateJoined",
     headerName: "Date Joined",

@@ -5,7 +5,7 @@ import { IRole } from "../../types/global.typing";
 
 const column: GridColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
-  { field: "name", headerName: "name", width: 200 },
+  { field: "name", headerName: "Name", width: 200 },
 ];
 
 interface IRolesGridProps {

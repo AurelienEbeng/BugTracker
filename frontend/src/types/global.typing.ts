@@ -20,3 +20,17 @@ export interface ICreateEmployeeDto {
   email: string;
   roleId: string;
 }
+
+export interface IProject {
+  id: string;
+  name: string;
+  description: string;
+  dateCreated: string;
+  managerId: string;
+}
+
+export interface ICreateProjectDto {
+  name: string;
+  description: string;
+  managerId: string;
+}
