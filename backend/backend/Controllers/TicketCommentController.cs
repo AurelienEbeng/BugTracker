@@ -45,6 +45,19 @@ namespace backend.Controllers
             return Ok(convertedTicketComments);
         }
 
+        //Read by ticketId
+        [HttpGet]
+        [Route("Get/{ticketId}")]
+        public async Task<ActionResult<IEnumerable<TicketCommentGetDto>>> GetTicketComment(int ticketId)
+        {
+            var ticketComment = await _context.TicketComments
+                                              .Include(ticketComment => ticketComment.Ticket)
+                                              .Where(ticketComment=> ticketComment.TicketId==ticketId)
+                                              .ToListAsync();
+            var convertedTicketComment = _mapper.Map<IEnumerable<TicketCommentGetDto>>(ticketComment);
+            return Ok(convertedTicketComment);
+        }
+
 
         //Update
         //Delete

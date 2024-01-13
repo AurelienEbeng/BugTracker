@@ -64,6 +64,21 @@ namespace backend.Controllers
             return Ok(convertedTicketAttachments);
         }
 
+        //Read by ticketId
+        [HttpGet]
+        [Route("Get/{ticketId}")]
+        public async Task<ActionResult<IEnumerable<TicketAttachmentGetDto>>> GetTicketAttachment(int ticketId)
+        {
+            var ticketAttachment = await _context.TicketAttachments
+                                                 .Include(ticketAttachment => ticketAttachment.Ticket)
+                                                 .Include(ticketAttachment => ticketAttachment.Uploader)
+                                                 .Where(ticketAttachment=> ticketAttachment.TicketId==ticketId)
+                                                 .ToListAsync();
+            var convertedTicketAttachment = _mapper.Map<IEnumerable<TicketAttachmentGetDto>>(ticketAttachment);
+            return Ok(convertedTicketAttachment);
+        }
+
+
         //Read (Download Pdf File)
         [HttpGet]
         [Route("download/{url}")]

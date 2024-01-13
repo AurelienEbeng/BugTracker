@@ -44,6 +44,56 @@ export interface ITicket {
   type: string;
   priority: string;
   projectId: string;
-  projectName:string;
+  projectName: string;
 }
 
+export interface ITicketAttachment {
+  id: string;
+  notes: string;
+  fileUrl: string;
+  ticketId: string;
+  ticketTitle: string;
+  uploaderId: string;
+  uploaderName: string;
+}
+
+export interface ITicketComment {
+  id: string;
+  message: string;
+  dateCreated: string;
+  ticketId: string;
+  ticketTitle: string;
+  commenterId: string;
+  commenterName: string;
+}
+
+export interface ICreateTicketCommentDto {
+  message: string;
+  dateCreated: string;
+  ticketId: string;
+  ticketTitle: string;
+  commenterId: string;
+  commenterName: string;
+}
+
+export interface ITicketHistory {
+  id: string;
+  oldValue: string;
+  newValue: string;
+  dateModified: string;
+  property: string;
+  ticketId: string;
+  ticketTitle: string;
+  employeeId: string;
+  employeeName: string;
+}
+export interface ICreateTicketHistory {
+  oldValue: string;
+  newValue: string;
+  dateModified: string;
+  property: string;
+  ticketId: string;
+  ticketTitle: string;
+  employeeId: string;
+  employeeName: string;
+}
