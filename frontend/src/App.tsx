@@ -4,7 +4,6 @@ import Navbar from "./components/navbar/Navbar.component";
 import { Routes, Route } from "react-router-dom";
 import CustomLinearProgress from "./components/custom linear progress/CustomLinearProgress.component";
 
-
 const Home = lazy(() => import("./pages/home/Home.page"));
 const Roles = lazy(() => import("./pages/roles/Roles.page"));
 const AddRoles = lazy(() => import("./pages/roles/AddRoles.page"));
@@ -13,6 +12,7 @@ const AddEmployees = lazy(() => import("./pages/employees/AddEmployees.page"));
 const Projects = lazy(() => import("./pages/projects/Projects.page"));
 const AddProjects = lazy(() => import("./pages/projects/AddProjects"));
 const DetailProjects = lazy(() => import("./pages/projects/DetailProjects"));
+const DetailTicket = lazy(() => import("./pages/tickets/DetailTicket"));
 
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -38,6 +38,7 @@ const App = () => {
               <Route index element={<Projects />} />
               <Route path="add" element={<AddProjects />} />
               <Route path="details" element={<DetailProjects />} />
+              <Route path="ticket" element={<DetailTicket />} />
             </Route>
           </Routes>
         </Suspense>

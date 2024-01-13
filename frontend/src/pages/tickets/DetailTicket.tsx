@@ -1,21 +1,22 @@
 import { useEffect, useState } from "react";
-import "./projects.scss";
+import "./tickets.scss";
 import httpModule from "../../helpers/http.module";
 import { ITicket } from "../../types/global.typing";
 import { CircularProgress } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import ProjectTicketsGrid from "../../components/projects/ProjectTicketsGrid.component";
+import TicketsGrid from "../../components/tickets/TicketsGrid.component";
 
-const DetailProjects = () => {
+const DetailTicket = () => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const location = useLocation();
-  const { projectId, projectDescription, projectName } = location.state;
+  const { ticketId } = location.state;
 
   useEffect(() => {
     setLoading(true);
     httpModule
-      .get<ITicket[]>(`Ticket/Get/project/${projectId}`)
+      .get<ITicket[]>(`Ticket/Get/${ticketId}`)
       .then((response) => {
         setTickets(response.data);
         setLoading(false);
@@ -27,10 +28,9 @@ const DetailProjects = () => {
       });
   }, []);
   return (
-    <div className="content projects">
+    <div className="content tickets">
       <div className="heading">
-        <div>Project Name: {projectName}</div>
-        <div>Description: {projectDescription}</div>
+        <div>Ticket id: {ticketId}</div>
       </div>
 
       {loading ? (
@@ -38,10 +38,10 @@ const DetailProjects = () => {
       ) : tickets.length === 0 ? (
         <h1>No Tickets</h1>
       ) : (
-        <ProjectTicketsGrid data={tickets} />
+        <TicketsGrid data={tickets} />
       )}
     </div>
   );
 };
 
-export default DetailProjects;
+export default DetailTicket;

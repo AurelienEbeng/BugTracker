@@ -1,10 +1,8 @@
-import { Box, Button } from "@mui/material";
+import { Box} from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import React from "react";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { IProject } from "../../types/global.typing";
 import moment from "moment";
-import { baseUrl } from "../../constants/url.constants";
 
 const column: GridColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
@@ -18,13 +16,19 @@ const column: GridColDef[] = [
   },
   { field: "managerName", headerName: "Manager Name", width: 200 },
   {
-    field: "Details",
+    field: "",
     renderCell: (params) => {
       return (
-        <Link to="/projects/details" state={{ projectId: `${params.row.id}` }}>
+        <Link
+          to="/projects/details"
+          state={{
+            projectId: `${params.row.id}`,
+            projectName: `${params.row.name}`,
+            projectDescription: `${params.row.description}`,
+          }}
+        >
           Details
         </Link>
-        
       );
     },
   },
