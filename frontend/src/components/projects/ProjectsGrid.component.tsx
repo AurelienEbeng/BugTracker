@@ -1,8 +1,10 @@
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React from "react";
+import { Link } from "react-router-dom";
 import { IProject } from "../../types/global.typing";
 import moment from "moment";
+import { baseUrl } from "../../constants/url.constants";
 
 const column: GridColDef[] = [
   { field: "id", headerName: "ID", width: 100 },
@@ -15,6 +17,14 @@ const column: GridColDef[] = [
     renderCell: (params) => moment(params.row.dateJoined).format("YYYY-MM--DD"),
   },
   { field: "managerName", headerName: "Manager Name", width: 200 },
+  {
+    field: "Details",
+    renderCell: (params) => {
+      return (
+        <a href={`${baseUrl}/Ticket/Get/${params.row.id}`}>Details</a>
+      ); 
+    },
+  },
 ];
 
 interface IProjectGridProps {

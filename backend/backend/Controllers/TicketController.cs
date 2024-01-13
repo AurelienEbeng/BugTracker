@@ -45,7 +45,16 @@ namespace backend.Controllers
             return Ok(convertedTickets);
         }
 
-
+        //Read by project id
+        [HttpGet]
+        [Route("Get/{projectId}")]
+        public async Task<ActionResult<IEnumerable<TicketGetDto>>> GetTicketsbyProjectId(int projectId)
+        {
+            var tickets = await _context.Tickets.Include(ticket => ticket.Project).ToListAsync();
+            var filteredTickets= tickets.Where(ticket => ticket.ProjectId == projectId);
+            var convertedTickets = _mapper.Map<IEnumerable<TicketGetDto>>(filteredTickets);
+            return Ok(convertedTickets);
+        }
         //Update
         //Delete
     }

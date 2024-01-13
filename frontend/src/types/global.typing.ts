@@ -34,3 +34,16 @@ export interface ICreateProjectDto {
   description: string;
   managerId: string;
 }
+
+export interface ITicket {
+  id: string;
+  title: string;
+  description: string;
+  dateCreated: string;
+  status: string;
+  type: string;
+  priority: string;
+  projectId: string;
+  projectName:string;
+}
+

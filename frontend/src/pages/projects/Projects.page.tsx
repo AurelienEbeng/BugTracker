@@ -1,15 +1,17 @@
 import { useEffect, useState } from "react";
 import "./projects.scss";
 import httpModule from "../../helpers/http.module";
-import { IProject } from "../../types/global.typing";
+import { IProject, ITicket } from "../../types/global.typing";
 import { error } from "console";
 import { Button, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Add } from "@mui/icons-material";
 import ProjectsGrid from "../../components/projects/ProjectsGrid.component";
+import TicketsGrid from "../../components/tickets/TicketsGrid.component";
 
 const Projects = () => {
   const [projects, setProjects] = useState<IProject[]>([]);
+  const [tickets, setTickets] = useState<ITicket[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const redirect = useNavigate();
 
@@ -28,6 +30,19 @@ const Projects = () => {
       });
   }, []);
 
+const showTickets= (projectId:number)=>{
+    httpModule
+      .get<ITicket[]>("/Ticket/Get/"+projectId)
+      .then((response) => {
+        setTickets(response.data);
+      })
+      .catch((error) => {
+        alert("Error");
+        console.log(error);
+      });
+  // console.log(tickets);
+}
+
   return (
     <div className="content projects">
       <div className="heading">
@@ -42,7 +57,7 @@ const Projects = () => {
       ) : projects.length === 0 ? (
         <h1>No Projects</h1>
       ) : (
-        <ProjectsGrid data={projects} />
+        <ProjectsGrid data={projects}  />
       )}
     </div>
   );
