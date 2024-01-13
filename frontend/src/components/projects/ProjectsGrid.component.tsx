@@ -1,7 +1,7 @@
 import { Box, Button } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IProject } from "../../types/global.typing";
 import moment from "moment";
 import { baseUrl } from "../../constants/url.constants";
@@ -21,8 +21,11 @@ const column: GridColDef[] = [
     field: "Details",
     renderCell: (params) => {
       return (
-        <a href={`${baseUrl}/Ticket/Get/${params.row.id}`}>Details</a>
-      ); 
+        <Link to="/projects/details" state={{ projectId: `${params.row.id}` }}>
+          Details
+        </Link>
+        
+      );
     },
   },
 ];

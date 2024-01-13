@@ -2,12 +2,10 @@ import { useEffect, useState } from "react";
 import "./projects.scss";
 import httpModule from "../../helpers/http.module";
 import { IProject, ITicket } from "../../types/global.typing";
-import { error } from "console";
 import { Button, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Add } from "@mui/icons-material";
 import ProjectsGrid from "../../components/projects/ProjectsGrid.component";
-import TicketsGrid from "../../components/tickets/TicketsGrid.component";
 
 const Projects = () => {
   const [projects, setProjects] = useState<IProject[]>([]);
@@ -40,7 +38,6 @@ const showTickets= (projectId:number)=>{
         alert("Error");
         console.log(error);
       });
-  // console.log(tickets);
 }
 
   return (

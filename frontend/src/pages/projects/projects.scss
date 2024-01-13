@@ -16,3 +16,10 @@
         color: var(--text-color1);
     }
 }
+
+.tickets{
+    .heading{
+        @include d-flex(row, space-between,center);
+        width: 100%;
+    }
+}
