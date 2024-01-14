@@ -7,12 +7,13 @@ import {
   ITicketComment,
   ITicketHistory,
 } from "../../types/global.typing";
-import { CircularProgress } from "@mui/material";
-import { useLocation } from "react-router-dom";
+import { Button, CircularProgress } from "@mui/material";
+import { useLocation, useNavigate } from "react-router-dom";
 import TicketsGrid from "../../components/tickets/TicketsGrid.component";
 import TicketAttachmentsGrid from "../../components/tickets/TicketAttachmentsGrid.component";
 import TicketCommentsGrid from "../../components/tickets/TicketCommentsGrid.component";
 import TicketHistoriesGrid from "../../components/tickets/TicketHistoryGrid.component";
+import { Add } from "@mui/icons-material";
 
 const DetailTicket = () => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
@@ -24,6 +25,7 @@ const DetailTicket = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const location = useLocation();
   const { ticketId } = location.state;
+  const redirect= useNavigate();
 
   useEffect(() => {
     setLoading(true);
@@ -92,6 +94,13 @@ const DetailTicket = () => {
       <div className="heading">
         <div>Ticket Attachment</div>
       </div>
+      <Button variant="outlined" onClick={() => 
+        redirect("/projects/addAttachment")
+        
+        }>
+          <Add />
+        </Button>
+
       {loading ? (
         <CircularProgress size={100} />
       ) : tickets.length === 0 ? (

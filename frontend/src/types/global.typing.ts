@@ -47,6 +47,16 @@ export interface ITicket {
   projectName: string;
 }
 
+export interface ICreateTicketDto {
+  title: string;
+  description: string;
+  dateCreated: string;
+  status: string;
+  type: string;
+  priority: string;
+  projectId: string;
+}
+
 export interface ITicketAttachment {
   id: string;
   notes: string;
@@ -55,6 +65,12 @@ export interface ITicketAttachment {
   ticketTitle: string;
   uploaderId: string;
   uploaderName: string;
+}
+
+export interface ICreateTicketAttachmentDto {
+  notes: string;
+  ticketId: string;
+  uploaderId: string;
 }
 
 export interface ITicketComment {
@@ -71,9 +87,7 @@ export interface ICreateTicketCommentDto {
   message: string;
   dateCreated: string;
   ticketId: string;
-  ticketTitle: string;
   commenterId: string;
-  commenterName: string;
 }
 
 export interface ITicketHistory {
@@ -93,7 +107,5 @@ export interface ICreateTicketHistory {
   dateModified: string;
   property: string;
   ticketId: string;
-  ticketTitle: string;
   employeeId: string;
-  employeeName: string;
 }
