@@ -12,7 +12,7 @@ namespace backend.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Roles",
+                name: "RolesPerso",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -41,7 +41,7 @@ namespace backend.Migrations
                     table.ForeignKey(
                         name: "FK_Employees_Roles_RoleId",
                         column: x => x.RoleId,
-                        principalTable: "Roles",
+                        principalTable: "RolesPerso",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                 });
@@ -280,7 +280,7 @@ namespace backend.Migrations
                 name: "Employees");
 
             migrationBuilder.DropTable(
-                name: "Roles");
+                name: "RolesPerso");
         }
     }
 }

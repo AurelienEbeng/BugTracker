@@ -16,8 +16,8 @@ namespace backend.Core.AutoMapperConfig
         public AutoMapperConfigProfile()
         {
             // Role
-            CreateMap<RoleCreateDto, Role>();
-            CreateMap<Role, RoleGetDto>();
+            CreateMap<RoleCreateDto, RolePerso>();
+            CreateMap<RolePerso, RoleGetDto>();
 
             //Employee
             CreateMap<EmployeeCreateDto, Employee>();

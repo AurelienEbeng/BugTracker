@@ -11,7 +11,7 @@ namespace backend.Core.Context
         {
         }
 
-        public DbSet<Role> Roles { get; set; }
+        public DbSet<RolePerso> RolesPerso { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
 
         public DbSet<TicketAttachment> TicketAttachments { get; set; }

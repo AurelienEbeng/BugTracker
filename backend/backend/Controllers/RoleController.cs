@@ -29,8 +29,8 @@ namespace backend.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateRole([FromBody] RoleCreateDto dto)
         {
-            Role newRole = _mapper.Map<Role>(dto); //maps to Role entity and the source is dto
-            await _context.Roles.AddAsync(newRole);
+            RolePerso newRole = _mapper.Map<RolePerso>(dto); //maps to Role entity and the source is dto
+            await _context.RolesPerso.AddAsync(newRole);
             await _context.SaveChangesAsync();
             return Ok("Role Created Successfully");
         }
@@ -39,7 +39,7 @@ namespace backend.Controllers
         [Route("Get")]
         public async Task<ActionResult <IEnumerable<RoleGetDto>>> GetRoles()
         {
-            var roles = await _context.Roles.ToListAsync();
+            var roles = await _context.RolesPerso.ToListAsync();
             var convertedRoles = _mapper.Map<IEnumerable<RoleGetDto>>(roles);
             return Ok(convertedRoles);
         }

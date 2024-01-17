@@ -109,7 +109,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Roles");
+                    b.ToTable("RolesPerso");
                 });
 
             modelBuilder.Entity("backend.Core.Entities.Ticket", b =>

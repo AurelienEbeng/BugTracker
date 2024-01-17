@@ -11,7 +11,7 @@
 
         //Relations
         public int RoleId { get; set; }
-        public Role Role { get; set; }
+        public RolePerso Role { get; set; }
 
         
         public ICollection<TicketComment> TicketComments { get; set; }
