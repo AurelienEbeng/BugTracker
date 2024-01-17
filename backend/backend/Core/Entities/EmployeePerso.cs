@@ -1,6 +1,6 @@
 ﻿namespace backend.Core.Entities
 {
-    public class Employee
+    public class EmployeePerso
     {
         public int Id { get; set; }
         public string Name { get; set; }

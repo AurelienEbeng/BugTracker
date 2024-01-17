@@ -63,7 +63,7 @@ namespace backend.Migrations
 
                     b.HasIndex("RoleId");
 
-                    b.ToTable("Employees");
+                    b.ToTable("EmployeesPerso");
                 });
 
             modelBuilder.Entity("backend.Core.Entities.Ticket", b =>
@@ -271,7 +271,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Core.Entities.Employee", b =>
                 {
                     b.HasOne("backend.Core.Entities.Role", "Role")
-                        .WithMany("Employees")
+                        .WithMany("EmployeesPerso")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -376,7 +376,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Core.Entities.Role", b =>
                 {
-                    b.Navigation("Employees");
+                    b.Navigation("EmployeesPerso");
                 });
 
             modelBuilder.Entity("backend.Core.Entities.Ticket", b =>

@@ -12,7 +12,7 @@
         public Ticket Ticket { get; set; }
 
         public int CommenterId { get; set; }
-        public Employee Commenter{ get; set; }
+        public EmployeePerso Commenter{ get; set; }
 
 
     }

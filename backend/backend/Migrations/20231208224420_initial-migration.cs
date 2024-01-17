@@ -25,7 +25,7 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Employees",
+                name: "EmployeesPerso",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -63,7 +63,7 @@ namespace backend.Migrations
                     table.ForeignKey(
                         name: "FK_Projects_Employees_ManagerId",
                         column: x => x.ManagerId,
-                        principalTable: "Employees",
+                        principalTable: "EmployeesPerso",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                 });
@@ -81,7 +81,7 @@ namespace backend.Migrations
                     table.ForeignKey(
                         name: "FK_ProjectMember_Employees_MembersId",
                         column: x => x.MembersId,
-                        principalTable: "Employees",
+                        principalTable: "EmployeesPerso",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -135,7 +135,7 @@ namespace backend.Migrations
                     table.ForeignKey(
                         name: "FK_TicketAttachments_Employees_UploaderId",
                         column: x => x.UploaderId,
-                        principalTable: "Employees",
+                        principalTable: "EmployeesPerso",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -163,7 +163,7 @@ namespace backend.Migrations
                     table.ForeignKey(
                         name: "FK_TicketComments_Employees_CommenterId",
                         column: x => x.CommenterId,
-                        principalTable: "Employees",
+                        principalTable: "EmployeesPerso",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -193,7 +193,7 @@ namespace backend.Migrations
                     table.ForeignKey(
                         name: "FK_TicketHistories_Employees_EmployeeId",
                         column: x => x.EmployeeId,
-                        principalTable: "Employees",
+                        principalTable: "EmployeesPerso",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
@@ -206,7 +206,7 @@ namespace backend.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Employees_RoleId",
-                table: "Employees",
+                table: "EmployeesPerso",
                 column: "RoleId");
 
             migrationBuilder.CreateIndex(
@@ -277,7 +277,7 @@ namespace backend.Migrations
                 name: "Projects");
 
             migrationBuilder.DropTable(
-                name: "Employees");
+                name: "EmployeesPerso");
 
             migrationBuilder.DropTable(
                 name: "RolesPerso");

@@ -20,8 +20,8 @@ namespace backend.Core.AutoMapperConfig
             CreateMap<RolePerso, RoleGetDto>();
 
             //Employee
-            CreateMap<EmployeeCreateDto, Employee>();
-            CreateMap<Employee, EmployeeGetDto>()
+            CreateMap<EmployeeCreateDto, EmployeePerso>();
+            CreateMap<EmployeePerso, EmployeeGetDto>()
                 .ForMember(dest => dest.RoleName, opt=> opt.MapFrom(src=> src.Role.Name));
 
             //Project

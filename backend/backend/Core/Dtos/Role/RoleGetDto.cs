@@ -8,6 +8,6 @@ namespace backend.Core.Dtos.Role
         public string Name { get; set; }
 
         //Relations
-        //public ICollection<Employee> Employees { get; set; }
+        //public ICollection<Employee> EmployeesPerso { get; set; }
     }
 }

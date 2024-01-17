@@ -17,7 +17,7 @@ namespace backend.Core.Context
         public DbSet<TicketAttachment> TicketAttachments { get; set; }
         public DbSet<TicketComment> TicketComments { get; set; }
         public DbSet<TicketHistory> TicketHistories { get; set; }
-        public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeePerso> EmployeesPerso { get; set; }
         public DbSet<Project> Projects { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -26,14 +26,14 @@ namespace backend.Core.Context
 
             //Many to one relationship
             //An employee has one role while a role has many employees
-            modelBuilder.Entity<Employee>()
+            modelBuilder.Entity<EmployeePerso>()
                 .HasOne(employee => employee.Role)
                 .WithMany(role => role.Employees)
                 .HasForeignKey(employee => employee.RoleId);
             
             //Many to many relationship
             //An employee can work on several projects and a project can have several employees
-            modelBuilder.Entity<Employee>()
+            modelBuilder.Entity<EmployeePerso>()
                 .HasMany(employee => employee.Projects)
                 .WithMany(project => project.Members)
                 .UsingEntity(j => j.ToTable("ProjectMember"));

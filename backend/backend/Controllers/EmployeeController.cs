@@ -29,8 +29,8 @@ namespace backend.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateEmployee([FromBody] EmployeeCreateDto dto)
         {
-            var newEmployee = _mapper.Map<Employee>(dto);
-            await _context.Employees.AddAsync(newEmployee);
+            var newEmployee = _mapper.Map<EmployeePerso>(dto);
+            await _context.EmployeesPerso.AddAsync(newEmployee);
             await _context.SaveChangesAsync();
             return Ok("Employee Created successfully");
         }
@@ -40,7 +40,7 @@ namespace backend.Controllers
         [Route("Get")]
         public async Task<ActionResult<IEnumerable<EmployeeGetDto>>> GetEmployees()
         {
-            var employees = await _context.Employees.Include(employee => employee.Role).ToListAsync();
+            var employees = await _context.EmployeesPerso.Include(employee => employee.Role).ToListAsync();
             var convertedEmployees = _mapper.Map<IEnumerable<EmployeeGetDto>>(employees);
             return Ok(convertedEmployees);
         }
