@@ -15,16 +15,19 @@ namespace backend.Controllers
         private backendContext _context { get; }
         private readonly SignInManager<Employee> _signInManager;
         private readonly UserManager<Employee> _userManager;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public AccountController(SignInManager<Employee>
             signInManager, UserManager<Employee> userManager,
-            backendContext context)
+            backendContext context,RoleManager<IdentityRole> roleManager)
         {
             _signInManager = signInManager;
             _context = context;
             _userManager = userManager;
+            _roleManager = roleManager;
         }
-
+        //await _roleManager.RoleExistsAsync(role)
+        // await _userManager.AddToRoleAsync(user,role);
         
 
         [HttpPost]
