@@ -1,14 +1,17 @@
 ﻿using backend.Data;
 using backend.Models;
 using backend.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using System.Data;
 
 namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class RoleController : ControllerBase
     {
         private backendContext _context { get; }
@@ -39,10 +42,7 @@ namespace backend.Controllers
         [Route("Get")]
         public async Task<IdentityRole> GetRole(string name)
         {
-
              return await _roleManager.FindByNameAsync(name);
-
-            
         }
 
     }

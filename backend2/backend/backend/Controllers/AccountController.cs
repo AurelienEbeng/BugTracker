@@ -1,10 +1,15 @@
-﻿using backend.Data;
+﻿using AutoMapper;
+using backend.Data;
+using backend.Dtos.Employee;
 using backend.Models;
 using backend.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace backend.Controllers
 {
@@ -16,18 +21,19 @@ namespace backend.Controllers
         private readonly SignInManager<Employee> _signInManager;
         private readonly UserManager<Employee> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private IMapper _mapper { get; set; }
 
         public AccountController(SignInManager<Employee>
             signInManager, UserManager<Employee> userManager,
-            backendContext context,RoleManager<IdentityRole> roleManager)
+            backendContext context,RoleManager<IdentityRole> roleManager,
+            IMapper mapper)
         {
             _signInManager = signInManager;
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
+            _mapper = mapper;
         }
-        //await _roleManager.RoleExistsAsync(role)
-        // await _userManager.AddToRoleAsync(user,role);
         
 
         [HttpPost]
@@ -53,7 +59,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        [Route("Register")]
+        [Route("Register"),Authorize(Roles = "Admin")]
         public async Task<IActionResult> Register(RegisterVM submittedInfo)
         {
             Employee user = new()
@@ -78,5 +84,28 @@ namespace backend.Controllers
 
             return Ok("Error");
         }
+        //AllowAnonymous
+
+
+        [HttpGet]
+        [Route("AddRoleToUser"),Authorize(Roles = "Admin")]
+        public async Task<ActionResult> AddRoleToUser(string roleName,string userId)
+        {
+            Employee user = await _userManager.FindByIdAsync(userId);
+            await _userManager.AddToRoleAsync(user, roleName);
+            return Ok("Role Added");
+        }
+
+        //[HttpGet]
+        //[Route("GetEmployees")]
+        //public async Task<ActionResult> GetEmployees()
+        //{
+        //    var employees = await _context.Employee.ToListAsync();
+        //    var convertedEmployees = _mapper.Map<IEnumerable<EmployeeGetDto>>(employees);
+        //    return Ok(convertedEmployees);
+        //}
+
+
+       
     }
 }

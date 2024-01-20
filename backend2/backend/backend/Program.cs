@@ -4,6 +4,7 @@ using backend.Data;
 using backend.Models;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
+using backend.AutoMapperConfig;
 
 
 
@@ -12,6 +13,9 @@ var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("local") ?? throw new InvalidOperationException("Connection string 'backendContextConnection' not found.");
 
 builder.Services.AddDbContext<backendContext>(options => options.UseSqlServer(connectionString));
+
+// Automapper Configuration
+builder.Services.AddAutoMapper(typeof(AutoMapperConfigProfile));
 
 builder.Services.AddIdentity<Employee,IdentityRole>(
     options =>

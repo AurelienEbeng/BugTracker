@@ -11,6 +11,7 @@ public class backendContext : IdentityDbContext<Employee>
         : base(options)
     {
     }
+    public DbSet<Employee> Employee { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
