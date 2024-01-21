@@ -19,7 +19,7 @@ namespace backend.Controllers
     {
         private backendContext _context { get; }
         private readonly SignInManager<Employee> _signInManager;
-        private readonly UserManager<Employee> _userManager;
+        private readonly UserManager<Employee> _employeeManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private IMapper _mapper { get; set; }
 
@@ -30,7 +30,7 @@ namespace backend.Controllers
         {
             _signInManager = signInManager;
             _context = context;
-            _userManager = userManager;
+            _employeeManager = userManager;
             _roleManager = roleManager;
             _mapper = mapper;
         }
@@ -68,7 +68,7 @@ namespace backend.Controllers
                 UserName = submittedInfo.Email,
                 Email = submittedInfo.Email
             };
-            var result = await _userManager.CreateAsync(user, submittedInfo.Password);
+            var result = await _employeeManager.CreateAsync(user, submittedInfo.Password);
 
             if (result.Succeeded)
             {
@@ -84,28 +84,32 @@ namespace backend.Controllers
 
             return Ok("Error");
         }
-        //AllowAnonymous
 
 
         [HttpGet]
         [Route("AddRoleToUser"),Authorize(Roles = "Admin")]
         public async Task<ActionResult> AddRoleToUser(string roleName,string userId)
         {
-            Employee user = await _userManager.FindByIdAsync(userId);
-            await _userManager.AddToRoleAsync(user, roleName);
+            Employee user = await _employeeManager.FindByIdAsync(userId);
+            await _employeeManager.AddToRoleAsync(user, roleName);
             return Ok("Role Added");
         }
 
-        //[HttpGet]
-        //[Route("GetEmployees")]
-        //public async Task<ActionResult> GetEmployees()
-        //{
-        //    var employees = await _context.Employee.ToListAsync();
-        //    var convertedEmployees = _mapper.Map<IEnumerable<EmployeeGetDto>>(employees);
-        //    return Ok(convertedEmployees);
-        //}
+        [HttpGet]
+        [Route("GetEmployees"), Authorize(Roles ="Admin")]
+        public async Task<ActionResult> GetEmployees()
+        {
+            return Ok(await _context.Users.ToListAsync());
+        }
 
+        [HttpGet]
+        [Route("GetCurrentLoggedInEmployeeId")]
+        public async Task<ActionResult> GetCurrentLoggedInEmployeeId()
+        {
+            
+            return Ok( _employeeManager.GetUserId(HttpContext.User));
+        }
 
-       
     }
 }
+ 
