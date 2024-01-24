@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using backend.Core.Context;
-using backend.Core.Dtos.Role;
-using backend.Core.Entities;
+﻿using backend.Core.Context;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,42 +9,47 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class RoleController : ControllerBase
     {
-        //ctor   creates a constructor when you press tab twice
         private ApplicationDBContext _context { get; }
-        private IMapper _mapper{get; set;}
-
-        public RoleController(ApplicationDBContext context, IMapper mapper)
+        private readonly RoleManager<IdentityRole> _roleManager;
+        public RoleController(ApplicationDBContext context, RoleManager<IdentityRole> roleManager)
         {
-            _context= context;
-            _mapper=mapper;
+            _context = context;
+            _roleManager = roleManager;
         }
 
-        //CRUD
 
-        //Create
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> CreateRole([FromBody] RoleCreateDto dto)
+        public async Task<IActionResult> CreateRole(string name)
         {
-            RolePerso newRole = _mapper.Map<RolePerso>(dto); //maps to Role entity and the source is dto
-            await _context.RolesPerso.AddAsync(newRole);
-            await _context.SaveChangesAsync();
-            return Ok("Role Created Successfully");
-        }
-        //Read
-        [HttpGet]
-        [Route("Get")]
-        public async Task<ActionResult <IEnumerable<RoleGetDto>>> GetRoles()
-        {
-            var roles = await _context.RolesPerso.ToListAsync();
-            var convertedRoles = _mapper.Map<IEnumerable<RoleGetDto>>(roles);
-            return Ok(convertedRoles);
+            var roleExist = await _roleManager.RoleExistsAsync(name);
+            if (roleExist) { return Ok("Role exist"); }
+            IdentityRole role = new IdentityRole { Name = name };
+            var result = await _roleManager.CreateAsync(role);
+            if (result.Succeeded)
+            {
+                return Ok("Success");
+            }
+            return Ok("Unsuccess");
         }
 
-        
-        //Update
-        //Delete
+
+        [HttpGet]
+        [Route("Get")]
+        public async Task<IdentityRole> GetRole(string name)
+        {
+            return await _roleManager.FindByNameAsync(name);
+        }
+
+        [HttpGet]
+        [Route("GetRoles")]
+        public async Task<ActionResult> GetRoles()
+        {
+            return Ok(await _roleManager.Roles.ToListAsync());
+        }
+
     }
 }

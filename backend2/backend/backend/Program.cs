@@ -26,6 +26,7 @@ builder.Services.AddIdentity<Employee,IdentityRole>(
         options.Password.RequireNonAlphanumeric = false;
         options.Password.RequireLowercase= false;
     } ).AddEntityFrameworkStores<backendContext>().AddDefaultTokenProviders();
+
 // Add services to the container.
 
 builder.Services.AddControllers();
@@ -41,6 +42,7 @@ builder.Services.AddSwaggerGen(options =>
     });
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
+
 builder.Services.AddAuthorization();
 
 var app = builder.Build();

@@ -1,11 +1,13 @@
 ﻿using backend.Core.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 
 
 namespace backend.Core.Context
 {
-    public class ApplicationDBContext : DbContext
+    public class ApplicationDBContext : IdentityDbContext<Employee>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
@@ -18,7 +20,8 @@ namespace backend.Core.Context
         public DbSet<TicketComment> TicketComments { get; set; }
         public DbSet<TicketHistory> TicketHistories { get; set; }
         public DbSet<EmployeePerso> EmployeesPerso { get; set; }
-        public DbSet<Project> Projects { get; set; } 
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Employee> Employees { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -87,13 +90,30 @@ namespace backend.Core.Context
                 .WithMany(employee => employee.TicketAttachments)
                 .HasForeignKey(ticketAttachment => ticketAttachment.UploaderId);
 
-            ////convert from string to int
-            //modelBuilder.Entity<Company>()
-            //    .Property(company => company.Size)
-            //    .HasConversion<string>();
 
-            //you need to add migration and update database
+            //To change the default names of Identity tables
+            modelBuilder.Entity<Employee>(
+                entity => entity.ToTable(name: "Employees"));
 
+            modelBuilder.Entity<IdentityRole>(
+               entity => entity.ToTable(name: "Roles"));
+
+            modelBuilder.Entity<IdentityUserRole<string>>(
+               entity => entity.ToTable(name: "EmployeesRoles"));
+
+            modelBuilder.Entity<IdentityUserClaim<string>>(
+               entity => entity.ToTable(name: "EmployeesClaims"));
+
+            modelBuilder.Entity<IdentityUserLogin<string>>(
+               entity => entity.ToTable(name: "EmployeesLogins"));
+
+            modelBuilder.Entity<IdentityRoleClaim<string>>(
+               entity => entity.ToTable(name: "RolesClaims"));
+
+            modelBuilder.Entity<IdentityUserToken<string>>(
+               entity => entity.ToTable(name: "EmployeesTokens"));
+
+            
 
         }
 
