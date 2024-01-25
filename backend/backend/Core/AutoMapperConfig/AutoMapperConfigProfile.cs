@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using backend.Core.Dtos.Employee;
 using backend.Core.Dtos.Project;
-using backend.Core.Dtos.Role;
 using backend.Core.Dtos.Ticket;
 using backend.Core.Dtos.TicketAttachment;
 using backend.Core.Dtos.TicketComment;
@@ -15,14 +14,10 @@ namespace backend.Core.AutoMapperConfig
     {
         public AutoMapperConfigProfile()
         {
-            // Role
-            CreateMap<RoleCreateDto, RolePerso>();
-            CreateMap<RolePerso, RoleGetDto>();
-
-            //Employee
+            //EmployeePerso
             CreateMap<EmployeeCreateDto, EmployeePerso>();
-            CreateMap<EmployeePerso, EmployeeGetDto>()
-                .ForMember(dest => dest.RoleName, opt=> opt.MapFrom(src=> src.Role.Name));
+            CreateMap<EmployeePerso, EmployeeGetDto>();
+
 
             //Project
             CreateMap<ProjectCreateDto, Project>();

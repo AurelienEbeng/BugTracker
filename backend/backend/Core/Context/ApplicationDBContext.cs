@@ -19,9 +19,9 @@ namespace backend.Core.Context
         public DbSet<TicketAttachment> TicketAttachments { get; set; }
         public DbSet<TicketComment> TicketComments { get; set; }
         public DbSet<TicketHistory> TicketHistories { get; set; }
-        public DbSet<EmployeePerso> EmployeesPerso { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<EmployeePerso> EmployeesPerso { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

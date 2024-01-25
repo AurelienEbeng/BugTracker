@@ -2,7 +2,7 @@
 
 namespace backend.Core.Entities
 {
-    public class Register
+    public class CreateEmployeeForm
     {
         [Required]
         public string? Name { get; set; }

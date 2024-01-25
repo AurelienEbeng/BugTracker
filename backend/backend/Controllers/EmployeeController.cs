@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
-using backend.Core.Dtos.Employee;
-using backend.Core.Dtos.Role;
 using backend.Core.Entities;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,42 +10,84 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles ="Admin")]
     public class EmployeeController : ControllerBase
     {
+        private readonly SignInManager<Employee> _signInManager;
+        private readonly UserManager<Employee> _employeeManager;
         private ApplicationDBContext _context { get; }
-        private IMapper _mapper { get; set; }
 
-        public EmployeeController(ApplicationDBContext context, IMapper mapper)
+
+        public EmployeeController(SignInManager<Employee>
+            signInManager, UserManager<Employee> userManager,
+            ApplicationDBContext context, RoleManager<IdentityRole> roleManager,
+            IMapper mapper)
         {
+            _signInManager = signInManager;
             _context = context;
-            _mapper = mapper;
+            _employeeManager = userManager;
         }
 
-        //CRUD
 
+        //CRUD
         //Create
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> CreateEmployee([FromBody] EmployeeCreateDto dto)
+        public async Task<IActionResult> Create(CreateEmployeeForm submittedInfo)
         {
-            var newEmployee = _mapper.Map<EmployeePerso>(dto);
-            await _context.EmployeesPerso.AddAsync(newEmployee);
-            await _context.SaveChangesAsync();
-            return Ok("Employee Created successfully");
+            Employee user = new()
+            {
+                Name = submittedInfo.Name,
+                UserName = submittedInfo.Email,
+                Email = submittedInfo.Email
+            };
+            var result = await _employeeManager.CreateAsync(user, submittedInfo.Password);
+
+            if (result.Succeeded)
+            {
+                await _signInManager.SignInAsync(user, false);
+                return Ok("Logged in");
+            }
+
+
+            return Ok("Error");
         }
+
+
 
         //Read
         [HttpGet]
-        [Route("Get")]
-        public async Task<ActionResult<IEnumerable<EmployeeGetDto>>> GetEmployees()
+        [Route("GetEmployees"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult> GetEmployees()
         {
-            var employees = await _context.EmployeesPerso.Include(employee => employee.Role).ToListAsync();
-            var convertedEmployees = _mapper.Map<IEnumerable<EmployeeGetDto>>(employees);
-            return Ok(convertedEmployees);
+            return Ok(await _context.Users.ToListAsync());
+        }
+
+        [HttpGet]
+        [Route("GetCurrentLoggedInEmployeeId")]
+        public async Task<ActionResult> GetCurrentLoggedInEmployeeId()
+        {
+
+            return Ok(_employeeManager.GetUserId(HttpContext.User));
         }
 
 
         //Update
+        [HttpGet]
+        [Route("AddRoleToUser"), Authorize(Roles = "Admin")]
+        public async Task<ActionResult> AddRoleToEmployee(string roleName, string userId)
+        {
+            Employee user = await _employeeManager.FindByIdAsync(userId);
+            await _employeeManager.AddToRoleAsync(user, roleName);
+            return Ok("Role Added");
+        }
+
+
         //Delete
+
     }
+
+
+    
+
 }
