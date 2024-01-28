@@ -3,6 +3,7 @@ using backend.Core.Context;
 using backend.Core.Dtos.Project;
 using backend.Core.Dtos.TicketComment;
 using backend.Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class TicketCommentController : ControllerBase
     {
         private ApplicationDBContext _context { get; }

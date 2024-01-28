@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
 using backend.Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,6 +9,7 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    
     public class SignInSignOutController : ControllerBase
     {
         private readonly SignInManager<Employee> _signInManager;
@@ -36,7 +38,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Route("Logout")]
+        [Route("Logout"),Authorize(Roles = "Admin")]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();

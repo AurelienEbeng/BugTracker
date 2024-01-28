@@ -13,7 +13,7 @@
         public int TicketId { get; set; }
         public string TicketTitle { get; set; }
 
-        public int EmployeeId { get; set; }
+        public string EmployeeId { get; set; }
         public string EmployeeName { get; set; }
     }
 }

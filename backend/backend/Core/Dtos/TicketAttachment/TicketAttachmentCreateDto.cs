@@ -9,6 +9,6 @@
 
         public int TicketId { get; set; }
 
-        public int UploaderId { get; set; }
+        public string UploaderId { get; set; }
     }
 }

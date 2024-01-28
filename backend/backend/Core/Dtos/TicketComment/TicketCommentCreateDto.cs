@@ -10,6 +10,6 @@
 
         public int TicketId { get; set; }
 
-        public int CommenterId { get; set; }
+        public string CommenterId { get; set; }
     }
 }

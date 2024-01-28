@@ -11,7 +11,7 @@
         public int TicketId { get; set; }
         public string TicketTitle { get; set; }
 
-        public int CommenterId { get; set; }
+        public string CommenterId { get; set; }
         public string CommenterName { get; set; }
     }
 }

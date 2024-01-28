@@ -57,7 +57,7 @@ namespace backend.Controllers
 
         //Read
         [HttpGet]
-        [Route("GetEmployees"), Authorize(Roles = "Admin")]
+        [Route("GetEmployees")]
         public async Task<ActionResult> GetEmployees()
         {
             return Ok(await _context.Users.ToListAsync());
@@ -74,7 +74,7 @@ namespace backend.Controllers
 
         //Update
         [HttpGet]
-        [Route("AddRoleToUser"), Authorize(Roles = "Admin")]
+        [Route("AddRoleToEmployee")]
         public async Task<ActionResult> AddRoleToEmployee(string roleName, string userId)
         {
             Employee user = await _employeeManager.FindByIdAsync(userId);

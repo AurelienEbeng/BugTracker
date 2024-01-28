@@ -11,7 +11,7 @@ namespace backend.Core.Dtos.Project
         public DateTime DateCreated { get; set; }
 
 
-        public int ManagerId { get; set; }
+        public string ManagerId { get; set; }
         public string ManagerName { get; set; }
 
     }
