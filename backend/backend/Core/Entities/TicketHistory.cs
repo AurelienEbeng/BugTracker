@@ -14,7 +14,7 @@
         public Ticket Ticket { get; set; }
 
         public int EmployeeId { get; set; }
-        public EmployeePerso Employee { get; set; }
+        public Employee Employee { get; set; }
 
 
 

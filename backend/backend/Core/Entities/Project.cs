@@ -10,9 +10,9 @@
 
         //Relations
         public int ManagerId { get; set; }
-        public EmployeePerso Manager { get; set; }
+        public Employee Manager { get; set; }
 
         public ICollection<Ticket> Tickets { get; set; }
-        public ICollection<EmployeePerso> Members { get; set; }
+        public ICollection<Employee> Members { get; set; }
     }
 }

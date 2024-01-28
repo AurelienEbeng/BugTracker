@@ -14,9 +14,6 @@ namespace backend.Core.AutoMapperConfig
     {
         public AutoMapperConfigProfile()
         {
-            //EmployeePerso
-            CreateMap<EmployeeCreateDto, EmployeePerso>();
-            CreateMap<EmployeePerso, EmployeeGetDto>();
 
 
             //Project

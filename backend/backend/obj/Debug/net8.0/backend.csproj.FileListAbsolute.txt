@@ -262,5 +262,3 @@ C:\Users\EUROPEONLINE\Desktop\Portfolio Projects\bug tracker\backend\backend\bin
 C:\Users\EUROPEONLINE\Desktop\Portfolio Projects\bug tracker\backend\backend\bin\Debug\net8.0\Scrutor.dll
 C:\Users\EUROPEONLINE\Desktop\Portfolio Projects\bug tracker\backend\backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.dll
 C:\Users\EUROPEONLINE\Desktop\Portfolio Projects\bug tracker\backend\backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.Filters.Abstractions.dll
-C:\Users\EUROPEONLINE\Desktop\Portfolio Projects\bug tracker\backend\backend\obj\Debug\net8.0\backend.RazorAssemblyInfo.cache
-C:\Users\EUROPEONLINE\Desktop\Portfolio Projects\bug tracker\backend\backend\obj\Debug\net8.0\backend.RazorAssemblyInfo.cs

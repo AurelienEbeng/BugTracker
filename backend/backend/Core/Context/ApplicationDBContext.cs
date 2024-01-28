@@ -13,7 +13,6 @@ namespace backend.Core.Context
         {
         }
 
-        public DbSet<RolePerso> RolesPerso { get; set; }
         public DbSet<Ticket> Tickets { get; set; }
 
         public DbSet<TicketAttachment> TicketAttachments { get; set; }
@@ -21,30 +20,27 @@ namespace backend.Core.Context
         public DbSet<TicketHistory> TicketHistories { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        public DbSet<EmployeePerso> EmployeesPerso { get; set; }
+        //Add the project member table
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            //Many to one relationship
-            //An employee has one role while a role has many employees
-            modelBuilder.Entity<EmployeePerso>()
-                .HasOne(employee => employee.Role)
-                .WithMany(role => role.Employees)
-                .HasForeignKey(employee => employee.RoleId);
+            
+            
             
             //Many to many relationship
             //An employee can work on several projects and a project can have several employees
-            modelBuilder.Entity<EmployeePerso>()
+            modelBuilder.Entity<Employee>()
                 .HasMany(employee => employee.Projects)
                 .WithMany(project => project.Members)
-                .UsingEntity(j => j.ToTable("ProjectMember"));
+                .UsingEntity(j => j.ToTable("ProjectsMembers"));
 
+            //Many to one relationship
             //project to manager
             modelBuilder.Entity<Project>()
                 .HasOne(project => project.Manager)
-                .WithMany(employee => employee.ManageProjects)
+                .WithMany(employee => employee.ManagedProjects)
                 .HasForeignKey(project => project.ManagerId);
 
 
