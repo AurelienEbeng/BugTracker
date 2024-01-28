@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
+using backend.Core.DataTransfer;
 using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -17,7 +18,7 @@ namespace backend.Controllers
         private readonly UserManager<Employee> _employeeManager;
         private ApplicationDBContext _context { get; }
 
-
+        public static string employeeId;
         public EmployeeController(SignInManager<Employee>
             signInManager, UserManager<Employee> userManager,
             ApplicationDBContext context, RoleManager<IdentityRole> roleManager,
@@ -63,13 +64,24 @@ namespace backend.Controllers
             return Ok(await _context.Users.ToListAsync());
         }
 
+        //[HttpGet]
+        //[Route("GetCurrentLoggedInEmployeeId")]
+        //public async Task<ActionResult> GetCurrentLoggedInEmployeeId()
+        //{
+
+        //    return Ok(_employeeManager.GetUserId(HttpContext.User));
+        //}
+
         [HttpGet]
         [Route("GetCurrentLoggedInEmployeeId")]
         public async Task<ActionResult> GetCurrentLoggedInEmployeeId()
         {
-
-            return Ok(_employeeManager.GetUserId(HttpContext.User));
+            var id = _employeeManager.GetUserId(HttpContext.User);
+            EmployeeId.Id = id.ToString();
+            return Ok(EmployeeId.Id);
         }
+
+
 
 
         //Update

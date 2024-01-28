@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
+using backend.Core.DataTransfer;
 using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -13,13 +14,13 @@ namespace backend.Controllers
     public class SignInSignOutController : ControllerBase
     {
         private readonly SignInManager<Employee> _signInManager;
-
         public SignInSignOutController(SignInManager<Employee>
             signInManager, UserManager<Employee> userManager,
             ApplicationDBContext context, RoleManager<IdentityRole> roleManager,
             IMapper mapper)
         {
             _signInManager = signInManager;
+            
         }
 
 

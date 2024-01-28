@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using backend.Core.Enums;
+using Microsoft.AspNetCore.Identity;
+using backend.Core.DataTransfer;
 
 namespace backend.Controllers
 {
@@ -17,6 +20,7 @@ namespace backend.Controllers
     {
         private ApplicationDBContext _context { get; }
         private IMapper _mapper { get; set; }
+        
 
         public TicketController(ApplicationDBContext context, IMapper mapper)
         {
@@ -67,7 +71,67 @@ namespace backend.Controllers
             var convertedTickets = _mapper.Map<IEnumerable<TicketGetDto>>(ticket);
             return Ok(convertedTickets);
         }
+
         //Update
+        [HttpPut]
+        [Route("Update")]
+        public async Task<IActionResult> Update(int ticketId, string property, string newValue)
+        {
+            var ticket = _context.Tickets.Where(ticket => ticket.Id == ticketId).First();
+            var ticketHistory = new TicketHistory();
+            ticketHistory.Property = property;
+            ticketHistory.NewValue= newValue;
+            ticketHistory.EmployeeId = EmployeeId.Id;
+            ticketHistory.TicketId = ticketId;
+
+            property=property.ToUpper();
+            newValue=newValue.ToUpper();
+
+            if (property == "STATUS")
+            {
+                if (newValue == "OPEN")
+                {
+                    ticketHistory.OldValue = ticket.Status.ToString();
+                    ticket.Status = TicketStatus.OPEN;
+                }
+                else if(newValue=="CLOSE")
+                {
+                    ticketHistory.OldValue = ticket.Status.ToString();
+                    ticket.Status = TicketStatus.CLOSE;
+                }
+
+                
+            }
+            else if (property == "PRIORITY")
+            {
+                if (newValue == "HIGH")
+                {
+                    ticketHistory.OldValue = ticket.Priority.ToString();
+                    ticket.Priority = TicketPriority.HIGH;
+                }
+                else if (newValue == "MEDIUM")
+                {
+                    ticketHistory.OldValue = ticket.Priority.ToString();
+                    ticket.Priority = TicketPriority.MEDIUM;
+                }
+                else if (newValue == "LOW")
+                {
+                    ticketHistory.OldValue = ticket.Priority.ToString();
+                    ticket.Priority = TicketPriority.LOW;
+                }
+            }
+
+
+
+
+
+            await _context.TicketHistories.AddAsync(ticketHistory);
+            _context.SaveChanges();
+            return Ok("Ticket Updated successfully");
+
+        }
+
+
         //Delete
     }
 }
