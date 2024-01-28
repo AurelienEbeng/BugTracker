@@ -9,7 +9,7 @@
         public DateTime DateCreated { get; set; }
 
         //Relations
-        public int ManagerId { get; set; }
+        public string ManagerId { get; set; }
         public Employee Manager { get; set; }
 
         public ICollection<Ticket> Tickets { get; set; }

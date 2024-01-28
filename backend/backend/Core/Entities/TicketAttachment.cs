@@ -11,7 +11,7 @@
         public int TicketId { get; set; }
         public Ticket Ticket { get; set; }
 
-        public int UploaderId { get; set; }
+        public string UploaderId { get; set; }
         public Employee Uploader { get; set; }
 
 
