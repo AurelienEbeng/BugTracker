@@ -13,5 +13,6 @@ namespace backend.Core.Entities
         public ICollection<Project> ManagedProjects { get; set; }
         public ICollection<TicketHistory> TicketHistories { get; set; }
         public ICollection<TicketAttachment> TicketAttachments { get; set; }
+        public ICollection<NotificationsEmployees> NotificationsEmployees { get; set; }
     }
 }

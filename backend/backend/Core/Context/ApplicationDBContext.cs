@@ -86,6 +86,19 @@ namespace backend.Core.Context
                 .WithMany(employee => employee.TicketAttachments)
                 .HasForeignKey(ticketAttachment => ticketAttachment.UploaderId);
 
+            modelBuilder.Entity<NotificationsEmployees>()
+                .HasOne(notificationsEmployees => notificationsEmployees.Notification)
+                .WithMany(notification => notification.NotificationsEmployees)
+                .HasForeignKey(notificationsEmployees => notificationsEmployees.NotificationId);
+
+            modelBuilder.Entity<NotificationsEmployees>()
+                .HasOne(notificationsEmployees => notificationsEmployees.ToEmployee)
+                .WithMany(employee => employee.NotificationsEmployees)
+                .HasForeignKey(notificationsEmployees => notificationsEmployees.ToEmployeeId);
+
+
+            modelBuilder.Entity<NotificationsEmployees>()
+                .HasKey(notificationsEmployees => new { notificationsEmployees.NotificationId,notificationsEmployees.ToEmployeeId });
 
             //To change the default names of Identity tables
             modelBuilder.Entity<Employee>(
