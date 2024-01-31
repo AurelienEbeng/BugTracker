@@ -20,7 +20,8 @@ namespace backend.Core.Context
         public DbSet<TicketHistory> TicketHistories { get; set; }
         public DbSet<Project> Projects { get; set; }
         public DbSet<Employee> Employees { get; set; }
-        //Add the project member table
+        public DbSet<NotificationsEmployees> NotificationsEmployees { get; set; }
+        public DbSet<Notification> Notification { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -86,6 +87,7 @@ namespace backend.Core.Context
                 .WithMany(employee => employee.TicketAttachments)
                 .HasForeignKey(ticketAttachment => ticketAttachment.UploaderId);
 
+
             modelBuilder.Entity<NotificationsEmployees>()
                 .HasOne(notificationsEmployees => notificationsEmployees.Notification)
                 .WithMany(notification => notification.NotificationsEmployees)
@@ -98,7 +100,11 @@ namespace backend.Core.Context
 
 
             modelBuilder.Entity<NotificationsEmployees>()
-                .HasKey(notificationsEmployees => new { notificationsEmployees.NotificationId,notificationsEmployees.ToEmployeeId });
+                .HasKey(notificationsEmployees => 
+                new { notificationsEmployees.NotificationId,notificationsEmployees.ToEmployeeId });
+
+
+
 
             //To change the default names of Identity tables
             modelBuilder.Entity<Employee>(

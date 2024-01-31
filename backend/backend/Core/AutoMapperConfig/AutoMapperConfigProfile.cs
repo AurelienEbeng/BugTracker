@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using backend.Core.Dtos.Employee;
+using backend.Core.Dtos.Notification;
 using backend.Core.Dtos.Project;
 using backend.Core.Dtos.Ticket;
 using backend.Core.Dtos.TicketAttachment;
@@ -41,6 +42,16 @@ namespace backend.Core.AutoMapperConfig
             CreateMap<TicketHistory, TicketHistoryGetDto>()
                 .ForMember(dest => dest.TicketTitle, opt => opt.MapFrom(src => src.Ticket.Title))
                 .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.Employee.Name));
+
+            //Notification
+            CreateMap<NotificationCreateDto, Notification>();
+            CreateMap<NotificationsEmployeesCreateDto, NotificationsEmployees>();
+            CreateMap<NotificationsEmployees, NotificationGetDto>()
+                .ForMember(dest => dest.Message, opt => opt.MapFrom(src => src.Notification.Message))
+                .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => src.Notification.DateCreated))
+                .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.ToEmployee.Name));
+
+            
         }
     }
 }
