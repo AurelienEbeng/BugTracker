@@ -22,20 +22,29 @@ namespace backend.Core.Context
         public DbSet<Employee> Employees { get; set; }
         public DbSet<NotificationsEmployees> NotificationsEmployees { get; set; }
         public DbSet<Notification> Notification { get; set; }
+        public DbSet<ProjectsMembers> ProjectsMembers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            
-            
-            
+
+
+
             //Many to many relationship
             //An employee can work on several projects and a project can have several employees
             modelBuilder.Entity<Employee>()
                 .HasMany(employee => employee.Projects)
                 .WithMany(project => project.Members)
-                .UsingEntity(j => j.ToTable("ProjectsMembers"));
+                .UsingEntity<ProjectsMembers>(
+                projectMember => projectMember.HasOne(prop => prop.Project).WithMany().HasForeignKey(prop => prop.ProjectID),
+                projectMember=> projectMember.HasOne(prop => prop.Employee).WithMany().HasForeignKey(prop=> prop.EmployeeId),
+                projectMember =>
+                {
+                    projectMember.HasKey(prop => new { prop.ProjectID, prop.EmployeeId });
+                    projectMember.Property(prop => prop.DateAdded).HasDefaultValueSql("GETUTCDATE()");
+                }
+                );
 
             //Many to one relationship
             //project to manager

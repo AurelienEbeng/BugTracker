@@ -9,5 +9,7 @@
         public string EmployeeId { get; set; }
         public Employee Employee { get; set; }
 
+        public DateTime DateAdded { get; set; }
+
     }
 }
