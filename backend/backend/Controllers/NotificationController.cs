@@ -32,12 +32,13 @@ namespace backend.Controllers
             var newNotification = _mapper.Map<Notification>(dto);
             await _context.Notification.AddAsync(newNotification);
             await _context.SaveChangesAsync();
+
             var notification = _context.Notification.Where(
                 notification => notification.Message == newNotification.Message &&
                 notification.DateCreated == newNotification.DateCreated).FirstOrDefault();
 
             var projectMembers = _context.ProjectsMembers.Where(
-                projectMember => projectMember.ProjectsId == 1);
+                projectMember => projectMember.ProjectsId == 1); //All notifications will only concern members of project 1
 
             foreach(var projectMember in projectMembers)
             {
@@ -45,11 +46,11 @@ namespace backend.Controllers
                 newNotificationEmployee.NotificationId = notification.Id;
                 newNotificationEmployee.ToEmployeeId = projectMember.MembersId;
                 await _context.NotificationsEmployees.AddAsync(newNotificationEmployee);
-                await _context.SaveChangesAsync();
+                
 
             }
 
-            
+            await _context.SaveChangesAsync();
             return Ok("Success");
         }
 
@@ -61,7 +62,7 @@ namespace backend.Controllers
             var notificationEmployees = await _context.NotificationsEmployees
                 .Include(notification => notification.ToEmployee )
                 .Include(notification => notification.Notification).ToListAsync();
-            var convertedNotificationEmployees = _mapper.Map<IEnumerable<NotificationsEmployees>>(notificationEmployees);
+            var convertedNotificationEmployees = _mapper.Map<IEnumerable<NotificationGetDto>>(notificationEmployees);
             return Ok(convertedNotificationEmployees);
         }
 
