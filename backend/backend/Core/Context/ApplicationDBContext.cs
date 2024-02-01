@@ -22,7 +22,7 @@ namespace backend.Core.Context
         public DbSet<Employee> Employees { get; set; }
         public DbSet<NotificationsEmployees> NotificationsEmployees { get; set; }
         public DbSet<Notification> Notification { get; set; }
-        public DbSet<ProjectsMembers> ProjectsMembers { get; set; }
+        public DbSet<ProjectMember> ProjectsMembers { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,12 +36,12 @@ namespace backend.Core.Context
             modelBuilder.Entity<Employee>()
                 .HasMany(employee => employee.Projects)
                 .WithMany(project => project.Members)
-                .UsingEntity<ProjectsMembers>(
-                projectMember => projectMember.HasOne(prop => prop.Project).WithMany().HasForeignKey(prop => prop.ProjectID),
-                projectMember=> projectMember.HasOne(prop => prop.Employee).WithMany().HasForeignKey(prop=> prop.EmployeeId),
+                .UsingEntity<ProjectMember>(
+                projectMember => projectMember.HasOne(prop => prop.Project).WithMany().HasForeignKey(prop => prop.ProjectsId),
+                projectMember=> projectMember.HasOne(prop => prop.Employee).WithMany().HasForeignKey(prop=> prop.MembersId),
                 projectMember =>
                 {
-                    projectMember.HasKey(prop => new { prop.ProjectID, prop.EmployeeId });
+                    projectMember.HasKey(prop => new { prop.ProjectsId, prop.MembersId });
                     projectMember.Property(prop => prop.DateAdded).HasDefaultValueSql("GETUTCDATE()");
                 }
                 );

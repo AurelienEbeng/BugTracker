@@ -429,7 +429,7 @@ namespace backend.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EmployeeId")
+                    b.Property<string>("MembersId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -450,7 +450,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("MembersId");
 
                     b.HasIndex("TicketId");
 
@@ -606,7 +606,7 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Core.Entities.Employee", "Employee")
                         .WithMany("TicketHistories")
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("MembersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

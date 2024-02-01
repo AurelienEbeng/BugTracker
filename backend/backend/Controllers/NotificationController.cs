@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
 using backend.Core.Dtos.Notification;
+using backend.Core.Dtos.Ticket;
 using backend.Core.Dtos.TicketComment;
 using backend.Core.Entities;
 using Microsoft.AspNetCore.Http;
@@ -35,11 +36,35 @@ namespace backend.Controllers
                 notification => notification.Message == newNotification.Message &&
                 notification.DateCreated == newNotification.DateCreated).FirstOrDefault();
 
+            var projectMembers = _context.ProjectsMembers.Where(
+                projectMember => projectMember.ProjectsId == 1);
+
+            foreach(var projectMember in projectMembers)
+            {
+                var newNotificationEmployee = new NotificationsEmployees();
+                newNotificationEmployee.NotificationId = notification.Id;
+                newNotificationEmployee.ToEmployeeId = projectMember.MembersId;
+                await _context.NotificationsEmployees.AddAsync(newNotificationEmployee);
+                await _context.SaveChangesAsync();
+
+            }
+
             
-            return Ok(notification.Id);
+            return Ok("Success");
+        }
+
+        //Read
+        [HttpGet]
+        [Route("Get")]
+        public async Task<ActionResult<IEnumerable<NotificationGetDto>>> GetNotifications()
+        {
+            var notificationEmployees = await _context.NotificationsEmployees
+                .Include(notification => notification.ToEmployee )
+                .Include(notification => notification.Notification).ToListAsync();
+            var convertedNotificationEmployees = _mapper.Map<IEnumerable<NotificationsEmployees>>(notificationEmployees);
+            return Ok(convertedNotificationEmployees);
         }
 
 
-        
     }
 }

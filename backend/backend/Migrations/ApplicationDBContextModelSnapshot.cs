@@ -300,7 +300,7 @@ namespace backend.Migrations
                     b.Property<int>("ProjectID")
                         .HasColumnType("int");
 
-                    b.Property<string>("EmployeeId")
+                    b.Property<string>("MembersId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("DateAdded")
@@ -308,9 +308,9 @@ namespace backend.Migrations
                         .HasColumnType("datetime2")
                         .HasDefaultValueSql("GETUTCDATE()");
 
-                    b.HasKey("ProjectID", "EmployeeId");
+                    b.HasKey("ProjectID", "MembersId");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("MembersId");
 
                     b.ToTable("ProjectsMembers");
                 });
@@ -431,7 +431,7 @@ namespace backend.Migrations
                     b.Property<DateTime>("DateModified")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("EmployeeId")
+                    b.Property<string>("MembersId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
@@ -452,7 +452,7 @@ namespace backend.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("EmployeeId");
+                    b.HasIndex("MembersId");
 
                     b.HasIndex("TicketId");
 
@@ -544,7 +544,7 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Core.Entities.Employee", "Employee")
                         .WithMany()
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("MembersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -612,7 +612,7 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Core.Entities.Employee", "Employee")
                         .WithMany("TicketHistories")
-                        .HasForeignKey("EmployeeId")
+                        .HasForeignKey("MembersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

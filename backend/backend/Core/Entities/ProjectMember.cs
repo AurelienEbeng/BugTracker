@@ -1,12 +1,12 @@
 ﻿namespace backend.Core.Entities
 {
-    public class ProjectsMembers
+    public class ProjectMember
     {
-        public int ProjectID { get; set; }
+        public int ProjectsId { get; set; }
         public Project Project { get; set; }
 
 
-        public string EmployeeId { get; set; }
+        public string MembersId { get; set; }
         public Employee Employee { get; set; }
 
         public DateTime DateAdded { get; set; }

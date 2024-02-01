@@ -2,6 +2,7 @@
 using backend.Core.Dtos.Employee;
 using backend.Core.Dtos.Notification;
 using backend.Core.Dtos.Project;
+using backend.Core.Dtos.ProjectMember;
 using backend.Core.Dtos.Ticket;
 using backend.Core.Dtos.TicketAttachment;
 using backend.Core.Dtos.TicketComment;
@@ -51,7 +52,10 @@ namespace backend.Core.AutoMapperConfig
                 .ForMember(dest => dest.DateCreated, opt => opt.MapFrom(src => src.Notification.DateCreated))
                 .ForMember(dest => dest.EmployeeName, opt => opt.MapFrom(src => src.ToEmployee.Name));
 
-            
+            //ProjectMember
+            CreateMap<ProjectMemberCreateDto,ProjectMember>();
+            CreateMap<ProjectMember, ProjectMemberGetDto>();
+
         }
     }
 }

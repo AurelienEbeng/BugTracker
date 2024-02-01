@@ -388,7 +388,7 @@ namespace backend.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_TicketHistories_EmployeeId",
                 table: "TicketHistories",
-                column: "EmployeeId");
+                column: "MembersId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TicketHistories_TicketId",
