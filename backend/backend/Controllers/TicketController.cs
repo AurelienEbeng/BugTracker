@@ -78,14 +78,29 @@ namespace backend.Controllers
         public async Task<IActionResult> Update(int ticketId, string property, string newValue)
         {
             var ticket = _context.Tickets.Where(ticket => ticket.Id == ticketId).First();
+            property = property.ToUpper();
+            newValue = newValue.ToUpper();
+
+            if (ticket.Status.ToString() == newValue)
+            {
+                return Ok($"Ticket status is already {newValue}");
+            }
+            else if (ticket.Priority.ToString() == newValue)
+            {
+                return Ok($"Ticket priority is already {newValue}");
+            }
+
+
+
             var ticketHistory = new TicketHistory();
             ticketHistory.Property = property;
             ticketHistory.NewValue= newValue;
             ticketHistory.EmployeeId = EmployeeId.Id;
             ticketHistory.TicketId = ticketId;
 
-            property=property.ToUpper();
-            newValue=newValue.ToUpper();
+            
+
+           
 
             if (property == "STATUS")
             {
@@ -93,6 +108,7 @@ namespace backend.Controllers
                 {
                     ticketHistory.OldValue = ticket.Status.ToString();
                     ticket.Status = TicketStatus.OPEN;
+                    
                 }
                 else if(newValue=="CLOSE")
                 {
@@ -100,7 +116,7 @@ namespace backend.Controllers
                     ticket.Status = TicketStatus.CLOSE;
                 }
 
-                
+               
             }
             else if (property == "PRIORITY")
             {
@@ -123,10 +139,19 @@ namespace backend.Controllers
 
 
 
-
+            
+            string notificationMessage = $"Ticket {property} updated from {ticketHistory.OldValue} to {newValue}";
+            NotificationController c = new NotificationController(_context, _mapper);
+            await c.CreateNotificationAndAddToAllMembersOfOneProject(notificationMessage);
 
             await _context.TicketHistories.AddAsync(ticketHistory);
             _context.SaveChanges();
+            /*
+            notificationMessage = null;
+            c = null;
+            ticketHistory = null;
+            ticket = null;
+            property = null; newValue = null; */
             return Ok("Ticket Updated successfully");
 
         }
