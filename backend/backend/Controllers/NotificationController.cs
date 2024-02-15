@@ -23,60 +23,29 @@ namespace backend.Controllers
             _mapper = mapper;
         }
 
-        ////CRUD
-        ////Create
-        //[HttpPost]
-        //[Route("Create")]
-        //public async Task<IActionResult> CreateNotification([FromBody] NotificationCreateDto dto)
-        //{
-        //    var newNotification = _mapper.Map<Notification>(dto);
-        //    await _context.Notification.AddAsync(newNotification);
-        //    await _context.SaveChangesAsync();
-
-        //    var notification = _context.Notification.Where(
-        //        notification => notification.Message == newNotification.Message &&
-        //        notification.DateCreated == newNotification.DateCreated).FirstOrDefault();
-
-        //    var projectMembers = _context.ProjectsMembers.Where(
-        //        projectMember => projectMember.ProjectsId == 1); //All notifications will only concern members of project 1
-
-        //    foreach(var projectMember in projectMembers)
-        //    {
-        //        var newNotificationEmployee = new NotificationsEmployees();
-        //        newNotificationEmployee.NotificationId = notification.Id;
-        //        newNotificationEmployee.ToEmployeeId = projectMember.MembersId;
-        //        await _context.NotificationsEmployees.AddAsync(newNotificationEmployee);
-
-
-        //    }
-
-        //    await _context.SaveChangesAsync();
-        //    return Ok("Success");
-        //}
-
-
-
-
+      
 
 
         //CRUD
         //Create
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> CreateNotificationAndAddToAllMembersOfOneProject(string message)
+        public async Task<IActionResult> CreateNotificationAndAddToAllMembersOfOneProject(string message, int projectId)
         {
             var newNotification = new Notification();
             newNotification.Message = message;
+            newNotification.DateCreated = DateTime.UtcNow;
 
             await _context.Notification.AddAsync(newNotification);
             await _context.SaveChangesAsync();
 
+            //newNotification is not created because of date
             var notification = _context.Notification.Where(
                 notification => notification.Message == newNotification.Message &&
                 notification.DateCreated == newNotification.DateCreated).FirstOrDefault();
 
             var projectMembers = _context.ProjectsMembers.Where(
-                projectMember => projectMember.ProjectsId == 1); //All notifications will only concern members of project 1
+                projectMember => projectMember.ProjectsId == projectId); //All notifications will only concern members of project 1
 
             foreach (var projectMember in projectMembers)
             {
@@ -91,13 +60,6 @@ namespace backend.Controllers
             await _context.SaveChangesAsync();
             return Ok("Success");
         }
-
-
-
-
-
-
-
 
 
 

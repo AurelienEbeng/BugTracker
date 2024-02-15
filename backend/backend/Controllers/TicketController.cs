@@ -140,10 +140,10 @@ namespace backend.Controllers
 
 
             
-            string notificationMessage = $"Ticket {property} updated from {ticketHistory.OldValue} to {newValue}";
+            string notificationMessage = $"Ticket: {ticket.Title} {property} updated from {ticketHistory.OldValue} to {newValue}";
             NotificationController c = new NotificationController(_context, _mapper);
-            await c.CreateNotificationAndAddToAllMembersOfOneProject(notificationMessage);
-
+            await c.CreateNotificationAndAddToAllMembersOfOneProject(notificationMessage,ticket.ProjectId);
+            
             await _context.TicketHistories.AddAsync(ticketHistory);
             _context.SaveChanges();
             /*
