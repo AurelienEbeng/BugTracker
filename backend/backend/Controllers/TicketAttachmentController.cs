@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
+using backend.Core.DataTransfer;
 using backend.Core.Dtos.Project;
 using backend.Core.Dtos.TicketAttachment;
 using backend.Core.Entities;
@@ -50,8 +51,21 @@ namespace backend.Controllers
             var newTicketAttachment = _mapper.Map<TicketAttachment>(dto);
             newTicketAttachment.fileUrl = fileUrl;
             newTicketAttachment.DateUploaded = DateTime.Now;
+            newTicketAttachment.UploaderId = EmployeeId.Id;
             await _context.TicketAttachments.AddAsync(newTicketAttachment);
             await _context.SaveChangesAsync();
+
+
+
+            var ticket = _context.Tickets.Where(ticket => ticket.Id == newTicketAttachment.TicketId).First();
+
+            string notificationMessage = $"A new attachment has been added to Ticket: {ticket.Title}";
+            NotificationController c = new NotificationController(_context, _mapper);
+            await c.CreateNotificationAndAddToAllMembersOfOneProject(notificationMessage, ticket.ProjectId);
+
+
+
+
             return Ok("Ticket Attachment Created successfully");
         }
 
