@@ -34,12 +34,12 @@ namespace backend.Controllers
         {
             var newNotification = new Notification();
             newNotification.Message = message;
-            newNotification.DateCreated = DateTime.UtcNow;
+            newNotification.DateCreated = DateTime.Now;
 
             await _context.Notification.AddAsync(newNotification);
             await _context.SaveChangesAsync();
 
-            //newNotification is not created because of date
+            
             var notification = _context.Notification.Where(
                 notification => notification.Message == newNotification.Message &&
                 notification.DateCreated == newNotification.DateCreated).FirstOrDefault();
