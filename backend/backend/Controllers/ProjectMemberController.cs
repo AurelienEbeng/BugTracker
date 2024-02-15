@@ -26,8 +26,8 @@ namespace backend.Controllers
 
         //Create
         [HttpPost]
-        [Route("Create")]
-        public async Task<IActionResult> CreateProjectMember([FromBody] ProjectMemberCreateDto dto)
+        [Route("AssignEmployeesToProject")]
+        public async Task<IActionResult> AssignEmployeesToProject([FromBody] ProjectMemberCreateDto dto)
         {
             //var newProjectMember = _mapper.Map<ProjectsMembers>(dto);
             
