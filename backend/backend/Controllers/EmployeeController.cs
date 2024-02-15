@@ -64,25 +64,8 @@ namespace backend.Controllers
             return Ok(await _context.Users.ToListAsync());
         }
 
-        //[HttpGet]
-        //[Route("GetCurrentLoggedInEmployeeId")]
-        //public async Task<ActionResult> GetCurrentLoggedInEmployeeId()
-        //{
 
-        //    return Ok(_employeeManager.GetUserId(HttpContext.User));
-        //}
-
-        [HttpGet]
-        [Route("GetCurrentLoggedInEmployeeId")]
-        public async Task<ActionResult> GetCurrentLoggedInEmployeeId()
-        {
-            var id = _employeeManager.GetUserId(HttpContext.User);
-            EmployeeId.Id = id.ToString();
-            return Ok(EmployeeId.Id);
-        }
-
-
-
+        
 
         //Update
         [HttpGet]

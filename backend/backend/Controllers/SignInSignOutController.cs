@@ -14,13 +14,14 @@ namespace backend.Controllers
     public class SignInSignOutController : ControllerBase
     {
         private readonly SignInManager<Employee> _signInManager;
+        private readonly UserManager<Employee> _employeeManager;
         public SignInSignOutController(SignInManager<Employee>
             signInManager, UserManager<Employee> userManager,
             ApplicationDBContext context, RoleManager<IdentityRole> roleManager,
             IMapper mapper)
         {
             _signInManager = signInManager;
-            
+            _employeeManager = userManager;
         }
 
 
@@ -33,7 +34,9 @@ namespace backend.Controllers
                 submittedInfo.RememberMe, false);
             if (result.Succeeded)
             {
-                return Ok("Success");
+                var id = _employeeManager.GetUserId(HttpContext.User);
+                EmployeeId.Id = id.ToString();
+                return Ok($"Success");
             }
             return Ok("Unsuccess");
         }

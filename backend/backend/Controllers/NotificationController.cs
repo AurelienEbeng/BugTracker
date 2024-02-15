@@ -61,6 +61,8 @@ namespace backend.Controllers
 
         //CRUD
         //Create
+        [HttpPost]
+        [Route("Create")]
         public async Task<IActionResult> CreateNotificationAndAddToAllMembersOfOneProject(string message)
         {
             var newNotification = new Notification();
