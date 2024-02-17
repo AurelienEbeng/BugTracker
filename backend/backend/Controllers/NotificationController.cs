@@ -4,6 +4,7 @@ using backend.Core.Dtos.Notification;
 using backend.Core.Dtos.Ticket;
 using backend.Core.Dtos.TicketComment;
 using backend.Core.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,7 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin,Developer,QualityAssurance")]
     public class NotificationController : ControllerBase
     {
         public ApplicationDBContext _context { get; }

@@ -1,9 +1,8 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
-using backend.Core.Dtos.Project;
 using backend.Core.Dtos.ProjectMember;
 using backend.Core.Entities;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +10,7 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Admin")]
     public class ProjectMemberController : ControllerBase
     {
         public ApplicationDBContext _context { get; }
@@ -45,5 +45,10 @@ namespace backend.Controllers
             var convertedProjectMembers = _mapper.Map<IEnumerable<ProjectMemberGetDto>>(projectMembers);
             return Ok(convertedProjectMembers);
         }
+
+        //Update
+
+        //Delete
+
     }
 }

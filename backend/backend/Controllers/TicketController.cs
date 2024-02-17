@@ -15,7 +15,7 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Developer,QualityAssurance")]
     public class TicketController : ControllerBase
     {
         private ApplicationDBContext _context { get; }
@@ -146,12 +146,7 @@ namespace backend.Controllers
             
             await _context.TicketHistories.AddAsync(ticketHistory);
             _context.SaveChanges();
-            /*
-            notificationMessage = null;
-            c = null;
-            ticketHistory = null;
-            ticket = null;
-            property = null; newValue = null; */
+            
             return Ok("Ticket Updated successfully");
 
         }

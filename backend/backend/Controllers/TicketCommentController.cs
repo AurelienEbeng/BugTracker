@@ -12,7 +12,7 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Developer,QualityAssurance")]
     public class TicketCommentController : ControllerBase
     {
         private ApplicationDBContext _context { get; }
