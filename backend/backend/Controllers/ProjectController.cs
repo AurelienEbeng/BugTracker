@@ -49,6 +49,17 @@ namespace backend.Controllers
 
 
         //Update
+        [HttpPut]
+        [Route("Update")]
+        public async Task<IActionResult> ChangeProjectManager(int projectId, string newManagerId) {
+            var project = _context.Projects.Where(p => p.Id == projectId).FirstOrDefault();
+
+            project.ManagerId = newManagerId;
+
+            await _context.SaveChangesAsync();
+
+            return Ok("Project Manager Changed successfully");
+        }
         //Delete
     }
 }
