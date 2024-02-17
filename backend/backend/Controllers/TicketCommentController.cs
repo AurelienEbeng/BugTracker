@@ -1,14 +1,12 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
 using backend.Core.DataTransfer;
-using backend.Core.Dtos.Project;
 using backend.Core.Dtos.TicketComment;
 using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Net.Sockets;
+
 
 namespace backend.Controllers
 {
@@ -74,6 +72,17 @@ namespace backend.Controllers
 
 
         //Update
+
         //Delete
+        [HttpDelete]
+        [Route("Delete/{commentId}")]
+        public async Task<IActionResult> DeleteComment(int commentId)
+        {
+            
+            await _context.TicketComments.Where(c => c.Id == commentId).ExecuteDeleteAsync();
+            return Ok("Deleted");
+            
+        }
+
     }
 }

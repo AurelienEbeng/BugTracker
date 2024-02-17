@@ -29,12 +29,7 @@ namespace backend.Controllers
         [Route("AssignEmployeesToProject")]
         public async Task<IActionResult> AssignEmployeesToProject([FromBody] ProjectMemberCreateDto dto)
         {
-            //var newProjectMember = _mapper.Map<ProjectsMembers>(dto);
-            
-
             var newProjectMember = new ProjectMember() { MembersId= dto.MembersId, ProjectsId = dto.ProjectsId} ;
-            //newProjectMember.ProjectID = dto.ProjectsId;
-            //newProjectMember.MembersId = dto.MembersId;
             await _context.ProjectsMembers.AddAsync(newProjectMember);
             await _context.SaveChangesAsync();
             return Ok("Project Member added successfully");

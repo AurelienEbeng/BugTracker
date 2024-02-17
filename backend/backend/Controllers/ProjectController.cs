@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Sockets;
 
 namespace backend.Controllers
 {
@@ -56,7 +57,6 @@ namespace backend.Controllers
             var project = _context.Projects.Where(p => p.Id == projectId).FirstOrDefault();
 
             project.ManagerId = newManagerId;
-
             await _context.SaveChangesAsync();
 
             return Ok("Project Manager Changed successfully");
