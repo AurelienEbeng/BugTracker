@@ -32,6 +32,7 @@ namespace backend.Controllers
         public async Task<IActionResult> CreateProject([FromBody] ProjectCreateDto dto)
         {
             var newProject = _mapper.Map<Project>(dto);
+            newProject.DateCreated = DateTime.Now;
             await _context.Projects.AddAsync(newProject);
             await _context.SaveChangesAsync();
             return Ok("Project Created successfully");
