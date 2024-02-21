@@ -6,6 +6,7 @@ using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Sockets;
 
 namespace backend.Controllers
 {
@@ -33,19 +34,22 @@ namespace backend.Controllers
             var project = _context.Projects.Where(p => p.Id == dto.ProjectsId).First();
             if(project.ManagerId == EmployeeId.Id || "bb1c27a0-38fb-4594-abcb-bd8620a03306"==EmployeeId.Id)
             {
+                //Only the admin or the project manager can add an employee to a project
+                var newProjectMember = new ProjectMember() { MembersId = dto.MembersId, ProjectsId = dto.ProjectsId };
 
+                string notificationMessage = $"Another employee has been added to project {project.Name}";
+                NotificationController c = new NotificationController(_context, _mapper);
+                await c.CreateNotificationAndAddToAllMembersOfOneProject(notificationMessage, project.Id);
 
-                return Ok("Admin or project manager");
+                await _context.ProjectsMembers.AddAsync(newProjectMember);
+                await _context.SaveChangesAsync();
+                return Ok("Project Member added successfully");
             }
 
-            await _context.SaveChangesAsync();
-            return Ok("");
+            return Ok("You are not an admin or a project manager");
 
 
-            //var newProjectMember = new ProjectMember() { MembersId= dto.MembersId, ProjectsId = dto.ProjectsId} ;
-            //await _context.ProjectsMembers.AddAsync(newProjectMember);
-            //await _context.SaveChangesAsync();
-            //return Ok("Project Member added successfully");
+            
         }
 
 
@@ -64,6 +68,16 @@ namespace backend.Controllers
         //Update
 
         //Delete
+        [HttpDelete]
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(int projectId, string employeeId)
+        {
+
+            await _context.ProjectsMembers.Where(p => p.ProjectsId== projectId && p.MembersId == employeeId).ExecuteDeleteAsync();
+            return Ok("Deleted");
+
+        }
+
 
     }
 }
