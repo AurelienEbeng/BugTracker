@@ -23,6 +23,7 @@ namespace backend.Core.Context
         public DbSet<NotificationsEmployees> NotificationsEmployees { get; set; }
         public DbSet<Notification> Notification { get; set; }
         public DbSet<ProjectMember> ProjectsMembers { get; set; }
+        
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
