@@ -2,6 +2,7 @@
 using backend.Core.Context;
 using backend.Core.DataTransfer;
 using backend.Core.Entities;
+using backend.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +16,16 @@ namespace backend.Controllers
     {
         private readonly SignInManager<Employee> _signInManager;
         private readonly UserManager<Employee> _employeeManager;
+        private readonly IAuthService _authService;
         public SignInSignOutController(SignInManager<Employee>
             signInManager, UserManager<Employee> userManager,
             ApplicationDBContext context, RoleManager<IdentityRole> roleManager,
+            IAuthService authService, 
             IMapper mapper)
         {
             _signInManager = signInManager;
             _employeeManager = userManager;
+            _authService = authService;
         }
 
 
@@ -36,7 +40,12 @@ namespace backend.Controllers
             {
                 var id = _employeeManager.GetUserId(HttpContext.User);
                 EmployeeId.Id = id.ToString();
-                return Ok($"Success");
+
+                var tokenString = _authService.GenerateTokenString(submittedInfo);
+                return Ok($"{tokenString}");
+
+                //return Ok($"Success");
+
             }
             return Ok("Unsuccess");
         }
