@@ -1,4 +1,4 @@
 .vs
- backend/.vs
- backend/backend/obj
+ 
+backend/obj/
  backend/bin
