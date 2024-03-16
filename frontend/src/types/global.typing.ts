@@ -109,3 +109,9 @@ export interface ICreateTicketHistory {
   ticketId: string;
   employeeId: string;
 }
+
+export interface ISignIn{
+  username: string;
+  password: string;
+  rememberMe: boolean;
+}

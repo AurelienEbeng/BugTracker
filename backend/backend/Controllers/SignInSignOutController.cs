@@ -27,7 +27,7 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> LoginAsync(Login submittedInfo)
+        public async Task<IActionResult> LoginAsync([FromBody] Login submittedInfo)
         {
             var result = await _signInManager.PasswordSignInAsync(
                 submittedInfo.Username!, submittedInfo.Password!,

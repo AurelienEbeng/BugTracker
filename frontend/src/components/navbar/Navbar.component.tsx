@@ -10,6 +10,7 @@ const links = [
   { href: "/employees", label: "Employees" },
   { href: "/projects", label: "Projects" },
   { href: "/roles", label: "Roles" },
+  { href: "/signIn", label: "Sign In" },
 ];
 const Navbar = () => {
   const [open, setOpen] = useState<boolean>(false);

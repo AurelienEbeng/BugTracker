@@ -13,9 +13,8 @@ const Projects = lazy(() => import("./pages/projects/Projects.page"));
 const AddProjects = lazy(() => import("./pages/projects/AddProjects"));
 const DetailProjects = lazy(() => import("./pages/projects/DetailProjects"));
 const DetailTicket = lazy(() => import("./pages/tickets/DetailTicket"));
-const AddTicketAttachment = lazy(
-  () => import("./pages/tickets/AddTicketAttachment.page")
-);
+const AddTicketAttachment = lazy(() => import("./pages/tickets/AddTicketAttachment.page"));
+const SignIn = lazy(() => import("./pages/signInSignOut/signIn.page"));
 
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -51,6 +50,7 @@ const App = () => {
                 />
               </Route> */}
             </Route>
+            <Route path="/signIn" element={<SignIn />} />
           </Routes>
         </Suspense>
       </div>

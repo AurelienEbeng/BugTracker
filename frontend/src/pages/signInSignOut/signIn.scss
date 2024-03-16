@@ -1,0 +1,13 @@
+@import "../../mixins";
+
+
+.signIn{
+    width: 500px;
+    max-width: 100%;
+    @include d-flex(column, flex-start,center);
+    gap: 1rem;
+    *{
+        color: var(--text-color1);
+    }
+}
+
