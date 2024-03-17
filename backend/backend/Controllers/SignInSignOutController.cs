@@ -29,9 +29,11 @@ namespace backend.Controllers
         }
 
 
+
+
         [HttpPost]
         [Route("Login")]
-        public async Task<IActionResult> LoginAsync([FromBody] Login submittedInfo)
+        public async Task<string> LoginAsync([FromBody] Login submittedInfo)
         {
             var result = await _signInManager.PasswordSignInAsync(
                 submittedInfo.Username!, submittedInfo.Password!,
@@ -42,12 +44,11 @@ namespace backend.Controllers
                 EmployeeId.Id = id.ToString();
 
                 var tokenString = _authService.GenerateTokenString(submittedInfo);
-                return Ok($"{tokenString}");
+                return $"{tokenString}";
 
-                //return Ok($"Success");
 
             }
-            return Ok("Unsuccess");
+            return "Unsuccess";
         }
 
         [HttpGet]
