@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import "./projects.scss";
-import {
-  ICreateProjectDto,
-  IEmployee,
-} from "../../types/global.typing";
+import { ICreateProjectDto, IEmployee } from "../../types/global.typing";
 import {
   Button,
   TextField,
@@ -25,8 +22,16 @@ const AddProjects = () => {
   const redirect = useNavigate();
 
   useEffect(() => {
+    let username = sessionStorage.getItem("username");
+    if (username === "" || username === null) {
+      redirect("/signIn");
+    }
+    let jwtToken = sessionStorage.getItem("jwtToken");
+
     httpModule
-      .get<IEmployee[]>("/Employee/Get")
+      .get<IEmployee[]>("/Employee/Get", {
+        headers: { "Authorization": "Bearer " + jwtToken },
+      })
       .then((response) => {
         setEmployees(response.data);
       })
@@ -41,8 +46,11 @@ const AddProjects = () => {
       alert("Fill  all fields");
       return;
     }
+    let jwtToken = sessionStorage.getItem("jwtToken");
     httpModule
-      .post("Project/Create", project)
+      .post("Project/Create", project, {
+        headers: { Authorization: "Bearer " + jwtToken },
+      })
       .then((response) => redirect("/projects"))
       .catch((error) => console.log(error));
   };

@@ -30,8 +30,15 @@ const AddTicketAttachment = () => {
   const redirect = useNavigate();
 
   useEffect(() => {
+    let username = sessionStorage.getItem("username");
+    if (username === "" || username === null) {
+      redirect("/signIn");
+    }
+    let jwtToken = sessionStorage.getItem("jwtToken");
     httpModule
-      .get<ITicket[]>("/Ticket/Get")
+      .get<ITicket[]>("/Ticket/Get", {
+        headers: { Authorization: "Bearer " + jwtToken },
+      })
       .then((response) => {
         setTickets(response.data);
       })
@@ -41,7 +48,9 @@ const AddTicketAttachment = () => {
       });
 
     httpModule
-      .get<IEmployee[]>("/Employee/Get")
+      .get<IEmployee[]>("/Employee/Get", {
+        headers: { Authorization: "Bearer " + jwtToken },
+      })
       .then((response) => {
         setEmployees(response.data);
       })
@@ -67,9 +76,12 @@ const AddTicketAttachment = () => {
     newAttachmentFormData.append("TicketId", ticketAttachment.ticketId);
     newAttachmentFormData.append("UploaderId", ticketAttachment.uploaderId);
     newAttachmentFormData.append("pdfFile", pdfFile);
+    let jwtToken = sessionStorage.getItem("jwtToken");
 
     httpModule
-      .post("TicketAttachment/Create", newAttachmentFormData)
+      .post("TicketAttachment/Create", newAttachmentFormData, {
+        headers: { Authorization: "Bearer " + jwtToken },
+      })
       .then((response) => redirect("/projects"))
       .catch((error) => console.log(error));
   };

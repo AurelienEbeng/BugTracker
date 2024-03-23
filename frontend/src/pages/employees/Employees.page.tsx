@@ -14,8 +14,17 @@ const Employees = () => {
 
   useEffect(() => {
     setLoading(true);
+    let username = sessionStorage.getItem("username");
+    if (username === "" || username === null) {
+      redirect("/signIn");
+    }
+
+    let jwtToken = sessionStorage.getItem("jwtToken");
+
     httpModule
-      .get<IEmployee[]>("/Employee/Get")
+      .get<IEmployee[]>("/Employee/GetEmployees", {
+        headers: { "Authorization": "Bearer " + jwtToken },
+      })
       .then((response) => {
         setEmployees(response.data);
         setLoading(false);

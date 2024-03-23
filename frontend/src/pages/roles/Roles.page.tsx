@@ -15,8 +15,16 @@ const Roles = () => {
 
   useEffect(() => {
     setLoading(true);
+    let username = sessionStorage.getItem("username");
+    if (username === "" || username === null) {
+      redirect("/signIn");
+    }
+
+    let jwtToken = sessionStorage.getItem("jwtToken");
     httpModule
-      .get<IRole[]>("/Role/Get")
+      .get<IRole[]>("/Role/GetRoles", {
+        headers: { "Authorization": "Bearer " + jwtToken },
+      })
       .then((response) => {
         setRoles(response.data);
         setLoading(false);
@@ -28,7 +36,6 @@ const Roles = () => {
       });
   }, []);
 
-  //console.log(roles);
   return (
     <div className="content roles">
       <div className="heading">

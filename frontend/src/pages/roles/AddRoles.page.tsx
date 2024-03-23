@@ -1,21 +1,30 @@
-import { useState } from "react";
-import "./roles.scss"
+import { useEffect, useState } from "react";
+import "./roles.scss";
 import { ICreateRoleDto } from "../../types/global.typing";
 import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import httpModule from "../../helpers/http.module";
 
 const AddRoles = () => {
-  const [role, setRole] = useState<ICreateRoleDto>({ name: "" }); //name is default value
+  const [role, setRole] = useState<ICreateRoleDto>({ name: "" });
   const redirect = useNavigate();
 
+  useEffect(() => {
+    let username = sessionStorage.getItem("username");
+    if (username === "" || username === null) {
+      redirect("/signIn");
+    }
+  }, []);
   const handleClickSaveBtn = () => {
     if (role.name === "") {
       alert("Fill  all fields");
       return;
     }
+    let jwtToken = sessionStorage.getItem("jwtToken");
     httpModule
-      .post("Role/Create", role)
+      .post("Role/Create", role, {
+        headers: { "Authorization": "Bearer " + jwtToken },
+      })
       .then((response) => redirect("/roles"))
       .catch((error) => console.log(error));
   };

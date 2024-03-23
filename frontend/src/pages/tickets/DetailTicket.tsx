@@ -25,12 +25,19 @@ const DetailTicket = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const location = useLocation();
   const { ticketId } = location.state;
-  const redirect= useNavigate();
+  const redirect = useNavigate();
 
   useEffect(() => {
     setLoading(true);
+    let username = sessionStorage.getItem("username");
+    if (username === "" || username === null) {
+      redirect("/signIn");
+    }
+    let jwtToken = sessionStorage.getItem("jwtToken");
     httpModule
-      .get<ITicket[]>(`Ticket/Get/${ticketId}`)
+      .get<ITicket[]>(`Ticket/Get/${ticketId}`, {
+        headers: { Authorization: "Bearer " + jwtToken },
+      })
       .then((response) => {
         setTickets(response.data);
         setLoading(false);
@@ -42,7 +49,9 @@ const DetailTicket = () => {
       });
 
     httpModule
-      .get<ITicketAttachment[]>(`TicketAttachment/Get/${ticketId}`)
+      .get<ITicketAttachment[]>(`TicketAttachment/Get/${ticketId}`, {
+        headers: { Authorization: "Bearer " + jwtToken },
+      })
       .then((response) => {
         setTicketAttachments(response.data);
         setLoading(false);
@@ -54,7 +63,9 @@ const DetailTicket = () => {
       });
 
     httpModule
-      .get<ITicketComment[]>(`TicketComment/Get/${ticketId}`)
+      .get<ITicketComment[]>(`TicketComment/Get/${ticketId}`, {
+        headers: { Authorization: "Bearer " + jwtToken },
+      })
       .then((response) => {
         setTicketComments(response.data);
         setLoading(false);
@@ -66,7 +77,9 @@ const DetailTicket = () => {
       });
 
     httpModule
-      .get<ITicketHistory[]>(`TicketHistory/Get/${ticketId}`)
+      .get<ITicketHistory[]>(`TicketHistory/Get/${ticketId}`, {
+        headers: { Authorization: "Bearer " + jwtToken },
+      })
       .then((response) => {
         setTicketHistories(response.data);
         setLoading(false);
@@ -94,12 +107,12 @@ const DetailTicket = () => {
       <div className="heading">
         <div>Ticket Attachment</div>
       </div>
-      <Button variant="outlined" onClick={() => 
-        redirect("/projects/addAttachment")
-        
-        }>
-          <Add />
-        </Button>
+      <Button
+        variant="outlined"
+        onClick={() => redirect("/projects/addAttachment")}
+      >
+        <Add />
+      </Button>
 
       {loading ? (
         <CircularProgress size={100} />

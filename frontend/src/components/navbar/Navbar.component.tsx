@@ -11,6 +11,7 @@ const links = [
   { href: "/projects", label: "Projects" },
   { href: "/roles", label: "Roles" },
   { href: "/signIn", label: "Sign In" },
+  { href: "/logout", label: "Logout" },
 ];
 const Navbar = () => {
   const [open, setOpen] = useState<boolean>(false);

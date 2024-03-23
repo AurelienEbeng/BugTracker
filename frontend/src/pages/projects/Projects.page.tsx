@@ -15,15 +15,17 @@ const Projects = () => {
   useEffect(() => {
     setLoading(true);
 
-    let username = sessionStorage.getItem('username');
-    if(username ===''|| username ===null){
-      redirect('/signIn');
+    let username = sessionStorage.getItem("username");
+    if (username === "" || username === null) {
+      redirect("/signIn");
     }
 
-    let jwtToken = sessionStorage.getItem('jwtToken');
+    let jwtToken = sessionStorage.getItem("jwtToken");
 
     httpModule
-      .get<IProject[]>("/Project/Get",{headers: {"Authorization":"bearer"+jwtToken}})
+      .get<IProject[]>("/Project/Get", {
+        headers: { "Authorization": "Bearer " + jwtToken },
+      })
       .then((response) => {
         setProjects(response.data);
         setLoading(false);

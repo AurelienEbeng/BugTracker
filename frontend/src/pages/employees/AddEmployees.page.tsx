@@ -23,8 +23,15 @@ const AddEmployee = () => {
   const redirect = useNavigate();
 
   useEffect(() => {
+    let username = sessionStorage.getItem("username");
+    if (username === "" || username === null) {
+      redirect("/signIn");
+    }
+    let jwtToken = sessionStorage.getItem("jwtToken");
     httpModule
-      .get<IRole[]>("/Role/Get")
+      .get<IRole[]>("/Role/Get", {
+        headers: { "Authorization": "Bearer " + jwtToken },
+      })
       .then((response) => {
         setRoles(response.data);
       })
@@ -39,8 +46,11 @@ const AddEmployee = () => {
       alert("Fill  all fields");
       return;
     }
+    let jwtToken = sessionStorage.getItem("jwtToken");
     httpModule
-      .post("Employee/Create", employee)
+      .post("Employee/Create", employee, {
+        headers: { Authorization: "Bearer " + jwtToken },
+      })
       .then((response) => redirect("/employees"))
       .catch((error) => console.log(error));
   };
