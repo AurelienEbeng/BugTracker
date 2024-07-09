@@ -25,6 +25,7 @@ const AddProjects = () => {
     let username = sessionStorage.getItem("username");
     if (username === "" || username === null) {
       redirect("/signIn");
+      return;
     }
     let jwtToken = sessionStorage.getItem("jwtToken");
 

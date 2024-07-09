@@ -13,6 +13,7 @@ const AddRoles = () => {
     let username = sessionStorage.getItem("username");
     if (username === "" || username === null) {
       redirect("/signIn");
+      return;
     }
   }, []);
   const handleClickSaveBtn = () => {
