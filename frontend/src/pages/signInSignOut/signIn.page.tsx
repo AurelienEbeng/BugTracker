@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./signIn.scss";
 import { ISignIn } from "../../types/global.typing";
 import { Button, TextField } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import httpModule from "../../helpers/http.module";
 
 
@@ -62,6 +62,9 @@ const SignIn = () => {
             Sign In
           </Button>
         </div>
+        <p>Forgot your <Link to ="/" style={{textDecoration: "underline"}}>password?</Link></p>
+        <p>Create an account? <Link to ="/" style={{textDecoration: "underline"}}>Sign Up</Link></p>
+        <p>Sign In as <Link to ="/" style={{textDecoration: "underline"}}>Demo User</Link></p>
       </div>
     </div>
   );
