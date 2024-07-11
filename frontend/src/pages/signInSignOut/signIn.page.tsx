@@ -5,6 +5,7 @@ import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import httpModule from "../../helpers/http.module";
 
+
 const SignIn = () => {
   const [signIn, setSignIn] = useState<ISignIn>({
     username: "",
@@ -49,6 +50,7 @@ const SignIn = () => {
           label="Password"
           variant="outlined"
           value={signIn.password}
+          type= "password"
           onChange={(e) => setSignIn({ ...signIn, password: e.target.value })}
         />
         <div className="btns">
