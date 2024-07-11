@@ -2,12 +2,14 @@
 
 
 .signIn{
-    width: 500px;
+    width: 300px;
     max-width: 100%;
     @include d-flex(column, flex-start,center);
     gap: 1rem;
     *{
         color: var(--text-color1);
     }
+    border: 1px solid black;
+    border-radius: 5%;
 }
 
