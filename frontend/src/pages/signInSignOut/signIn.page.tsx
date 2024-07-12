@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import "./signIn.scss";
 import { ISignIn } from "../../types/global.typing";
-import { Button, TextField } from "@mui/material";
+import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import httpModule from "../../helpers/http.module";
 
+import Input from "@mui/material/Input";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
 const SignIn = () => {
   const [signIn, setSignIn] = useState<ISignIn>({
@@ -12,6 +15,7 @@ const SignIn = () => {
     password: "",
     rememberMe: false,
   });
+  const [showPassword,setShowPassword] = useState<boolean>(false);
   const redirect = useNavigate();
 
   const handleClickSignInBtn = () => {
@@ -34,6 +38,30 @@ const SignIn = () => {
     sessionStorage.clear();
   }, []);
 
+  const handleClickShowPassword = () => {
+    setShowPassword(
+      (prevState: boolean) => { return !prevState}
+    )
+  };
+
+  const handleMouseDownPassword = (event: any) => {
+    event.preventDefault();
+  };
+
+  /* const handlePasswordChange = (prop: any) => (event: any) => {
+    setSignIn({
+      ...signIn,
+      [prop]: event.target.value,
+    });
+  }; */
+
+  const handlePasswordChange = (e:any) => {
+    setSignIn({
+      ...signIn,
+      password: e.target.value,
+    });
+  };
+
   return (
     <div className="content">
       <div className="signIn">
@@ -50,23 +78,57 @@ const SignIn = () => {
           label="Password"
           variant="outlined"
           value={signIn.password}
-          type= "password"
-          onChange={(e) => setSignIn({ ...signIn, password: e.target.value })}
+          type={
+            showPassword
+                ? "text"
+                : "password"
+        }
+          onChange={(e) => handlePasswordChange(e)}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
+
         <div className="btns">
           <Button
             variant="outlined"
             color="primary"
             onClick={handleClickSignInBtn}
+            fullWidth
           >
             Sign In
           </Button>
         </div>
         <div className="extra">
-          <p>Forgot your <Link to ="/" style={{textDecoration: "underline"}}>password?</Link></p>
-          <p>Create an account? <Link to ="/" style={{textDecoration: "underline"}}>Sign Up</Link></p>
-          <p>Sign In as <Link to ="/" style={{textDecoration: "underline"}}>Demo User</Link></p>
+          <p>
+            Forgot your{" "}
+            <Link to="/" style={{ textDecoration: "underline" }}>
+              password?
+            </Link>
+          </p>
+          <p>
+            Create an account?{" "}
+            <Link to="/" style={{ textDecoration: "underline" }}>
+              Sign Up
+            </Link>
+          </p>
+          <p>
+            Sign In as{" "}
+            <Link to="/" style={{ textDecoration: "underline" }}>
+              Demo User
+            </Link>
+          </p>
         </div>
+        
       </div>
     </div>
   );
