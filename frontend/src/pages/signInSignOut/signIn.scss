@@ -11,5 +11,16 @@
     }
     border: 1px solid black;
     border-radius: 5%;
+    padding-top: 40px;
+    padding-bottom:40px;
+
+    .extra{
+        @include d-flex(column, flex-start,center);
+        font-size: small;
+        p{
+            color: gray;
+        }
+        padding-top: 20px;
+    }
 }
 

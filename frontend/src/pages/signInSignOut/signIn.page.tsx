@@ -62,9 +62,11 @@ const SignIn = () => {
             Sign In
           </Button>
         </div>
-        <p>Forgot your <Link to ="/" style={{textDecoration: "underline"}}>password?</Link></p>
-        <p>Create an account? <Link to ="/" style={{textDecoration: "underline"}}>Sign Up</Link></p>
-        <p>Sign In as <Link to ="/" style={{textDecoration: "underline"}}>Demo User</Link></p>
+        <div className="extra">
+          <p>Forgot your <Link to ="/" style={{textDecoration: "underline"}}>password?</Link></p>
+          <p>Create an account? <Link to ="/" style={{textDecoration: "underline"}}>Sign Up</Link></p>
+          <p>Sign In as <Link to ="/" style={{textDecoration: "underline"}}>Demo User</Link></p>
+        </div>
       </div>
     </div>
   );
