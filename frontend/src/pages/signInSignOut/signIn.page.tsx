@@ -4,8 +4,6 @@ import { ISignIn } from "../../types/global.typing";
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import httpModule from "../../helpers/http.module";
-
-import Input from "@mui/material/Input";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 
@@ -15,7 +13,7 @@ const SignIn = () => {
     password: "",
     rememberMe: false,
   });
-  const [showPassword,setShowPassword] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const redirect = useNavigate();
 
   const handleClickSignInBtn = () => {
@@ -39,23 +37,18 @@ const SignIn = () => {
   }, []);
 
   const handleClickShowPassword = () => {
-    setShowPassword(
-      (prevState: boolean) => { return !prevState}
-    )
+    setShowPassword((prevState: boolean) => {
+      return !prevState;
+    });
   };
 
   const handleMouseDownPassword = (event: any) => {
     event.preventDefault();
   };
 
-  /* const handlePasswordChange = (prop: any) => (event: any) => {
-    setSignIn({
-      ...signIn,
-      [prop]: event.target.value,
-    });
-  }; */
+  
 
-  const handlePasswordChange = (e:any) => {
+  const handlePasswordChange = (e: any) => {
     setSignIn({
       ...signIn,
       password: e.target.value,
@@ -66,24 +59,25 @@ const SignIn = () => {
     <div className="content">
       <div className="signIn">
         <h2>Sign In</h2>
+        <div className="container">
         <TextField
           autoComplete="off"
           label="Username"
           variant="outlined"
           value={signIn.username}
           onChange={(e) => setSignIn({ ...signIn, username: e.target.value })}
+          fullWidth
+          
         />
+        </div>
+        <div className="container">
         <TextField
           autoComplete="off"
           label="Password"
           variant="outlined"
           value={signIn.password}
-          type={
-            showPassword
-                ? "text"
-                : "password"
-        }
-          onChange={(e) => handlePasswordChange(e)}
+          type={showPassword ? "text" : "password"}
+          onChange={(e) => setSignIn({ ...signIn, password: e.target.value })}
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -96,7 +90,9 @@ const SignIn = () => {
               </InputAdornment>
             ),
           }}
+          fullWidth
         />
+        </div>
 
         <div className="btns">
           <Button
@@ -129,6 +125,7 @@ const SignIn = () => {
           </p>
         </div>
         
+
       </div>
     </div>
   );
