@@ -10,6 +10,7 @@
     padding-top: 35px;
     padding-bottom:35px;
     
+    
     .row{
         @include d-flex(row, space-around,center);
         width: 100%;
@@ -23,5 +24,10 @@
 
     .extra{
         padding-top:10px;
+
+        a{
+            text-decoration: underline;
+            color: var(--text-color1);
+        }
     }
 }
