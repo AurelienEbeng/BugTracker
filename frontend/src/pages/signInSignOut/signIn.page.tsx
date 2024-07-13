@@ -50,46 +50,42 @@ const SignIn = () => {
     event.preventDefault();
   };
 
-  
-
-  
   return (
     <div className="content">
       <div className={signInBackground}>
         <h2>Sign In</h2>
         <div className="container">
-        <TextField
-          autoComplete="off"
-          label="Username"
-          variant="outlined"
-          value={signIn.username}
-          onChange={(e) => setSignIn({ ...signIn, username: e.target.value })}
-          fullWidth
-          
-        />
+          <TextField
+            autoComplete="off"
+            label="Username"
+            variant="outlined"
+            value={signIn.username}
+            onChange={(e) => setSignIn({ ...signIn, username: e.target.value })}
+            fullWidth
+          />
         </div>
         <div className="container">
-        <TextField
-          autoComplete="off"
-          label="Password"
-          variant="outlined"
-          value={signIn.password}
-          type={showPassword ? "text" : "password"}
-          onChange={(e) => setSignIn({ ...signIn, password: e.target.value })}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="end">
-                <IconButton
-                  onClick={handleClickShowPassword}
-                  onMouseDown={handleMouseDownPassword}
-                >
-                  {showPassword ? <Visibility /> : <VisibilityOff />}
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-          fullWidth
-        />
+          <TextField
+            autoComplete="off"
+            label="Password"
+            variant="outlined"
+            value={signIn.password}
+            type={showPassword ? "text" : "password"}
+            onChange={(e) => setSignIn({ ...signIn, password: e.target.value })}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                  >
+                    {showPassword ? <Visibility /> : <VisibilityOff />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
+            fullWidth
+          />
         </div>
 
         <div className="btns">
@@ -104,26 +100,15 @@ const SignIn = () => {
         </div>
         <div className="extra">
           <p>
-            Forgot your{" "}
-            <Link to="/" style={{ textDecoration: "underline" }}>
-              password?
-            </Link>
+            Forgot your <Link to="/">password?</Link>
           </p>
           <p>
-            Create an account?{" "}
-            <Link to="/" style={{ textDecoration: "underline" }}>
-              Sign Up
-            </Link>
+            Create an account? <Link to="/">Sign Up</Link>
           </p>
           <p>
-            Sign In as{" "}
-            <Link to="/demoUsersLogin" style={{ textDecoration: "underline" }}>
-              Demo User
-            </Link>
+            Sign In as <Link to="/demoUsersLogin">Demo User</Link>
           </p>
         </div>
-        
-
       </div>
     </div>
   );

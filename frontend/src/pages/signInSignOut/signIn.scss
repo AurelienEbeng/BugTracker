@@ -1,38 +1,38 @@
 @import "../../mixins";
 
+.signIn {
+  width: 300px;
+  max-width: 100%;
+  @include d-flex(column, flex-start, center);
+  gap: 1rem;
+  * {
+    color: var(--text-color1);
+  }
+  border: 1px solid black;
+  border-radius: 5%;
+  padding-top: 40px;
+  padding-bottom: 40px;
 
-.signIn{
-    width: 300px;
-    max-width: 100%;
-    @include d-flex(column, flex-start,center);
-    gap: 1rem;
-    *{
-        color: var(--text-color1);
-        
+  .extra {
+    @include d-flex(column, flex-start, center);
+    font-size: small;
+    p {
+      color: gray;
     }
-    border: 1px solid black;
-    border-radius: 5%;
-    padding-top: 40px;
-    padding-bottom:40px;
-
-    .extra{
-        @include d-flex(column, flex-start,center);
-        font-size: small;
-        p{
-            color: gray;
-        }
-        padding-top: 20px;
+    padding-top: 20px;
+    a {
+      text-decoration: underline;
     }
+  }
 
-    .btns,.container{
-        width: 100%;
-        padding-left: 15px;
-        padding-right: 15px;
-    }
+  .btns,
+  .container {
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 
-    &.dark {
-        background-color: rgb(56, 53, 53);
-      }
-    
+  &.dark {
+    background-color: rgb(56, 53, 53);
+  }
 }
-
