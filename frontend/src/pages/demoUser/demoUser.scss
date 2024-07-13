@@ -1,0 +1,27 @@
+@import "../../mixins";
+
+.demoUsers{
+    border: 1px solid black;
+    width: 400px;
+    max-width: 100%;
+    @include d-flex(column, center,center);
+    gap: 1rem;
+    border-radius: 5%;
+    padding-top: 35px;
+    padding-bottom:35px;
+    
+    .row{
+        @include d-flex(row, space-around,center);
+        width: 100%;
+        padding-left: 10px;
+        padding-right: 10px;
+
+        .demoUser{
+            @include d-flex(column, center,center);
+        }
+    }
+
+    .extra{
+        padding-top:10px;
+    }
+}
