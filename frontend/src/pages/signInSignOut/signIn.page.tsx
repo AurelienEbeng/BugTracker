@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./signIn.scss";
 import { ISignIn } from "../../types/global.typing";
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
@@ -6,6 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import httpModule from "../../helpers/http.module";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { ThemeContext } from "../../context/theme.context";
 
 const SignIn = () => {
   const [signIn, setSignIn] = useState<ISignIn>({
@@ -15,6 +16,9 @@ const SignIn = () => {
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const redirect = useNavigate();
+  const { darkMode } = useContext(ThemeContext);
+
+  const signInBackground = darkMode ? "signIn dark" : "signIn";
 
   const handleClickSignInBtn = () => {
     if (signIn.username === "" || signIn.password === "") {
@@ -48,16 +52,10 @@ const SignIn = () => {
 
   
 
-  const handlePasswordChange = (e: any) => {
-    setSignIn({
-      ...signIn,
-      password: e.target.value,
-    });
-  };
-
+  
   return (
     <div className="content">
-      <div className="signIn">
+      <div className={signInBackground}>
         <h2>Sign In</h2>
         <div className="container">
         <TextField
