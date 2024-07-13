@@ -18,6 +18,7 @@ const AddTicketAttachment = lazy(
 );
 const SignIn = lazy(() => import("./pages/signInSignOut/signIn.page"));
 const Logout = lazy(() => import("./pages/signInSignOut/logout.page"));
+const DemoUsersLogin = lazy(() => import("./pages/demoUser/demoUser.login.page"))
 
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -55,6 +56,7 @@ const App = () => {
             </Route>
             <Route path="/signIn" element={<SignIn />} />
             <Route path="/logout" element={<Logout />} />
+            <Route path="/demoUsersLogin" element = {<DemoUsersLogin />} />
           </Routes>
         </Suspense>
       </div>
