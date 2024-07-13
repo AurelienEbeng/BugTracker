@@ -117,7 +117,7 @@ const SignIn = () => {
           </p>
           <p>
             Sign In as{" "}
-            <Link to="/" style={{ textDecoration: "underline" }}>
+            <Link to="/demoUsersLogin" style={{ textDecoration: "underline" }}>
               Demo User
             </Link>
           </p>
