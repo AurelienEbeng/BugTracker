@@ -1,11 +1,15 @@
 import PersonIcon from "@mui/icons-material/Person";
 import "./demoUser.scss";
 import { Link } from "react-router-dom";
+import { ThemeContext } from "../../context/theme.context";
+import { useContext } from "react";
 
 const DemoUserLogin = () => {
+  const { darkMode } = useContext(ThemeContext);
+  const demoUserclass = darkMode ? "demoUsers dark" : "demoUsers";
   return (
     <div className="content">
-      <div className="demoUsers">
+      <div className={demoUserclass}>
         <h1>Demo Users Login</h1>
         <div className="row">
           <div className="demoUser">

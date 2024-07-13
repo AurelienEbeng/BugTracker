@@ -30,4 +30,7 @@
             color: var(--text-color1);
         }
     }
+    &.dark {
+        background-color: rgb(56, 53, 53);
+      }
 }
