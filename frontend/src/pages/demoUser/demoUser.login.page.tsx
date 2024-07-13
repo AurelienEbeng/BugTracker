@@ -9,7 +9,7 @@ const DemoUserLogin = () => {
         <h1>Demo Users Login</h1>
         <div className="row">
           <div className="demoUser">
-            <Link to ="/"><PersonIcon style={{ fontSize: "100px", color:"black" }} /></Link>
+            <Link to ="/"><PersonIcon color="secondary" style={{ fontSize: "100px"}} /></Link>
             <p>Admin</p>
           </div>
           <div className="demoUser">
