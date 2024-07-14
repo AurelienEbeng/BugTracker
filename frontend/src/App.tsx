@@ -1,7 +1,7 @@
-import { useContext, lazy, Suspense } from "react";
+import { useContext, lazy, Suspense, useEffect } from "react";
 import { ThemeContext } from "./context/theme.context";
 import Navbar from "./components/navbar/Navbar.component";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useNavigate } from "react-router-dom";
 import CustomLinearProgress from "./components/custom linear progress/CustomLinearProgress.component";
 
 const Home = lazy(() => import("./pages/home/Home.page"));
@@ -24,7 +24,15 @@ const App = () => {
   const { darkMode } = useContext(ThemeContext);
 
   const appStyles = darkMode ? "app dark" : "app";
+  const redirect = useNavigate();
 
+  useEffect(() => {
+    let username = sessionStorage.getItem("username");
+    if (username === "" || username === null) {
+      redirect("/signIn");
+      return;
+    }
+  },[])
   return (
     <div className={appStyles}>
       <Navbar />
