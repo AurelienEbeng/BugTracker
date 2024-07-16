@@ -1,12 +1,13 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext,  useState } from "react";
 import "./signIn.scss";
 import { ISignIn } from "../../types/global.typing";
 import { Button, IconButton, InputAdornment, TextField } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
-import httpModule from "../../helpers/http.module";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { ThemeContext } from "../../context/theme.context";
+import { useJwt } from "../../context/Jwt.context";
+
 
 const SignIn = () => {
   const [signIn, setSignIn] = useState<ISignIn>({
@@ -15,30 +16,23 @@ const SignIn = () => {
     rememberMe: false,
   });
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const redirect = useNavigate();
+  
   const { darkMode } = useContext(ThemeContext);
 
   const signInBackground = darkMode ? "signIn dark" : "signIn";
+  const jwt = useJwt()
+  const redirect = useNavigate()
 
   const handleClickSignInBtn = () => {
     if (signIn.username === "" || signIn.password === "") {
       alert("Fill  all fields");
       return;
     }
-    console.log(signIn);
-    httpModule
-      .post("SignInSignOut/Login", signIn)
-      .then((response) => {
-        sessionStorage.setItem("username", signIn.username);
-        sessionStorage.setItem("jwtToken", response.data);
-      })
-      .then(() => redirect("/projects"))
-      .catch((error) => console.log(error));
+    jwt.login(signIn.username,signIn.password); 
+    redirect("/projects")
   };
 
-  useEffect(() => {
-    sessionStorage.clear();
-  }, []);
+  
 
   const handleClickShowPassword = () => {
     setShowPassword((prevState: boolean) => {
@@ -112,6 +106,5 @@ const SignIn = () => {
       </div>
     </div>
   );
-};
-
+}; 
 export default SignIn;

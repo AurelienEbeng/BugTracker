@@ -1,8 +1,9 @@
-import { useContext, lazy, Suspense, useEffect } from "react";
+import { useContext, lazy, Suspense } from "react";
 import { ThemeContext } from "./context/theme.context";
 import Navbar from "./components/navbar/Navbar.component";
-import { Routes, Route, useNavigate } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import CustomLinearProgress from "./components/custom linear progress/CustomLinearProgress.component";
+import { useJwt } from "./context/Jwt.context";
 
 const Home = lazy(() => import("./pages/home/Home.page"));
 const Roles = lazy(() => import("./pages/roles/Roles.page"));
@@ -24,18 +25,12 @@ const App = () => {
   const { darkMode } = useContext(ThemeContext);
 
   const appStyles = darkMode ? "app dark" : "app";
-  const redirect = useNavigate();
+  const jwt = useJwt()
 
-  useEffect(() => {
-    let username = sessionStorage.getItem("username");
-    if (username === "" || username === null) {
-      redirect("/signIn");
-      return;
-    }
-  },[])
+  
   return (
     <div className={appStyles}>
-      <Navbar />
+      {!(Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) && <Navbar />}
       <div className="wrapper">
         <Suspense fallback={<CustomLinearProgress />}>
           <Routes>
@@ -55,7 +50,7 @@ const App = () => {
               <Route path="ticket" element={<DetailTicket />} />
               <Route path="addAttachment" element={<AddTicketAttachment />} />
               {/* <Route path="ticket" element={<DetailTicket />}>
-                
+                you can * at the end of path for subcategories
                 <Route
                   path=":addAttachment"
                   element={<AddTicketAttachment />}

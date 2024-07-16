@@ -1,25 +1,24 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import httpModule from "../../helpers/http.module";
+import { useJwt } from "../../context/Jwt.context";
 
 const Logout = () => {
   const redirect = useNavigate();
+  const jwt = useJwt()
   useEffect(() => {
-    let username = sessionStorage.getItem("username");
-    if (username === "" || username === null) {
-      redirect("/signIn");
-      return;
-    }
-
-    let jwtToken = sessionStorage.getItem("jwtToken");
+    
+    
+    let jwtToken = jwt.user.jwtToken;
+    jwt.logout();
     httpModule
       .get("SignInSignOut/Logout", {
         headers: { "Authorization": "Bearer " + jwtToken },
       })
-      .then(() => redirect("/signIn"))
+      .then(() => {redirect("/signIn")})
       .catch((error) => console.log(error));
   }, []);
-  return <div>Logout</div>;
+  return <div></div>;
 };
 
 export default Logout;
