@@ -14,6 +14,7 @@ import TicketAttachmentsGrid from "../../components/tickets/TicketAttachmentsGri
 import TicketCommentsGrid from "../../components/tickets/TicketCommentsGrid.component";
 import TicketHistoriesGrid from "../../components/tickets/TicketHistoryGrid.component";
 import { Add } from "@mui/icons-material";
+import { useJwt } from "../../context/Jwt.context";
 
 const DetailTicket = () => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
@@ -26,14 +27,15 @@ const DetailTicket = () => {
   const location = useLocation();
   const { ticketId } = location.state;
   const redirect = useNavigate();
+  const jwt = useJwt();
 
   useEffect(() => {
     setLoading(true);
-    let username = sessionStorage.getItem("username");
-    if (username === "" || username === null) {
-      redirect("/signIn");
+    if (Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) {
+      redirect("/signin", { replace: true });
+      return;
     }
-    let jwtToken = sessionStorage.getItem("jwtToken");
+    let jwtToken = jwt.user.jwtToken;
     httpModule
       .get<ITicket[]>(`Ticket/Get/${ticketId}`, {
         headers: { Authorization: "Bearer " + jwtToken },
