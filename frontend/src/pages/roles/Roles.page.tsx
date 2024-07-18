@@ -7,24 +7,25 @@ import { Button, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Add } from "@mui/icons-material";
 import RolesGrid from "../../components/roles/RolesGrid.component";
+import { useJwt } from "../../context/Jwt.context";
 
 const Roles = () => {
   const [roles, setRoles] = useState<IRole[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const redirect = useNavigate();
+  const jwt = useJwt();
 
   useEffect(() => {
     setLoading(true);
-    let username = sessionStorage.getItem("username");
-    if (username === "" || username === null) {
-      redirect("/signIn");
+    if (Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) {
+      redirect("/signin", { replace: true });
       return;
     }
 
-    let jwtToken = sessionStorage.getItem("jwtToken");
+    let jwtToken = jwt.user.jwtToken;
     httpModule
       .get<IRole[]>("/Role/GetRoles", {
-        headers: { "Authorization": "Bearer " + jwtToken },
+        headers: { Authorization: "Bearer " + jwtToken },
       })
       .then((response) => {
         setRoles(response.data);
