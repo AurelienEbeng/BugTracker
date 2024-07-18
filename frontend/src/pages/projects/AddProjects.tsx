@@ -11,6 +11,7 @@ import {
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import httpModule from "../../helpers/http.module";
+import { useJwt } from "../../context/Jwt.context";
 
 const AddProjects = () => {
   const [employees, setEmployees] = useState<IEmployee[]>([]);
@@ -20,18 +21,18 @@ const AddProjects = () => {
     managerId: "",
   });
   const redirect = useNavigate();
+  const jwt = useJwt();
 
   useEffect(() => {
-    let username = sessionStorage.getItem("username");
-    if (username === "" || username === null) {
-      redirect("/signIn");
+    if (Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) {
+      redirect("/signin", { replace: true });
       return;
     }
-    let jwtToken = sessionStorage.getItem("jwtToken");
+    let jwtToken = jwt.user.jwtToken;
 
     httpModule
       .get<IEmployee[]>("/Employee/Get", {
-        headers: { "Authorization": "Bearer " + jwtToken },
+        headers: { Authorization: "Bearer " + jwtToken },
       })
       .then((response) => {
         setEmployees(response.data);
@@ -47,7 +48,7 @@ const AddProjects = () => {
       alert("Fill  all fields");
       return;
     }
-    let jwtToken = sessionStorage.getItem("jwtToken");
+    let jwtToken = jwt.user.jwtToken;
     httpModule
       .post("Project/Create", project, {
         headers: { Authorization: "Bearer " + jwtToken },
