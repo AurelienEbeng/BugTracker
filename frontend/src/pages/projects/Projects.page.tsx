@@ -6,22 +6,25 @@ import { Button, CircularProgress } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { Add } from "@mui/icons-material";
 import ProjectsGrid from "../../components/projects/ProjectsGrid.component";
+import { useJwt } from "../../context/Jwt.context";
 
 const Projects = () => {
   const [projects, setProjects] = useState<IProject[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const redirect = useNavigate();
+  const jwt = useJwt();
 
   useEffect(() => {
     setLoading(true);
 
-    
-
-    let jwtToken = sessionStorage.getItem("jwtToken");
+    if (Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) {
+      redirect("/signin", { replace: true });
+      return;
+    }
 
     httpModule
       .get<IProject[]>("/Project/Get", {
-        headers: { "Authorization": "Bearer " + jwtToken },
+        headers: { Authorization: "Bearer " + jwt.user.jwtToken },
       })
       .then((response) => {
         setProjects(response.data);
