@@ -15,6 +15,7 @@ import {
   IEmployee,
   ITicket,
 } from "../../types/global.typing";
+import { useJwt } from "../../context/Jwt.context";
 
 const AddTicketAttachment = () => {
   const [ticketAttachment, setTicketAttachment] =
@@ -28,13 +29,14 @@ const AddTicketAttachment = () => {
   const [pdfFile, setPdfFile] = useState<File | null>();
 
   const redirect = useNavigate();
+  const jwt = useJwt();
 
   useEffect(() => {
-    let username = sessionStorage.getItem("username");
-    if (username === "" || username === null) {
-      redirect("/signIn");
+    if (Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) {
+      redirect("/signin", { replace: true });
+      return;
     }
-    let jwtToken = sessionStorage.getItem("jwtToken");
+    let jwtToken = jwt.user.jwtToken;
     httpModule
       .get<ITicket[]>("/Ticket/Get", {
         headers: { Authorization: "Bearer " + jwtToken },
@@ -76,7 +78,7 @@ const AddTicketAttachment = () => {
     newAttachmentFormData.append("TicketId", ticketAttachment.ticketId);
     newAttachmentFormData.append("UploaderId", ticketAttachment.uploaderId);
     newAttachmentFormData.append("pdfFile", pdfFile);
-    let jwtToken = sessionStorage.getItem("jwtToken");
+    let jwtToken = jwt.user.jwtToken;
 
     httpModule
       .post("TicketAttachment/Create", newAttachmentFormData, {
