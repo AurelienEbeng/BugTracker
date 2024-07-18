@@ -11,6 +11,7 @@ import {
 import { useNavigate } from "react-router-dom";
 import httpModule from "../../helpers/http.module";
 import { ICreateEmployeeDto, IRole } from "../../types/global.typing";
+import { useJwt } from "../../context/Jwt.context";
 
 const AddEmployee = () => {
   const [employee, setEmployee] = useState<ICreateEmployeeDto>({
@@ -21,17 +22,17 @@ const AddEmployee = () => {
   const [roles, setRoles] = useState<IRole[]>([]);
 
   const redirect = useNavigate();
+  const jwt = useJwt();
 
   useEffect(() => {
-    let username = sessionStorage.getItem("username");
-    if (username === "" || username === null) {
-      redirect("/signIn");
+    if (Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) {
+      redirect("/signin", { replace: true });
       return;
     }
-    let jwtToken = sessionStorage.getItem("jwtToken");
+    let jwtToken = jwt.user.jwtToken;
     httpModule
       .get<IRole[]>("/Role/Get", {
-        headers: { "Authorization": "Bearer " + jwtToken },
+        headers: { Authorization: "Bearer " + jwtToken },
       })
       .then((response) => {
         setRoles(response.data);
@@ -47,7 +48,7 @@ const AddEmployee = () => {
       alert("Fill  all fields");
       return;
     }
-    let jwtToken = sessionStorage.getItem("jwtToken");
+    let jwtToken = jwt.user.jwtToken;
     httpModule
       .post("Employee/Create", employee, {
         headers: { Authorization: "Bearer " + jwtToken },
