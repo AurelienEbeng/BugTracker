@@ -5,6 +5,7 @@ import { ITicket } from "../../types/global.typing";
 import { CircularProgress } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProjectTicketsGrid from "../../components/projects/ProjectTicketsGrid.component";
+import { useJwt } from "../../context/Jwt.context";
 
 const DetailProjects = () => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
@@ -12,19 +13,19 @@ const DetailProjects = () => {
   const location = useLocation();
   const { projectId, projectDescription, projectName } = location.state;
   const redirect = useNavigate();
+  const jwt = useJwt();
 
   useEffect(() => {
     setLoading(true);
-    let username = sessionStorage.getItem("username");
-    if (username === "" || username === null) {
-      redirect("/signIn");
+    if (Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) {
+      redirect("/signin", { replace: true });
       return;
     }
 
-    let jwtToken = sessionStorage.getItem("jwtToken");
+    let jwtToken = jwt.user.jwtToken;
     httpModule
       .get<ITicket[]>(`Ticket/Get/project/${projectId}`, {
-        headers: { "Authorization": "Bearer " + jwtToken },
+        headers: { Authorization: "Bearer " + jwtToken },
       })
       .then((response) => {
         setTickets(response.data);
