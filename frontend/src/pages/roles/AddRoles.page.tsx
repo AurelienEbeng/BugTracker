@@ -4,15 +4,16 @@ import { ICreateRoleDto } from "../../types/global.typing";
 import { Button, TextField } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import httpModule from "../../helpers/http.module";
+import { useJwt } from "../../context/Jwt.context";
 
 const AddRoles = () => {
   const [role, setRole] = useState<ICreateRoleDto>({ name: "" });
   const redirect = useNavigate();
+  const jwt = useJwt();
 
   useEffect(() => {
-    let username = sessionStorage.getItem("username");
-    if (username === "" || username === null) {
-      redirect("/signIn");
+    if (Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) {
+      redirect("/signin", { replace: true });
       return;
     }
   }, []);
@@ -21,10 +22,10 @@ const AddRoles = () => {
       alert("Fill  all fields");
       return;
     }
-    let jwtToken = sessionStorage.getItem("jwtToken");
+    let jwtToken = jwt.user.jwtToken;
     httpModule
       .post("Role/Create", role, {
-        headers: { "Authorization": "Bearer " + jwtToken },
+        headers: { Authorization: "Bearer " + jwtToken },
       })
       .then((response) => redirect("/roles"))
       .catch((error) => console.log(error));
