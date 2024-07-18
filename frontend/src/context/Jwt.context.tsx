@@ -35,9 +35,14 @@ export default function JwtProvider({ children }: JwtProviderProps) {
       .catch((error) => console.log(error));
   };
 
-  const logout = () => {
-    setUser({} as User);
+  const logout = async () => {
+    await httpModule
+      .get("SignInSignOut/Logout", {
+        headers: { Authorization: "Bearer " + user.jwtToken },
+      })
+      .catch((error) => console.log(error));
     sessionStorage.removeItem("User");
+    setUser({} as User);
   };
 
   return (
