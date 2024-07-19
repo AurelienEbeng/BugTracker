@@ -21,14 +21,22 @@ a {
 ul {
   list-style: none;
 }
+.frame {
+  width: 100%;
+  height: 100vh;
+  &.loggedIn {
+    width: calc(100vw - 240px);
+  }
+}
 .wrapper {
   width: 100%;
-  padding: 2rem;
+  padding: 0 2rem;
   min-height: calc(100vh - 60px);
 }
 .content {
   @include d-flex(column, flex-start, center);
   gap: 2rem;
+  padding-top: 5px;
 }
 
 .app {
@@ -39,5 +47,15 @@ ul {
     --bg-color: #000;
     --text-color1: #fff;
     --text-color2: #999;
+  }
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 960px) {
+  .frame {
+    &.loggedIn {
+      width: 100%;
+    }
   }
 }

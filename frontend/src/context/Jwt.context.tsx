@@ -10,6 +10,7 @@ type UserContext = {
   user: User;
   login: (username: string, password: string) => void;
   logout: () => void;
+  isLoggedIn: () => boolean;
 };
 
 const JwtContext = createContext<UserContext>({} as UserContext);
@@ -45,8 +46,15 @@ export default function JwtProvider({ children }: JwtProviderProps) {
     setUser({} as User);
   };
 
+  const isLoggedIn = () => {
+    if (Object.keys(user).length === 0 && user.constructor === Object) {
+      return false;
+    }
+    return true;
+  };
+
   return (
-    <JwtContext.Provider value={{ user, login, logout }}>
+    <JwtContext.Provider value={{ user, login, logout, isLoggedIn }}>
       {children}
     </JwtContext.Provider>
   );

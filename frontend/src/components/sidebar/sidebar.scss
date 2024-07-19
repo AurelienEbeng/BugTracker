@@ -11,8 +11,8 @@
   }
 
   .head {
-    height: 50px;
-    width: 100%;
+    height: 60px;
+    width: 90%;
     @include d-flex(column, center, center);
   }
   hr {
@@ -32,5 +32,14 @@
         padding: 5px 10px;
       }
     }
+  }
+}
+
+@media (max-width: 960px) {
+  .sidebar {
+    left: -240px;
+    position: fixed;
+    z-index: 100;
+    transition: all 0.3s ease-in-out;
   }
 }
