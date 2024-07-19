@@ -4,6 +4,7 @@ import Navbar from "./components/navbar/Navbar.component";
 import { Routes, Route } from "react-router-dom";
 import CustomLinearProgress from "./components/custom linear progress/CustomLinearProgress.component";
 import { useJwt } from "./context/Jwt.context";
+import Sidebar from "./components/sidebar/Sidebar.component";
 
 const Home = lazy(() => import("./pages/home/Home.page"));
 const Roles = lazy(() => import("./pages/roles/Roles.page"));
@@ -31,6 +32,7 @@ const App = () => {
   return (
     <div className={appStyles}>
       {!(Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) && <Navbar />}
+      <Sidebar />
       <div className="wrapper">
         <Suspense fallback={<CustomLinearProgress />}>
           <Routes>
