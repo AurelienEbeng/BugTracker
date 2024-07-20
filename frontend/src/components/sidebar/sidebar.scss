@@ -6,10 +6,6 @@
   width: 240px;
   height: 100vh;
 
-  .hamburger {
-    display: none;
-  }
-
   .head {
     height: 60px;
     width: 90%;
@@ -41,5 +37,9 @@
     position: fixed;
     z-index: 100;
     transition: all 0.3s ease-in-out;
+
+    &.open {
+      left: 0;
+    }
   }
 }

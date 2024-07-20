@@ -9,6 +9,7 @@ import GroupIcon from "@mui/icons-material/Group";
 import ReorderIcon from "@mui/icons-material/Reorder";
 import ViewListIcon from "@mui/icons-material/ViewList";
 import PersonIcon from "@mui/icons-material/Person";
+import { useSidebarContext } from "../../context/sidebar.context";
 
 const links = [
   { href: "/", label: "Dashboard", icon: <DashboardIcon /> },
@@ -19,27 +20,21 @@ const links = [
   { href: "/", label: "User Profile", icon: <PersonIcon /> },
 ];
 const Sidebar = () => {
-  const [open, setOpen] = useState<boolean>(false);
-  const ToggleOpenMenu = () => {
-    setOpen((prevState) => !prevState);
-  };
-  const menuStyles = open ? "menu open" : "menu";
   const jwt = useJwt();
+  const { openSidebarState } = useSidebarContext();
+  const sidebar = openSidebarState ? "sidebar open" : "sidebar";
 
   return (
-    <div className="sidebar">
+    <div className={sidebar}>
       <div className="head">
         <p>Welcome, {jwt.user.username}</p>
       </div>
       <hr />
-      <div className="hamburger">
-        <Menu onClick={ToggleOpenMenu} />
-      </div>
 
-      <div className={menuStyles}>
+      <div className="menu">
         <ul>
           {links.map((item) => (
-            <li key={item.href} onClick={ToggleOpenMenu}>
+            <li key={item.href}>
               <Link to={item.href}>
                 {item.icon}
                 {item.label}

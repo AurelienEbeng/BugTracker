@@ -27,6 +27,10 @@
     display: none;
     cursor: pointer;
   }
+  .sidebarIcon {
+    display: none;
+    cursor: pointer;
+  }
 
   .toggle {
     margin-left: 1rem;
@@ -54,10 +58,8 @@
       z-index: 100;
       transition: all 0.3s ease-in-out;
 
-
-      &.open{
+      &.open {
         left: 0;
-
       }
 
       ul {
@@ -72,6 +74,9 @@
     }
 
     .hamburger {
+      display: block;
+    }
+    .sidebarIcon {
       display: block;
     }
   }

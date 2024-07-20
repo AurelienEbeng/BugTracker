@@ -4,6 +4,7 @@ import "./global.scss";
 import ThemeContextProvider from "./context/theme.context";
 import { BrowserRouter } from "react-router-dom";
 import JwtProvider from "./context/Jwt.context";
+import SidebarProvider from "./context/sidebar.context";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -11,9 +12,11 @@ const root = ReactDOM.createRoot(
 root.render(
   <ThemeContextProvider>
     <JwtProvider>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
+      <SidebarProvider>
+        <BrowserRouter>
+          <App />
+        </BrowserRouter>
+      </SidebarProvider>
     </JwtProvider>
   </ThemeContextProvider>
-); 
+);

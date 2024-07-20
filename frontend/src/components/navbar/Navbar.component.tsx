@@ -4,6 +4,8 @@ import { Link } from "react-router-dom";
 import { Menu, LightMode, DarkMode } from "@mui/icons-material";
 import { ToggleButton } from "@mui/material";
 import { ThemeContext } from "../../context/theme.context";
+import { useSidebarContext } from "../../context/sidebar.context";
+import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 
 const links = [
   { href: "/", label: "Home" },
@@ -20,6 +22,7 @@ const Navbar = () => {
     setOpen((prevState) => !prevState);
   };
   const menuStyles = open ? "menu open" : "menu";
+  const sidebarContext = useSidebarContext();
   return (
     <div className="navbar">
       <div className="brand">
@@ -36,6 +39,9 @@ const Navbar = () => {
       </div>
       <div className="hamburger">
         <Menu onClick={ToggleOpenMenu} />
+      </div>
+      <div className="sidebarIcon">
+        <ViewSidebarIcon onClick={sidebarContext.toggleSidebarState} />
       </div>
       <div className="toggle">
         <ToggleButton
