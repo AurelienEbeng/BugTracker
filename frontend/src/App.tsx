@@ -6,7 +6,7 @@ import CustomLinearProgress from "./components/custom linear progress/CustomLine
 import { useJwt } from "./context/Jwt.context";
 import Sidebar from "./components/sidebar/Sidebar.component";
 
-const Home = lazy(() => import("./pages/home/Home.page"));
+const Dashboard = lazy(() => import("./pages/dashboard/Dashboard.page"));
 const Roles = lazy(() => import("./pages/roles/Roles.page"));
 const AddRoles = lazy(() => import("./pages/roles/AddRoles.page"));
 const Employees = lazy(() => import("./pages/employees/Employees.page"));
@@ -40,7 +40,7 @@ const App = () => {
         <div className="wrapper">
           <Suspense fallback={<CustomLinearProgress />}>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Dashboard />} />
               <Route path="/roles">
                 <Route index element={<Roles />} />
                 <Route path="add" element={<AddRoles />} />

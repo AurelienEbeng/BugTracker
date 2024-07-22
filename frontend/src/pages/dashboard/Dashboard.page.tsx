@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Home(){
+export default function Dashboard(){
   return (
     <div className="content home">
       <h3>Welcome To Website</h3>
