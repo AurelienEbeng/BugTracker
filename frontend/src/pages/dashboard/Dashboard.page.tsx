@@ -1,6 +1,19 @@
-import React from "react";
+import { useEffect, useState } from "react";
+import { useJwt } from "../../context/Jwt.context";
+import { useNavigate } from "react-router-dom";
 
-export default function Dashboard(){
+export default function Dashboard() {
+  const redirect = useNavigate();
+  const jwt = useJwt();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    setLoading(true);
+    if (!jwt.isLoggedIn()) {
+      redirect("/signin", { replace: true });
+      return;
+    }
+  }, []);
   return (
     <div className="content home">
       <h3>Welcome To Website</h3>
@@ -21,5 +34,4 @@ export default function Dashboard(){
       </span>
     </div>
   );
-};
-
+}
