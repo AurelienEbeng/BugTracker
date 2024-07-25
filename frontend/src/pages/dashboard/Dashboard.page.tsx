@@ -7,6 +7,7 @@ import { ITicket } from "../../types/global.typing";
 import { CircularProgress } from "@mui/material";
 import TicketsTypePieChart from "../../components/dashboard/TicketsTypePieChart.component";
 import TicketsStatusBarChart from "../../components/dashboard/TicketsStatusBarChart.component";
+import "./dashboard.scss";
 
 export default function Dashboard() {
   const redirect = useNavigate();
@@ -53,13 +54,12 @@ export default function Dashboard() {
               <TicketsTypePieChart data={tickets} />
               <div>Tickets by Type</div>
             </div>
-          </div>
-          <div className="row">
             <div className="chart">
               <TicketsStatusBarChart data={tickets} />
               <div>Tickets by Status</div>
             </div>
           </div>
+          
         </>
       )}
     </div>

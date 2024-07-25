@@ -1,0 +1,22 @@
+@import "../../mixins";
+.dashboard {
+  @include d-flex(column, center, center);
+  gap: 0;
+  padding-bottom: 10px;
+  .row {
+    @include d-flex(row, space-around, center);
+    width: 100%;
+
+    .chart {
+      @include d-flex(column, center, center);
+    }
+  }
+}
+
+@media (max-width: 960px) {
+  .dashboard {
+    .row {
+      @include d-flex(column, center, center);
+    }
+  }
+}
