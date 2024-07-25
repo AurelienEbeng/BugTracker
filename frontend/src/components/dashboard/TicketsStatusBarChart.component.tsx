@@ -1,12 +1,11 @@
 import { axisClasses } from "@mui/x-charts/ChartsAxis";
 import { BarChart } from "@mui/x-charts/BarChart";
 import { useContext, useState } from "react";
-import { ITicket} from "../../types/global.typing";
+import { ITicket } from "../../types/global.typing";
 import { ThemeContext } from "../../context/theme.context";
 
-
 type ChartData = {
-  priority: string;
+  status: string;
   numOfTickets: number;
 };
 
@@ -14,40 +13,42 @@ const chartSetting = {
   width: 300,
   height: 300,
   sx: {},
-  
 };
 
 const valueFormatter = (value: number | null) => `${value}`;
 
 function fillChartData(data: ITicket[]) {
   let obj = [
-    { priority: "None", numOfTickets: 0 },
-    { priority: "Low", numOfTickets: 0 },
-    { priority: "Medium", numOfTickets: 0 },
-    { priority: "High", numOfTickets: 0 },
+    { status: "New", numOfTickets: 0 },
+    { status: "Open", numOfTickets: 0 },
+    { status: "In Progress", numOfTickets: 0 },
+    { status: "Resolved", numOfTickets: 0 },
+    { status: "Additional Info Required", numOfTickets: 0 },
   ];
 
   data.map((ticket) => {
-    if (ticket.priority.toLowerCase() === "none") {
+    if (ticket.status.toLowerCase() === "new") {
       obj[0].numOfTickets = obj[0].numOfTickets + 1;
-    } else if (ticket.priority.toLowerCase() === "low") {
+    } else if (ticket.status.toLowerCase() === "open") {
       obj[1].numOfTickets = obj[1].numOfTickets + 1;
-    } else if (ticket.priority.toLowerCase() === "medium") {
+    } else if (ticket.status.toLowerCase() === "in progress") {
       obj[2].numOfTickets = obj[2].numOfTickets + 1;
-    } else if (ticket.priority.toLowerCase() === "high") {
+    } else if (ticket.status.toLowerCase() === "resolved") {
+      obj[3].numOfTickets = obj[3].numOfTickets + 1;
+    } else if (ticket.status.toLowerCase() === "additional info required") {
       obj[3].numOfTickets = obj[3].numOfTickets + 1;
     }
   });
   return obj;
 }
 
-interface ITicketsPriorityBarChartProps {
+interface ITicketsStatusBarChartProps {
   data: ITicket[];
 }
 
-export default function TicketsPriorityBarChart({
+export default function TicketsStatusBarChart({
   data,
-}: ITicketsPriorityBarChartProps) {
+}: ITicketsStatusBarChartProps) {
   const [chartData] = useState<ChartData[]>(() => fillChartData(data));
   const { darkMode } = useContext(ThemeContext);
 
@@ -79,8 +80,8 @@ export default function TicketsPriorityBarChart({
     <>
       <BarChart
         dataset={chartData}
-        xAxis={[{ scaleType: "band", dataKey: "priority" }]}
-        series={[{ dataKey: "numOfTickets", valueFormatter,  }]}
+        xAxis={[{ scaleType: "band", dataKey: "status" }]}
+        series={[{ dataKey: "numOfTickets", valueFormatter }]}
         {...chartSetting}
       />
     </>

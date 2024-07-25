@@ -6,6 +6,7 @@ import httpModule from "../../helpers/http.module";
 import { ITicket } from "../../types/global.typing";
 import { CircularProgress } from "@mui/material";
 import TicketsTypePieChart from "../../components/dashboard/TicketsTypePieChart.component";
+import TicketsStatusBarChart from "../../components/dashboard/TicketsStatusBarChart.component";
 
 export default function Dashboard() {
   const redirect = useNavigate();
@@ -51,6 +52,12 @@ export default function Dashboard() {
             <div className="chart">
               <TicketsTypePieChart data={tickets} />
               <div>Tickets by Type</div>
+            </div>
+          </div>
+          <div className="row">
+            <div className="chart">
+              <TicketsStatusBarChart data={tickets} />
+              <div>Tickets by Status</div>
             </div>
           </div>
         </>
