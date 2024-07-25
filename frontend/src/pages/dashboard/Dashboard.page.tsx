@@ -5,6 +5,7 @@ import TicketsPriorityBarChart from "../../components/dashboard/TicketsPriorityB
 import httpModule from "../../helpers/http.module";
 import { ITicket } from "../../types/global.typing";
 import { CircularProgress } from "@mui/material";
+import TicketsTypePieChart from "../../components/dashboard/TicketsTypePieChart.component";
 
 export default function Dashboard() {
   const redirect = useNavigate();
@@ -35,13 +36,24 @@ export default function Dashboard() {
   }, []);
 
   return (
-    <div className="content home">
+    <div className="content dashboard">
       {loading ? (
         <CircularProgress size={100} />
       ) : tickets.length === 0 ? (
         <h1>No Tickets</h1>
       ) : (
-        <TicketsPriorityBarChart data={tickets} />
+        <>
+          <div className="row">
+            <div className="chart">
+              <TicketsPriorityBarChart data={tickets} />
+              <div>Tickets by Priority</div>
+            </div>
+            <div className="chart">
+              <TicketsTypePieChart data={tickets} />
+              <div>Tickets by Type</div>
+            </div>
+          </div>
+        </>
       )}
     </div>
   );
