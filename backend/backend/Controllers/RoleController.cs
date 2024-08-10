@@ -1,4 +1,5 @@
 ﻿using backend.Core.Context;
+using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
@@ -13,8 +14,8 @@ namespace backend.Controllers
     public class RoleController : ControllerBase
     {
         private ApplicationDBContext _context { get; }
-        private readonly RoleManager<IdentityRole> _roleManager;
-        public RoleController(ApplicationDBContext context, RoleManager<IdentityRole> roleManager)
+        private readonly RoleManager<Role> _roleManager;
+        public RoleController(ApplicationDBContext context, RoleManager<Role> roleManager)
         {
             _context = context;
             _roleManager = roleManager;
@@ -27,7 +28,7 @@ namespace backend.Controllers
         {
             var roleExist = await _roleManager.RoleExistsAsync(name);
             if (roleExist) { return Ok("Role exist"); }
-            IdentityRole role = new IdentityRole { Name = name };
+            Role role = new Role { Name = name };
             var result = await _roleManager.CreateAsync(role);
             if (result.Succeeded)
             {
@@ -39,7 +40,7 @@ namespace backend.Controllers
 
         [HttpGet]
         [Route("Get")]
-        public async Task<IdentityRole> GetRole(string name)
+        public async Task<Role> GetRole(string name)
         {
             return await _roleManager.FindByNameAsync(name);
         }

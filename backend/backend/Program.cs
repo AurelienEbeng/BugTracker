@@ -46,7 +46,7 @@ builder.Services.AddSwaggerGen(options =>
     options.OperationFilter<SecurityRequirementsOperationFilter>();
 });
 
-builder.Services.AddIdentity<Employee, IdentityRole>(
+builder.Services.AddIdentity<Employee, Role>(
     options =>
     {
         options.Password.RequiredUniqueChars = 0;

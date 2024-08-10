@@ -21,7 +21,7 @@ namespace backend.Controllers
         public static string employeeId;
         public EmployeeController(SignInManager<Employee>
             signInManager, UserManager<Employee> userManager,
-            ApplicationDBContext context, RoleManager<IdentityRole> roleManager,
+            ApplicationDBContext context, RoleManager<Role> roleManager,
             IMapper mapper)
         {
             _signInManager = signInManager;
@@ -64,8 +64,18 @@ namespace backend.Controllers
             return Ok(await _context.Users.ToListAsync());
         }
 
+        [HttpGet]
+        [Route("GetManageUserRolesData")]
+        public async Task<ActionResult> GetManageUserRolesData()
+        {
 
-        
+            var model = await _context.Roles.ToListAsync();
+
+
+
+            return Ok(model);
+        }
+
 
         //Update
         [HttpGet]

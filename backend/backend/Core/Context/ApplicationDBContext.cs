@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backend.Core.Context
 {
-    public class ApplicationDBContext : IdentityDbContext<Employee>
+    public class ApplicationDBContext : IdentityDbContext<Employee, Role, string>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
@@ -120,7 +120,7 @@ namespace backend.Core.Context
             modelBuilder.Entity<Employee>(
                 entity => entity.ToTable(name: "Employees"));
 
-            modelBuilder.Entity<IdentityRole>(
+            modelBuilder.Entity<Role>(
                entity => entity.ToTable(name: "Roles"));
 
             modelBuilder.Entity<IdentityUserRole<string>>(

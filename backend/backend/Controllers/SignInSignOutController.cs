@@ -19,7 +19,7 @@ namespace backend.Controllers
         private readonly IAuthService _authService;
         public SignInSignOutController(SignInManager<Employee>
             signInManager, UserManager<Employee> userManager,
-            ApplicationDBContext context, RoleManager<IdentityRole> roleManager,
+            ApplicationDBContext context, RoleManager<Role> roleManager,
             IAuthService authService, 
             IMapper mapper)
         {
