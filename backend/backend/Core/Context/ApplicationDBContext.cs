@@ -7,7 +7,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backend.Core.Context
 {
-    public class ApplicationDBContext : IdentityDbContext<Employee, Role, string>
+    public class ApplicationDBContext : IdentityDbContext<Employee, Role, string,
+        IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>,
+        IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
         public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
         {
@@ -123,7 +125,7 @@ namespace backend.Core.Context
             modelBuilder.Entity<Role>(
                entity => entity.ToTable(name: "Roles"));
 
-            modelBuilder.Entity<IdentityUserRole<string>>(
+            modelBuilder.Entity<UserRole>(
                entity => entity.ToTable(name: "EmployeesRoles"));
 
             modelBuilder.Entity<IdentityUserClaim<string>>(
@@ -138,7 +140,23 @@ namespace backend.Core.Context
             modelBuilder.Entity<IdentityUserToken<string>>(
                entity => entity.ToTable(name: "EmployeesTokens"));
 
-            
+
+
+            modelBuilder.Entity<Employee>(b =>
+            {
+                b.HasMany(e => e.UserRoles)
+                .WithOne(e => e.Employee)
+                .HasForeignKey(ur => ur.UserId)
+                .IsRequired();
+            });
+
+            modelBuilder.Entity<Role>(b =>
+            {
+                b.HasMany(e => e.UserRoles)
+                    .WithOne(e => e.Role)
+                    .HasForeignKey(ur => ur.RoleId)
+                    .IsRequired();
+            });
 
         }
 

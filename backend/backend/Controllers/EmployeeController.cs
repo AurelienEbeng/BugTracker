@@ -69,7 +69,21 @@ namespace backend.Controllers
         public async Task<ActionResult> GetManageUserRolesData()
         {
 
-            var model = await _context.Roles.ToListAsync();
+            //var model = await _context.UserRoles.ToListAsync();
+
+
+            var model = from e in _context.Employees
+                        from ur in _context.UserRoles
+                        from r in _context.Roles
+                        where e.Id == ur.UserId
+                        where ur.RoleId == r.Id
+                        select new
+                        {
+                            username = e.UserName,
+                            email = e.Email,
+                            roleName = r.Name,
+                        };
+
 
 
 
