@@ -23,6 +23,7 @@ const Logout = lazy(() => import("./pages/signInSignOut/logout.page"));
 const DemoUsersLogin = lazy(
   () => import("./pages/demoUser/demoUser.login.page")
 );
+const ManageUserRoles = lazy(() => import("./pages/manageUserRoles/ManageUserRoles.page"))
 
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -66,6 +67,7 @@ const App = () => {
               <Route path="/signIn" element={<SignIn />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/demoUsersLogin" element={<DemoUsersLogin />} />
+              <Route path= "/manageUserRoles" element= {<ManageUserRoles />} />
             </Routes>
           </Suspense>
         </div>
