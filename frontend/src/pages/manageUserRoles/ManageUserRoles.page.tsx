@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useJwt } from '../../context/Jwt.context';
 import httpModule from '../../helpers/http.module';
+import ManageUserRolesGrid from '../../components/manageUserRoles/ManageUserRolesGrid';
 
 type UserRole = {
     email: string,
@@ -51,8 +52,7 @@ const ManageUserRoles = () => {
         ) : userRoles.length === 0 ? (
           <h1>No User Roles</h1>
         ) : (
-          <div>Manage<button onClick={Show}>Show</button></div> // This is where the grid should be
-          
+          <ManageUserRolesGrid data = {userRoles} />
         )}
       </div>
     );
