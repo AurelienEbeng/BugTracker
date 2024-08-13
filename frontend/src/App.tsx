@@ -23,14 +23,20 @@ const Logout = lazy(() => import("./pages/signInSignOut/logout.page"));
 const DemoUsersLogin = lazy(
   () => import("./pages/demoUser/demoUser.login.page")
 );
-const ManageUserRoles = lazy(() => import("./pages/manageUserRoles/ManageUserRoles.page"))
+const ManageUserRoles = lazy(
+  () => import("./pages/manageUserRoles/ManageUserRoles.page")
+);
+const AddUserRoles = lazy(
+  () => import("./pages/manageUserRoles/AddUserRoles.page")
+);
+//const AddManageUserRoles = lazy(()=>import("./pages/manageUserRoles/AddManageUserRoles.page"));
 
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
 
   const appStyles = darkMode ? "app dark" : "app";
   const jwt = useJwt();
-  const frame= jwt.isLoggedIn() ? "frame loggedIn":"frame";;
+  const frame = jwt.isLoggedIn() ? "frame loggedIn" : "frame";
 
   return (
     <div className={appStyles}>
@@ -67,7 +73,10 @@ const App = () => {
               <Route path="/signIn" element={<SignIn />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/demoUsersLogin" element={<DemoUsersLogin />} />
-              <Route path= "/manageUserRoles" element= {<ManageUserRoles />} />
+              <Route path="/manageUserRoles">
+                <Route index element={<ManageUserRoles />} />
+                <Route path="add" element={<AddUserRoles />} />
+              </Route>
             </Routes>
           </Suspense>
         </div>

@@ -46,7 +46,7 @@ const ManageUserRoles = () => {
     <div className="content manageUserRoles">
       <div className="heading">
         <h2>Your Personnel</h2>
-        <Button variant="outlined" onClick={() => redirect("/")}>
+        <Button variant="outlined" onClick={() => redirect("/manageUserRoles/add")}>
           <Add />
         </Button>
       </div>
