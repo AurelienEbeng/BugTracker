@@ -3,23 +3,29 @@ import { IEmployee, IRole } from "../../types/global.typing";
 import { useJwt } from "../../context/Jwt.context";
 import { useNavigate } from "react-router-dom";
 import httpModule from "../../helpers/http.module";
-import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import {
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+} from "@mui/material";
 import "./manageUserRoles.scss";
 
-type UserRole = {
+interface UserRole  {
   userId: string;
   roleName: string;
 };
 const AddUserRoles = () => {
   const [roles, setRoles] = useState<IRole[]>([]);
   const [employees, setEmployees] = useState<IEmployee[]>([]);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [userRole, setUserRole] = useState<UserRole>({} as UserRole);
+  const [userRole, setUserRole] = useState<UserRole>(() => {
+    return { userId: "", roleName: "" };
+  });
   const jwt = useJwt();
   const redirect = useNavigate();
 
   useEffect(() => {
-    setLoading(true);
     if (!jwt.isLoggedIn()) {
       redirect("/signIn", { replace: true });
       return;
@@ -30,11 +36,9 @@ const AddUserRoles = () => {
       })
       .then((response) => {
         setEmployees(response.data);
-        setLoading(false);
       })
       .catch((error) => {
         console.log(error);
-        setLoading(false);
         alert("Error");
       });
 
@@ -44,21 +48,31 @@ const AddUserRoles = () => {
       })
       .then((response) => {
         setRoles(response.data);
-        setLoading(false);
       })
       .catch((error) => {
         alert("Error");
         console.log(error);
-        setLoading(false);
       });
   }, []);
 
-  function handleClickBackBtn(){
+  function handleClickBackBtn() {
     redirect("/manageUserRoles");
   }
-  
-  function handleClickSaveBtn(){
-    console.log(userRole)
+
+  function handleClickSaveBtn() {
+    if (userRole.roleName === "" || userRole.userId === "") {
+      alert("Fill all fields");
+      return;
+    }
+    httpModule
+      .post<UserRole>("Employee/AddRoleToEmployee", userRole,{
+        headers: { Authorization: "Bearer " + jwt.user.jwtToken},
+      })
+      .then(() => redirect("/manageUserRoles"))
+      .catch((error) => {
+        alert("Error");
+        console.log(error);
+      });
   }
 
   return (
