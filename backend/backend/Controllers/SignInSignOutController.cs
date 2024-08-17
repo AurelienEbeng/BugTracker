@@ -33,18 +33,19 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("Login")]
-        public async Task<string> LoginAsync([FromBody] Login submittedInfo)
+        public async Task<object> LoginAsync([FromBody] Login submittedInfo)
         {
             var result = await _signInManager.PasswordSignInAsync(
                 submittedInfo.Username!, submittedInfo.Password!,
                 submittedInfo.RememberMe, false);
             if (result.Succeeded)
             {
-                var id = _employeeManager.GetUserId(HttpContext.User);
-                EmployeeId.Id = id.ToString();
+                var userId = _employeeManager.GetUserId(HttpContext.User);
+                EmployeeId.Id = userId.ToString();
 
                 var tokenString = _authService.GenerateTokenString(submittedInfo);
-                return $"{tokenString}";
+                
+                return new { tokenString, userId };
 
 
             }

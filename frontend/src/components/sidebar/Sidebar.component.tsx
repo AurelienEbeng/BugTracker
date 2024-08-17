@@ -15,7 +15,7 @@ const links = [
   { href: "/", label: "Dashboard", icon: <DashboardIcon /> },
   { href: "/projects", label: "Manage Projects Users", icon: <GroupAddIcon /> },
   { href: "/manageUserRoles", label: "Manage Role Assignment", icon: <GroupIcon /> },
-  { href: "/", label: "My Projects", icon: <ReorderIcon /> },
+  { href: "/projects/myProjects", label: "My Projects", icon: <ReorderIcon /> },
   { href: "/", label: "My Tickets", icon: <ViewListIcon /> },
   { href: "/", label: "User Profile", icon: <PersonIcon /> },
 ];

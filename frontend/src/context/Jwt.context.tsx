@@ -4,6 +4,7 @@ import httpModule from "../helpers/http.module";
 type User = {
   username: string;
   jwtToken: string;
+  id: string;
 };
 
 type UserContext = {
@@ -30,7 +31,7 @@ export default function JwtProvider({ children }: JwtProviderProps) {
     await httpModule
       .post("SignInSignOut/Login", { username, password, rememberMe: false })
       .then((response) => {
-        setUser({ username: username, jwtToken: response.data });
+        setUser({ username: username, jwtToken: response.data.tokenString, id: response.data.userId });
         sessionStorage.setItem("User", JSON.stringify(user));
       })
       .catch((error) => console.log(error));

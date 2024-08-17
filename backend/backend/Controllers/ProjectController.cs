@@ -49,6 +49,26 @@ namespace backend.Controllers
             return Ok(convertedProjects);
         }
 
+        [HttpGet]
+        [Route("GetMyProjects")]
+        public async Task<ActionResult> GetMyProjects(string userId)
+        {
+            var myProjects = from p in _context.Projects
+                             from e in _context.Employees
+                             from pm in _context.ProjectsMembers
+                             where p.Id== pm.ProjectsId && e.Id==pm.MembersId && pm.MembersId == userId
+                             select new
+                             {
+                                 id = p.Id,
+                                 name = p.Name,
+                                 managerName = e.Name,
+                                 description = p.Description,
+                                 dateCreated = p.DateCreated,
+                             };
+            if (myProjects == null) { return Ok(); }
+            return Ok(myProjects);
+        }
+
 
         //Update
         [HttpPut]
