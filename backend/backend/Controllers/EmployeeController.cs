@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
-using backend.Core.DataTransfer;
 using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -55,6 +54,18 @@ namespace backend.Controllers
         }
 
 
+        [HttpPost]
+        [Route("AddRoleToEmployee")]
+        public async Task<ActionResult> AddRoleToEmployee(UserRoleCreateForm userRole)
+        {
+
+            Employee user = await _employeeManager.FindByIdAsync(userRole.userId);
+            await _employeeManager.AddToRoleAsync(user, userRole.roleName);
+
+            return Ok("Role Added");
+        }
+
+
 
         //Read
         [HttpGet]
@@ -92,14 +103,7 @@ namespace backend.Controllers
 
 
         //Update
-        [HttpGet]
-        [Route("AddRoleToEmployee")]
-        public async Task<ActionResult> AddRoleToEmployee(string roleName, string userId)
-        {
-            Employee user = await _employeeManager.FindByIdAsync(userId);
-            await _employeeManager.AddToRoleAsync(user, roleName);
-            return Ok("Role Added");
-        }
+        
 
 
         //Delete
