@@ -29,7 +29,7 @@ const ManageUserRoles = lazy(
 const AddUserRoles = lazy(
   () => import("./pages/manageUserRoles/AddUserRoles.page")
 );
-const MyProjects = lazy(()=>(import("./pages/myProjects/MyProjects.page")))
+const MyProjects = lazy(()=>(import("./pages/projects/MyProjects.page")))
 
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
