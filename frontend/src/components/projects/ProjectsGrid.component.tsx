@@ -47,7 +47,7 @@ const ProjectsGrid = ({ data }: IProjectGridProps) => {
         rows={data}
         columns={column}
         getRowId={(row) => row.id}
-        rowHeight={50}
+        getRowHeight={() => 'auto'}
       />
     </Box>
   );
