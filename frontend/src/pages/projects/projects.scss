@@ -5,6 +5,9 @@
         @include d-flex(row, space-between,center);
         width: 100%;
     }
+    *{
+        color: var(--text-color1);
+    }
 }
 
 .add-project{
