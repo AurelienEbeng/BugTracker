@@ -3,6 +3,7 @@ import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { IProject } from "../../types/global.typing";
 import moment from "moment";
+import "./projects-grid.scss"
 
 const column: GridColDef[] = [
   { field: "name", headerName: "Name", width: 200, flex: 1 },
@@ -20,6 +21,7 @@ const column: GridColDef[] = [
     flex: 1,
     renderCell: (params) => {
       return (
+        <div className="links">
         <Link
           to="/projects/details"
           state={{
@@ -30,6 +32,8 @@ const column: GridColDef[] = [
         >
           Details
         </Link>
+        <Link to="/">Manage Users</Link>
+        </div>
       );
     },
   },

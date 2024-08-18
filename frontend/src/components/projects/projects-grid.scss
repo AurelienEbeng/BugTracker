@@ -1,5 +1,11 @@
+@import "../../mixins";
 .projects-grid{
     *{
         color: var(--text-color1);
     }
+}
+
+.links{
+     @include d-flex(column,space-evenly,center);
+     height: 100%;
 }
