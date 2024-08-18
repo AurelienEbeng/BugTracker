@@ -1,24 +1,23 @@
-import { Box} from "@mui/material";
+import { Box } from "@mui/material";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { IProject } from "../../types/global.typing";
 import moment from "moment";
 
 const column: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 100, flex:1 },
-  { field: "name", headerName: "name", width: 200, flex:1 },
-  { field: "description", headerName: "Description", width: 200, flex:1 },
+  { field: "name", headerName: "Name", width: 200, flex: 1 },
+  { field: "description", headerName: "Description", width: 200, flex: 1 },
   {
     field: "dateCreated",
     headerName: "Creation Time",
     width: 200,
-    flex:1,
+    flex: 1,
     renderCell: (params) => moment(params.row.dateJoined).format("YYYY-MM--DD"),
   },
-  { field: "managerName", headerName: "Manager Name", width: 200, flex:1 },
+  { field: "managerName", headerName: "Manager Name", width: 200, flex: 1 },
   {
     field: "",
-    flex:1,
+    flex: 1,
     renderCell: (params) => {
       return (
         <Link
@@ -47,7 +46,7 @@ const ProjectsGrid = ({ data }: IProjectGridProps) => {
         rows={data}
         columns={column}
         getRowId={(row) => row.id}
-        getRowHeight={() => 'auto'}
+        getRowHeight={() => "auto"}
       />
     </Box>
   );
