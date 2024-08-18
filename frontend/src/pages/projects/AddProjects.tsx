@@ -24,14 +24,14 @@ const AddProjects = () => {
   const jwt = useJwt();
 
   useEffect(() => {
-    if (Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) {
+    if (!jwt.isLoggedIn()) {
       redirect("/signin", { replace: true });
       return;
     }
     let jwtToken = jwt.user.jwtToken;
 
     httpModule
-      .get<IEmployee[]>("/Employee/Get", {
+      .get<IEmployee[]>("/Employee/GetEmployees", {
         headers: { Authorization: "Bearer " + jwtToken },
       })
       .then((response) => {
@@ -53,11 +53,11 @@ const AddProjects = () => {
       .post("Project/Create", project, {
         headers: { Authorization: "Bearer " + jwtToken },
       })
-      .then((response) => redirect("/projects"))
+      .then((response) => redirect("/projects/myProjects"))
       .catch((error) => console.log(error));
   };
   const handleClickBackBtn = () => {
-    redirect("/projects");
+    redirect("/projects/myProjects");
   };
 
   return (
