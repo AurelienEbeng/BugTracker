@@ -44,7 +44,7 @@ const AddProjects = () => {
   }, []);
 
   const handleClickSaveBtn = () => {
-    if (project.name === "") {
+    if (project.name === "" || project.description==="" || project.managerId==="") {
       alert("Fill  all fields");
       return;
     }
