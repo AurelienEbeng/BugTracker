@@ -5,18 +5,20 @@ import { IProject } from "../../types/global.typing";
 import moment from "moment";
 
 const column: GridColDef[] = [
-  { field: "id", headerName: "ID", width: 100 },
-  { field: "name", headerName: "name", width: 200 },
-  { field: "description", headerName: "Description", width: 200 },
+  { field: "id", headerName: "ID", width: 100, flex:1 },
+  { field: "name", headerName: "name", width: 200, flex:1 },
+  { field: "description", headerName: "Description", width: 200, flex:1 },
   {
     field: "dateCreated",
     headerName: "Creation Time",
     width: 200,
+    flex:1,
     renderCell: (params) => moment(params.row.dateJoined).format("YYYY-MM--DD"),
   },
-  { field: "managerName", headerName: "Manager Name", width: 200 },
+  { field: "managerName", headerName: "Manager Name", width: 200, flex:1 },
   {
     field: "",
+    flex:1,
     renderCell: (params) => {
       return (
         <Link
