@@ -70,6 +70,7 @@ const AddProjects = () => {
           variant="outlined"
           value={project.name}
           onChange={(e) => setProject({ ...project, name: e.target.value })}
+          fullWidth
         />
         <TextField
           autoComplete="off"
@@ -79,6 +80,8 @@ const AddProjects = () => {
           onChange={(e) =>
             setProject({ ...project, description: e.target.value })
           }
+          multiline
+          fullWidth
         />
         <FormControl fullWidth>
           <InputLabel>Manager</InputLabel>
