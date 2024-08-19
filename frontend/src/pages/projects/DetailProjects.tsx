@@ -11,7 +11,7 @@ const DetailProjects = () => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const location = useLocation();
-  const { projectId, projectName } = location.state;
+  const { project } = location.state;
   const redirect = useNavigate();
   const jwt = useJwt();
 
@@ -24,7 +24,7 @@ const DetailProjects = () => {
 
     let jwtToken = jwt.user.jwtToken;
     httpModule
-      .get<ITicket[]>(`Ticket/Get/project/${projectId}`, {
+      .get<ITicket[]>(`Ticket/Get/project/${project.id}`, {
         headers: { Authorization: "Bearer " + jwtToken },
       })
       .then((response) => {
@@ -44,7 +44,7 @@ const DetailProjects = () => {
   return (
     <div className="content projects">
       <div className="heading">
-        <h1>Project Name: {projectName}</h1>
+        <h1>Project Name: {project.name}</h1>
         <Button variant="outlined" color="primary" onClick={handleEditBtn}>Edit</Button>
       </div>
 
