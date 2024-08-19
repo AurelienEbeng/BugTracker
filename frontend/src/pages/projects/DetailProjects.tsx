@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import "./projects.scss";
 import httpModule from "../../helpers/http.module";
 import { ITicket } from "../../types/global.typing";
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import ProjectTicketsGrid from "../../components/projects/ProjectTicketsGrid.component";
 import { useJwt } from "../../context/Jwt.context";
@@ -37,10 +37,15 @@ const DetailProjects = () => {
         setLoading(false);
       });
   }, []);
+  
+  function handleEditBtn(){
+    redirect("/projects/details/edit")
+  }
   return (
     <div className="content projects">
       <div className="heading">
         <h1>Project Name: {projectName}</h1>
+        <Button variant="outlined" color="primary" onClick={handleEditBtn}>Edit</Button>
       </div>
 
       {loading ? (
