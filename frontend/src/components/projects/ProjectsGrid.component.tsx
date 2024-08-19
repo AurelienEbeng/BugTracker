@@ -13,7 +13,7 @@ const column: GridColDef[] = [
     headerName: "Creation Time",
     width: 200,
     flex: 1,
-    renderCell: (params) => moment(params.row.dateJoined).format("YYYY-MM--DD"),
+    renderCell: (params) => moment(params.row.dateCreated).format("YYYY-MM-DD"),
   },
   { field: "managerName", headerName: "Manager Name", width: 200, flex: 1 },
   {
@@ -25,9 +25,13 @@ const column: GridColDef[] = [
         <Link
           to="/projects/details"
           state={{
-            projectId: `${params.row.id}`,
-            projectName: `${params.row.name}`,
-            projectDescription: `${params.row.description}`,
+            project:{
+              id:`${params.row.id}`,
+              name:`${params.row.name}`,
+              description:`${params.row.description}`,
+              dateCreated:`${params.row.dateCreated}`,
+              managerName:`${params.row.managerName}`
+            }
           }}
         >
           Details
