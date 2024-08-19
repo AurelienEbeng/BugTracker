@@ -11,7 +11,7 @@ const DetailProjects = () => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const location = useLocation();
-  const { projectId, projectDescription, projectName } = location.state;
+  const { projectId, projectName } = location.state;
   const redirect = useNavigate();
   const jwt = useJwt();
 
@@ -40,8 +40,7 @@ const DetailProjects = () => {
   return (
     <div className="content projects">
       <div className="heading">
-        <div>Project Name: {projectName}</div>
-        <div>Description: {projectDescription}</div>
+        <h1>Project Name: {projectName}</h1>
       </div>
 
       {loading ? (
