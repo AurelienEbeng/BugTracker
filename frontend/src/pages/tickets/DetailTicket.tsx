@@ -16,7 +16,7 @@ import TicketHistoriesGrid from "../../components/tickets/TicketHistoryGrid.comp
 import { Add } from "@mui/icons-material";
 import { useJwt } from "../../context/Jwt.context";
 
-const DetailTicket = () => {
+const Ticket = () => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [ticketAttachments, setTicketAttachments] = useState<
     ITicketAttachment[]
@@ -147,4 +147,4 @@ const DetailTicket = () => {
   );
 };
 
-export default DetailTicket;
+export default Ticket;
