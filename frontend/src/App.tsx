@@ -14,7 +14,7 @@ const AddEmployees = lazy(() => import("./pages/employees/AddEmployees.page"));
 const Projects = lazy(() => import("./pages/projects/Projects.page"));
 const AddProjects = lazy(() => import("./pages/projects/AddProjects"));
 const DetailProjects = lazy(() => import("./pages/projects/DetailProjects"));
-const DetailTicket = lazy(() => import("./pages/tickets/Ticket"));
+const Ticket = lazy(() => import("./pages/tickets/Ticket"));
 const AddTicketAttachment = lazy(
   () => import("./pages/tickets/AddTicketAttachment.page")
 );
@@ -62,7 +62,7 @@ const App = () => {
                 <Route index element={<Projects />} />
                 <Route path="add" element={<AddProjects />} />
                 <Route path="details" element={<DetailProjects />} />
-                <Route path="ticket" element={<DetailTicket />} />
+                <Route path="ticket" element={<Ticket />} />
                 <Route path="addAttachment" element={<AddTicketAttachment />} />
                 <Route path="myProjects" element= {<MyProjects />} />
                 <Route path="details/edit" element={<DetailProjectEdit />} />
