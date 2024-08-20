@@ -47,7 +47,6 @@ const DetailProjectEdit = () => {
         users.map((user) => {
           if (user.name === project.managerName) {
             updatedProject.managerId = user.id;
-            console.log(updatedProject);
           }
         });
         setLoading(false);
@@ -59,7 +58,30 @@ const DetailProjectEdit = () => {
       });
   }, []);
 
-  function handleClickSaveBtn() {}
+  function handleClickSaveBtn() {
+    if (
+      updatedProject.description === "" ||
+      updatedProject.managerId === "" ||
+      updatedProject.name === ""
+    ) {
+      alert("Fill all fields");
+      return;
+    }
+
+    setLoading(true);
+    httpModule
+      .put("/Project/Update", updatedProject, {
+        headers: { Authorization: "Bearer " + jwt.user.jwtToken },
+      })
+      .then(() => {
+        redirect("/projects/myProjects");
+      })
+      .catch((error) => {
+        alert("Error");
+        console.log(error);
+        setLoading(false);
+      });
+  }
 
   return (
     <div className="content">

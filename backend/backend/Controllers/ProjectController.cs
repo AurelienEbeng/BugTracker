@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
-using backend.Core.Dtos.Employee;
 using backend.Core.Dtos.Project;
 using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System.Net.Sockets;
+
 
 namespace backend.Controllers
 {
@@ -73,10 +71,12 @@ namespace backend.Controllers
         //Update
         [HttpPut]
         [Route("Update")]
-        public async Task<IActionResult> ChangeProjectManager(int projectId, string newManagerId) {
-            var project = _context.Projects.Where(p => p.Id == projectId).FirstOrDefault();
+        public async Task<IActionResult> UpdateProject(ProjectCreateDto updatedProject) {
+            var project = _context.Projects.Where(p => p.Id == updatedProject.Id).FirstOrDefault();
 
-            project.ManagerId = newManagerId;
+            project.ManagerId = updatedProject.ManagerId;
+            project.Name = updatedProject.Name;
+            project.Description = updatedProject.Description;
             await _context.SaveChangesAsync();
 
             return Ok("Project Manager Changed successfully");
