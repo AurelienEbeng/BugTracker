@@ -31,6 +31,8 @@ const AddUserRoles = lazy(
 );
 const MyProjects = lazy(()=>(import("./pages/projects/MyProjects.page")))
 
+const DetailProjectEdit= lazy(()=> import("./pages/projects/DetailProjectEdit"))
+
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
 
@@ -63,6 +65,7 @@ const App = () => {
                 <Route path="ticket" element={<DetailTicket />} />
                 <Route path="addAttachment" element={<AddTicketAttachment />} />
                 <Route path="myProjects" element= {<MyProjects />} />
+                <Route path="details/edit" element={<DetailProjectEdit />} />
                 {/* <Route path="ticket" element={<DetailTicket />}>
                 you can * at the end of path for subcategories
                 <Route
