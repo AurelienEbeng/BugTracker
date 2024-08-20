@@ -66,13 +66,6 @@ const App = () => {
                 <Route path="addAttachment" element={<AddTicketAttachment />} />
                 <Route path="myProjects" element= {<MyProjects />} />
                 <Route path="details/edit" element={<DetailProjectEdit />} />
-                {/* <Route path="ticket" element={<DetailTicket />}>
-                you can * at the end of path for subcategories
-                <Route
-                  path=":addAttachment"
-                  element={<AddTicketAttachment />}
-                />
-              </Route> */}
               </Route>
               <Route path="/signIn" element={<SignIn />} />
               <Route path="/logout" element={<Logout />} />
