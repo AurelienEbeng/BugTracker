@@ -14,7 +14,7 @@ const AddEmployees = lazy(() => import("./pages/employees/AddEmployees.page"));
 const Projects = lazy(() => import("./pages/projects/Projects.page"));
 const AddProjects = lazy(() => import("./pages/projects/AddProjects"));
 const DetailProjects = lazy(() => import("./pages/projects/DetailProjects"));
-const DetailTicket = lazy(() => import("./pages/tickets/DetailTicket"));
+const DetailTicket = lazy(() => import("./pages/tickets/Ticket"));
 const AddTicketAttachment = lazy(
   () => import("./pages/tickets/AddTicketAttachment.page")
 );
