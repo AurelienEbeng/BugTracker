@@ -1,5 +1,5 @@
 import {
-    Button,
+  Button,
   CircularProgress,
   FormControl,
   InputLabel,
@@ -8,23 +8,23 @@ import {
   TextField,
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { IEmployee, IProject } from "../../types/global.typing";
 import { useJwt } from "../../context/Jwt.context";
 import httpModule from "../../helpers/http.module";
-import "./projects.scss"
+import "./projects.scss";
 
 const DetailProjectEdit = () => {
   const location = useLocation();
   const { project } = location.state;
   const [updatedProject, setUpdatedProject] = useState(() => {
-    return { 
-        id:project.id,
-        name: project.name,
-        description: project.description,
-        dateCreated: project.dateCreated,
-        managerId:""
-     };
+    return {
+      id: project.id,
+      name: project.name,
+      description: project.description,
+      dateCreated: project.dateCreated,
+      managerId: "",
+    };
   });
   const [users, setUsers] = useState<IEmployee[]>([]);
   const jwt = useJwt();
@@ -44,12 +44,12 @@ const DetailProjectEdit = () => {
       })
       .then((response) => {
         setUsers(response.data);
-        users.map(user=>{
-            if(user.name=== project.managerName){
-                updatedProject.managerId = user.id
-                console.log(updatedProject)
-            }
-        })
+        users.map((user) => {
+          if (user.name === project.managerName) {
+            updatedProject.managerId = user.id;
+            console.log(updatedProject);
+          }
+        });
         setLoading(false);
       })
       .catch((error) => {
@@ -59,9 +59,7 @@ const DetailProjectEdit = () => {
       });
   }, []);
 
-  function handleClickBackBtn(){}
-
-  function handleClickSaveBtn(){}
+  function handleClickSaveBtn() {}
 
   return (
     <div className="content">
@@ -127,7 +125,6 @@ const DetailProjectEdit = () => {
                   managerId: e.target.value,
                 })
               }
-              
             >
               {users.map((user) => (
                 <MenuItem key={user.id} value={user.id}>
@@ -137,8 +134,18 @@ const DetailProjectEdit = () => {
             </Select>
           </FormControl>
           <div className="btns">
-            <Button variant="outlined" color="primary" onClick={handleClickBackBtn}>Back</Button>
-            <Button variant="outlined" color="primary" onClick={handleClickSaveBtn}>Save</Button>
+            <Link to="/projects/details" state={{ project }}>
+              <Button variant="outlined" color="primary">
+                Back
+              </Button>
+            </Link>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={handleClickSaveBtn}
+            >
+              Save
+            </Button>
           </div>
         </div>
       )}
