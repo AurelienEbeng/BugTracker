@@ -14,11 +14,11 @@ namespace backend.Controllers
     
     public class SignInSignOutController : ControllerBase
     {
-        private readonly SignInManager<Employee> _signInManager;
-        private readonly UserManager<Employee> _employeeManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _employeeManager;
         private readonly IAuthService _authService;
-        public SignInSignOutController(SignInManager<Employee>
-            signInManager, UserManager<Employee> userManager,
+        public SignInSignOutController(SignInManager<User>
+            signInManager, UserManager<User> userManager,
             ApplicationDBContext context, RoleManager<Role> roleManager,
             IAuthService authService, 
             IMapper mapper)

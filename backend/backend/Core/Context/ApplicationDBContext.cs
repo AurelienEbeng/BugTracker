@@ -1,4 +1,5 @@
-﻿using backend.Core.Entities;
+﻿using backend.Core.DataTransfer;
+using backend.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -7,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backend.Core.Context
 {
-    public class ApplicationDBContext : IdentityDbContext<Employee, Role, string,
+    public class ApplicationDBContext : IdentityDbContext<User, Role, string,
         IdentityUserClaim<string>, UserRole, IdentityUserLogin<string>,
         IdentityRoleClaim<string>, IdentityUserToken<string>>
     {
@@ -21,10 +22,8 @@ namespace backend.Core.Context
         public DbSet<TicketComment> TicketComments { get; set; }
         public DbSet<TicketHistory> TicketHistories { get; set; }
         public DbSet<Project> Projects { get; set; }
-        public DbSet<Employee> Employees { get; set; }
-        public DbSet<NotificationsEmployees> NotificationsEmployees { get; set; }
-        public DbSet<Notification> Notification { get; set; }
-        public DbSet<ProjectMember> ProjectsMembers { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<ProjectMember> ProjectMembers { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -36,15 +35,15 @@ namespace backend.Core.Context
 
             //Many to many relationship
             //An employee can work on several projects and a project can have several employees
-            modelBuilder.Entity<Employee>()
+            modelBuilder.Entity<User>()
                 .HasMany(employee => employee.Projects)
                 .WithMany(project => project.Members)
                 .UsingEntity<ProjectMember>(
-                projectMember => projectMember.HasOne(prop => prop.Project).WithMany().HasForeignKey(prop => prop.ProjectsId),
-                projectMember=> projectMember.HasOne(prop => prop.Employee).WithMany().HasForeignKey(prop=> prop.MembersId),
+                projectMember => projectMember.HasOne(prop => prop.Project).WithMany().HasForeignKey(prop => prop.ProjectId),
+                projectMember=> projectMember.HasOne(prop => prop.Member).WithMany().HasForeignKey(prop=> prop.MemberId),
                 projectMember =>
                 {
-                    projectMember.HasKey(prop => new { prop.ProjectsId, prop.MembersId });
+                    projectMember.HasKey(prop => new { prop.ProjectId, prop.MemberId });
                     projectMember.Property(prop => prop.DateAdded).HasDefaultValueSql("GETUTCDATE()");
                 }
                 );
@@ -83,9 +82,9 @@ namespace backend.Core.Context
 
             //ticket history to employee 
             modelBuilder.Entity<TicketHistory>()
-                .HasOne(ticketHistory => ticketHistory.Employee)
+                .HasOne(ticketHistory => ticketHistory.Creator)
                 .WithMany(employee => employee.TicketHistories)
-                .HasForeignKey(ticketHistory => ticketHistory.EmployeeId);
+                .HasForeignKey(ticketHistory => ticketHistory.CreatorId);
 
             //ticket attachment to ticket
             modelBuilder.Entity<TicketAttachment>()
@@ -100,49 +99,7 @@ namespace backend.Core.Context
                 .HasForeignKey(ticketAttachment => ticketAttachment.UploaderId);
 
 
-            modelBuilder.Entity<NotificationsEmployees>()
-                .HasOne(notificationsEmployees => notificationsEmployees.Notification)
-                .WithMany(notification => notification.NotificationsEmployees)
-                .HasForeignKey(notificationsEmployees => notificationsEmployees.NotificationId);
-
-            modelBuilder.Entity<NotificationsEmployees>()
-                .HasOne(notificationsEmployees => notificationsEmployees.ToEmployee)
-                .WithMany(employee => employee.NotificationsEmployees)
-                .HasForeignKey(notificationsEmployees => notificationsEmployees.ToEmployeeId);
-
-
-            modelBuilder.Entity<NotificationsEmployees>()
-                .HasKey(notificationsEmployees => 
-                new { notificationsEmployees.NotificationId,notificationsEmployees.ToEmployeeId });
-
-
-
-
-            //To change the default names of Identity tables
-            modelBuilder.Entity<Employee>(
-                entity => entity.ToTable(name: "Employees"));
-
-            modelBuilder.Entity<Role>(
-               entity => entity.ToTable(name: "Roles"));
-
-            modelBuilder.Entity<UserRole>(
-               entity => entity.ToTable(name: "EmployeesRoles"));
-
-            modelBuilder.Entity<IdentityUserClaim<string>>(
-               entity => entity.ToTable(name: "EmployeesClaims"));
-
-            modelBuilder.Entity<IdentityUserLogin<string>>(
-               entity => entity.ToTable(name: "EmployeesLogins"));
-
-            modelBuilder.Entity<IdentityRoleClaim<string>>(
-               entity => entity.ToTable(name: "RolesClaims"));
-
-            modelBuilder.Entity<IdentityUserToken<string>>(
-               entity => entity.ToTable(name: "EmployeesTokens"));
-
-
-
-            modelBuilder.Entity<Employee>(b =>
+            modelBuilder.Entity<User>(b =>
             {
                 b.HasMany(e => e.UserRoles)
                 .WithOne(e => e.Employee)
@@ -157,6 +114,44 @@ namespace backend.Core.Context
                     .HasForeignKey(ur => ur.RoleId)
                     .IsRequired();
             });
+
+            // AssignedDeveloperId Foreign key
+            modelBuilder.Entity<Ticket>(b =>
+            {
+                b.HasOne(ticket => ticket.AssignedDeveloper)
+                .WithMany(employee => employee.AssignedTickets)
+                .HasForeignKey(ticket => ticket.AssignedDeveloperId);
+            });
+
+            // CreatorID Foreign key
+            modelBuilder.Entity<Ticket>(b =>
+            {
+                b.HasOne(ticket => ticket.Creator)
+                .WithMany(employee => employee.CreatedTickets)
+                .HasForeignKey(ticket => ticket.CreatorId);
+            });
+
+            //To change the default names of Identity tables
+            modelBuilder.Entity<User>(
+                entity => entity.ToTable(name: "Users"));
+
+            modelBuilder.Entity<Role>(
+               entity => entity.ToTable(name: "Roles"));
+
+            modelBuilder.Entity<UserRole>(
+               entity => entity.ToTable(name: "UserRoles"));
+
+            modelBuilder.Entity<IdentityUserClaim<string>>(
+               entity => entity.ToTable(name: "UserClaims"));
+
+            modelBuilder.Entity<IdentityUserLogin<string>>(
+               entity => entity.ToTable(name: "UserLogins"));
+
+            modelBuilder.Entity<IdentityRoleClaim<string>>(
+               entity => entity.ToTable(name: "RoleClaims"));
+
+            modelBuilder.Entity<IdentityUserToken<string>>(
+               entity => entity.ToTable(name: "UserTokens"));
 
         }
 

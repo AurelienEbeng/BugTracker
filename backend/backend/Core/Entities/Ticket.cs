@@ -8,9 +8,9 @@ namespace backend.Core.Entities
         public int Id { get; set; }
         public string Title {  get; set; }
         public string Description { get; set; }
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreated { get; set; } = DateTime.UtcNow;
         public TicketStatus Status { get; set; }
-        public string Type { get; set; }
+        public TicketType Type { get; set; }
         public TicketPriority Priority { get; set; }
 
         //Relations
@@ -21,7 +21,10 @@ namespace backend.Core.Entities
         public ICollection<TicketAttachment> TicketAttachments { get; set; }
 
         public ICollection<TicketHistory> TicketHistories { get; set; }
-
+        public string CreatorId { get; set; }
+        public User Creator { get; set; }
+        public string AssignedDeveloperId { get; set; }
+        public User AssignedDeveloper { get; set; }
 
 
     }

@@ -1,6 +1,6 @@
 ﻿namespace backend.Core.Dtos.Employee
 {
-    public class EmployeeCreateDto
+    public class UserCreateDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

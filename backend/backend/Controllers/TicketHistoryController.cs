@@ -44,7 +44,7 @@ namespace backend.Controllers
         public async Task<ActionResult<IEnumerable<TicketHistoryGetDto>>> GetTicketHistory()
         {
             var ticketHistory = await _context.TicketHistories.Include(ticketHistory => ticketHistory.Ticket)
-                                                               .Include(ticketHistory => ticketHistory.Employee).ToListAsync();
+                                                               .Include(ticketHistory => ticketHistory.Creator).ToListAsync();
             var convertedTicketHistory = _mapper.Map<IEnumerable<TicketHistoryGetDto>>(ticketHistory);
             return Ok(convertedTicketHistory);
         }
@@ -55,7 +55,7 @@ namespace backend.Controllers
         public async Task<ActionResult<IEnumerable<TicketHistoryGetDto>>> GetTicketHistory(int ticketId)
         {
             var ticketHistory = await _context.TicketHistories.Include(ticketHistory => ticketHistory.Ticket)
-                                                               .Include(ticketHistory => ticketHistory.Employee)
+                                                               .Include(ticketHistory => ticketHistory.Creator)
                                                                .Where(ticketHistory=> ticketHistory.TicketId==ticketId)
                                                                .ToListAsync();
             var convertedTicketHistory = _mapper.Map<IEnumerable<TicketHistoryGetDto>>(ticketHistory);

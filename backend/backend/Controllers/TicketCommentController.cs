@@ -39,9 +39,6 @@ namespace backend.Controllers
 
             var ticket = _context.Tickets.Where(ticket => ticket.Id == newTicketComment.TicketId).First();
 
-            string notificationMessage = $"A new comment has been added to Ticket: {ticket.Title}";
-            NotificationController c = new NotificationController(_context, _mapper);
-            await c.CreateNotificationAndAddToAllMembersOfOneProject(notificationMessage, ticket.ProjectId);
 
 
             return Ok("Ticket Comment Created successfully");

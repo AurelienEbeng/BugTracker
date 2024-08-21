@@ -2,10 +2,10 @@
 
 namespace backend.Core.Entities
 {
-    public class Employee : IdentityUser
+    public class User : IdentityUser
     {
         public string Name { get; set; }
-        public DateTime DateJoined { get; set; } = DateTime.Now;
+        public DateTime DateJoined { get; set; } = DateTime.UtcNow;
 
         //Relationships
         public ICollection<TicketComment> TicketComments { get; set; }
@@ -13,7 +13,8 @@ namespace backend.Core.Entities
         public ICollection<Project> ManagedProjects { get; set; }
         public ICollection<TicketHistory> TicketHistories { get; set; }
         public ICollection<TicketAttachment> TicketAttachments { get; set; }
-        public ICollection<NotificationsEmployees> NotificationsEmployees { get; set; }
         public ICollection<UserRole> UserRoles { get; set; }
+        public ICollection<Ticket> AssignedTickets { get; set; }
+        public ICollection<Ticket> CreatedTickets { get; set; }
     }
 }

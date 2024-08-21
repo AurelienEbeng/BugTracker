@@ -35,13 +35,11 @@ namespace backend.Controllers
             if(project.ManagerId == EmployeeId.Id || "bb1c27a0-38fb-4594-abcb-bd8620a03306"==EmployeeId.Id)
             {
                 //Only the admin or the project manager can add an employee to a project
-                var newProjectMember = new ProjectMember() { MembersId = dto.MembersId, ProjectsId = dto.ProjectsId };
+                var newProjectMember = new ProjectMember() { MemberId = dto.MembersId, ProjectId = dto.ProjectsId };
 
-                string notificationMessage = $"Another employee has been added to project {project.Name}";
-                NotificationController c = new NotificationController(_context, _mapper);
-                await c.CreateNotificationAndAddToAllMembersOfOneProject(notificationMessage, project.Id);
+                
 
-                await _context.ProjectsMembers.AddAsync(newProjectMember);
+                await _context.ProjectMembers.AddAsync(newProjectMember);
                 await _context.SaveChangesAsync();
                 return Ok("Project Member added successfully");
             }
@@ -58,7 +56,7 @@ namespace backend.Controllers
         [Route("Get")]
         public async Task<ActionResult<IEnumerable<ProjectMemberGetDto>>> GetProjects()
         {
-            var projectMembers = await _context.ProjectsMembers.ToListAsync();
+            var projectMembers = await _context.ProjectMembers.ToListAsync();
             var convertedProjectMembers = _mapper.Map<IEnumerable<ProjectMemberGetDto>>(projectMembers);
             return Ok(convertedProjectMembers);
 
@@ -73,7 +71,7 @@ namespace backend.Controllers
         public async Task<IActionResult> Delete(int projectId, string employeeId)
         {
 
-            await _context.ProjectsMembers.Where(p => p.ProjectsId== projectId && p.MembersId == employeeId).ExecuteDeleteAsync();
+            await _context.ProjectMembers.Where(p => p.ProjectId== projectId && p.MemberId == employeeId).ExecuteDeleteAsync();
             return Ok("Deleted");
 
         }

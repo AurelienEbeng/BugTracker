@@ -13,13 +13,13 @@ namespace backend.Controllers
     [Authorize(Roles ="Admin")]
     public class EmployeeController : ControllerBase
     {
-        private readonly SignInManager<Employee> _signInManager;
-        private readonly UserManager<Employee> _employeeManager;
+        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<User> _employeeManager;
         private ApplicationDBContext _context { get; }
 
         public static string employeeId;
-        public EmployeeController(SignInManager<Employee>
-            signInManager, UserManager<Employee> userManager,
+        public EmployeeController(SignInManager<User>
+            signInManager, UserManager<User> userManager,
             ApplicationDBContext context, RoleManager<Role> roleManager,
             IMapper mapper)
         {
@@ -33,9 +33,9 @@ namespace backend.Controllers
         //Create
         [HttpPost]
         [Route("Create")]
-        public async Task<IActionResult> Create(CreateEmployeeForm submittedInfo)
+        public async Task<IActionResult> Create(CreateUserForm submittedInfo)
         {
-            Employee user = new()
+            User user = new()
             {
                 Name = submittedInfo.Name,
                 UserName = submittedInfo.Email,
@@ -59,7 +59,7 @@ namespace backend.Controllers
         public async Task<ActionResult> AddRoleToEmployee(UserRoleCreateForm userRole)
         {
 
-            Employee user = await _employeeManager.FindByIdAsync(userRole.userId);
+            User user = await _employeeManager.FindByIdAsync(userRole.userId);
             await _employeeManager.AddToRoleAsync(user, userRole.roleName);
 
             return Ok("Role Added");
@@ -83,7 +83,7 @@ namespace backend.Controllers
             //var model = await _context.UserRoles.ToListAsync();
 
 
-            var model = from e in _context.Employees
+            var model = from e in _context.Users
                         from ur in _context.UserRoles
                         from r in _context.Roles
                         where e.Id == ur.UserId

@@ -7,14 +7,14 @@ namespace backend.Core.Entities
         public int Id { get; set; }
         
         public string Message { get; set; }
-        public DateTime DateCreated {  get; set; } = DateTime.Now;
+        public DateTime DateCreated {  get; set; } = DateTime.UtcNow;
         
         //Relations
         public int TicketId { get; set; }
         public Ticket Ticket { get; set; }
 
         public string CommenterId { get; set; } = EmployeeId.Id;
-        public Employee Commenter{ get; set; }
+        public User Commenter{ get; set; }
 
 
     }

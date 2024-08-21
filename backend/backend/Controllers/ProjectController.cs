@@ -52,9 +52,9 @@ namespace backend.Controllers
         public async Task<ActionResult> GetMyProjects(string userId)
         {
             var myProjects = from p in _context.Projects
-                             from e in _context.Employees
-                             from pm in _context.ProjectsMembers
-                             where p.Id== pm.ProjectsId && e.Id==pm.MembersId && pm.MembersId == userId
+                             from e in _context.Users
+                             from pm in _context.ProjectMembers
+                             where p.Id== pm.ProjectId && e.Id==pm.MemberId && pm.MemberId == userId
                              select new
                              {
                                  id = p.Id,

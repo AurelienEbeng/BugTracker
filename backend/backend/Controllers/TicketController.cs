@@ -95,7 +95,7 @@ namespace backend.Controllers
             var ticketHistory = new TicketHistory();
             ticketHistory.Property = property;
             ticketHistory.NewValue= newValue;
-            ticketHistory.EmployeeId = EmployeeId.Id;
+            ticketHistory.CreatorId = EmployeeId.Id;
             ticketHistory.TicketId = ticketId;
 
             
@@ -110,10 +110,10 @@ namespace backend.Controllers
                     ticket.Status = TicketStatus.OPEN;
                     
                 }
-                else if(newValue=="CLOSE")
+                else if(newValue=="RESOLVED")
                 {
                     ticketHistory.OldValue = ticket.Status.ToString();
-                    ticket.Status = TicketStatus.CLOSE;
+                    ticket.Status = TicketStatus.RESOLVED;
                 }
 
                
@@ -139,10 +139,6 @@ namespace backend.Controllers
 
 
 
-            
-            string notificationMessage = $"Ticket: {ticket.Title} {property} updated from {ticketHistory.OldValue} to {newValue}";
-            NotificationController c = new NotificationController(_context, _mapper);
-            await c.CreateNotificationAndAddToAllMembersOfOneProject(notificationMessage,ticket.ProjectId);
             
             await _context.TicketHistories.AddAsync(ticketHistory);
             _context.SaveChanges();
