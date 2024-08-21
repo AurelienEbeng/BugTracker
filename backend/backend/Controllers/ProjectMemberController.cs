@@ -31,11 +31,11 @@ namespace backend.Controllers
         [Route("AssignEmployeesToProject")]
         public async Task<IActionResult> AssignEmployeesToProject([FromBody] ProjectMemberCreateDto dto)
         {
-            var project = _context.Projects.Where(p => p.Id == dto.ProjectsId).First();
+            var project = _context.Projects.Where(p => p.Id == dto.ProjectId).First();
             if(project.ManagerId == EmployeeId.Id || "bb1c27a0-38fb-4594-abcb-bd8620a03306"==EmployeeId.Id)
             {
                 //Only the admin or the project manager can add an employee to a project
-                var newProjectMember = new ProjectMember() { MemberId = dto.MembersId, ProjectId = dto.ProjectsId };
+                var newProjectMember = new ProjectMember() { MemberId = dto.MemberId, ProjectId = dto.ProjectId };
 
                 
 

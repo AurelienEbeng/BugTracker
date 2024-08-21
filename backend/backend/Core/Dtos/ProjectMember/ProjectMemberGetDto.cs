@@ -2,8 +2,8 @@
 {
     public class ProjectMemberGetDto
     {
-        public int ProjectsId { get; set; }
-        public string MembersId { get; set; }
+        public int ProjectId { get; set; }
+        public string MemberId { get; set; }
         public DateTime DateAdded { get; set; }
     }
 }
