@@ -55,6 +55,8 @@ export interface ICreateTicketDto {
   type: string;
   priority: string;
   projectId: string;
+  assignedDeveloperId: string;
+  creatorId: string;
 }
 
 export interface ITicketAttachment {
