@@ -33,6 +33,8 @@ const MyProjects = lazy(()=>(import("./pages/projects/MyProjects.page")))
 
 const DetailProjectEdit= lazy(()=> import("./pages/projects/DetailProjectEdit"))
 
+const AddTicket = lazy(()=> import("./pages/tickets/AddTicket"))
+
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
 
@@ -74,6 +76,7 @@ const App = () => {
                 <Route index element={<ManageUserRoles />} />
                 <Route path="add" element={<AddUserRoles />} />
               </Route>
+              <Route path="/projects/details/addTicket" element={<AddTicket />} />
             </Routes>
           </Suspense>
         </div>

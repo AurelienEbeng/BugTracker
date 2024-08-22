@@ -44,7 +44,12 @@ const DetailProjects = () => {
         <h1>Project Name: {project.name}</h1>
         <Link to="/projects/details/edit" state={{ project }}>
           <Button variant="outlined" color="primary">
-            Edit
+            Edit Project
+          </Button>
+        </Link>
+        <Link to="/projects/details/addTicket" state={{ project }}>
+          <Button variant="outlined" color="primary">
+            Add Ticket
           </Button>
         </Link>
       </div>
