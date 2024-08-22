@@ -6,6 +6,8 @@ using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System.ComponentModel;
 using System.Net.Sockets;
 
 namespace backend.Controllers
@@ -53,13 +55,28 @@ namespace backend.Controllers
 
         //Read
         [HttpGet]
-        [Route("Get")]
-        public async Task<ActionResult<IEnumerable<ProjectMemberGetDto>>> GetProjects()
+        [Route("GetAll")]
+        public async Task<ActionResult<IEnumerable<ProjectMemberGetDto>>> GetAllProjectMembers()
         {
             var projectMembers = await _context.ProjectMembers.ToListAsync();
             var convertedProjectMembers = _mapper.Map<IEnumerable<ProjectMemberGetDto>>(projectMembers);
             return Ok(convertedProjectMembers);
 
+        }
+
+        [HttpGet]
+        [Route("Get")]
+        public async Task<ActionResult> GetProjectMembers ( int projectId)
+        {
+            var projectMembers = from pm in _context.ProjectMembers
+                                where pm.ProjectId == projectId
+                                select new
+                                {
+                                    projectId= pm.ProjectId,
+                                    memberId= pm.MemberId,
+                                    dateAdded= pm.DateAdded
+                                };
+            return Ok(projectMembers);
         }
 
 
