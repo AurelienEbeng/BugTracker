@@ -9,7 +9,7 @@ namespace backend.Core.Dtos.Ticket
         public string Description { get; set; }
         public DateTime DateCreated { get; set; }
         public TicketStatus Status { get; set; }
-        public string Type { get; set; }
+        public TicketType Type { get; set; }
         public TicketPriority Priority { get; set; }
 
 
