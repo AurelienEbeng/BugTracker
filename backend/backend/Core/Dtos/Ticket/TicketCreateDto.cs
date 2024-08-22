@@ -15,5 +15,7 @@ namespace backend.Core.Dtos.Ticket
 
 
         public int ProjectId { get; set; }
+        public string CreatorId { get; set; }
+        public string AssignedDeveloperId { get; set; }
     }
 }
