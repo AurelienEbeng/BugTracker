@@ -45,6 +45,10 @@ export interface ITicket {
   priority: string;
   projectId: string;
   projectName: string;
+  assignedDeveloperId:string,
+  assignedDeveloperName: string,
+  creatorId: string,
+  creatorName: string,
 }
 
 export interface ICreateTicketDto {

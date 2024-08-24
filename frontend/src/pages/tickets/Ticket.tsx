@@ -15,6 +15,7 @@ import TicketCommentsGrid from "../../components/tickets/TicketCommentsGrid.comp
 import TicketHistoriesGrid from "../../components/tickets/TicketHistoryGrid.component";
 import { Add } from "@mui/icons-material";
 import { useJwt } from "../../context/Jwt.context";
+import TicketDetails from "./TicketDetails";
 
 const Ticket = () => {
   const [tickets, setTickets] = useState<ITicket[]>([]);
@@ -28,6 +29,7 @@ const Ticket = () => {
   const { ticketId } = location.state;
   const redirect = useNavigate();
   const jwt = useJwt();
+  const [ticket,setTicket] = useState<ITicket>({} as ITicket)
 
   useEffect(() => {
     setLoading(true);
@@ -42,6 +44,7 @@ const Ticket = () => {
       })
       .then((response) => {
         setTickets(response.data);
+        tickets.map(t=> setTicket(t))
         setLoading(false);
       })
       .catch((error) => {
@@ -103,7 +106,7 @@ const Ticket = () => {
       ) : tickets.length === 0 ? (
         <h1>No Tickets</h1>
       ) : (
-        <TicketsGrid data={tickets} />
+        <TicketDetails ticket={ticket} />
       )}
 
       <div className="heading">
