@@ -69,12 +69,14 @@ namespace backend.Controllers
         public async Task<ActionResult> GetProjectMembers ( int projectId)
         {
             var projectMembers = from pm in _context.ProjectMembers
-                                where pm.ProjectId == projectId
+                                 from u in _context.Users
+                                where pm.ProjectId == projectId && pm.MemberId == u.Id
                                 select new
                                 {
                                     projectId= pm.ProjectId,
                                     memberId= pm.MemberId,
-                                    dateAdded= pm.DateAdded
+                                    dateAdded= pm.DateAdded,
+                                    username= u.UserName
                                 };
             return Ok(projectMembers);
         }
