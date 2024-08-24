@@ -18,6 +18,7 @@ import { useJwt } from "../../context/Jwt.context";
 import TicketDetails from "./TicketDetails";
 
 const Ticket = () => {
+  const [ticket, setTicket] = useState<ITicket>({} as ITicket);
   const [tickets, setTickets] = useState<ITicket[]>([]);
   const [ticketAttachments, setTicketAttachments] = useState<
     ITicketAttachment[]
@@ -29,8 +30,7 @@ const Ticket = () => {
   const { ticketId } = location.state;
   const redirect = useNavigate();
   const jwt = useJwt();
-  const [ticket,setTicket] = useState<ITicket>({} as ITicket)
-
+  /*
   useEffect(() => {
     setLoading(true);
     if (Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) {
@@ -44,7 +44,6 @@ const Ticket = () => {
       })
       .then((response) => {
         setTickets(response.data);
-        tickets.map(t=> setTicket(t))
         setLoading(false);
       })
       .catch((error) => {
@@ -94,58 +93,40 @@ const Ticket = () => {
         console.log(error);
         setLoading(false);
       });
-  }, []);
+  }, []); */
   return (
     <div className="content tickets">
-      <div className="heading">
-        <div>Ticket id: {ticketId}</div>
+      <div className="row">
+        <div className="tickets-details">
+          <TicketDetails ticket={ticket} />
+        </div>
+        <div className="tickets-attachments">
+          <div className="heading">
+            <div>Ticket Attachment</div>
+          </div>
+          <Button
+            variant="outlined"
+            onClick={() => redirect("/projects/addAttachment")}
+          >
+            <Add />
+          </Button>
+          <TicketAttachmentsGrid data={ticketAttachments} />
+        </div>
       </div>
-
-      {loading ? (
-        <CircularProgress size={100} />
-      ) : tickets.length === 0 ? (
-        <h1>No Tickets</h1>
-      ) : (
-        <TicketDetails ticket={ticket} />
-      )}
-
-      <div className="heading">
-        <div>Ticket Attachment</div>
+      <div className="row">
+        <div className="tickets-comments">
+          <div className="heading">
+            <div>Ticket Comments</div>
+          </div>
+          <TicketCommentsGrid data={ticketComments} />
+        </div>
+        <div className="tickets-history">
+          <div className="heading">
+            <div>Ticket History</div>
+          </div>
+          <TicketHistoriesGrid data={ticketHistories} />
+        </div>
       </div>
-      <Button
-        variant="outlined"
-        onClick={() => redirect("/projects/addAttachment")}
-      >
-        <Add />
-      </Button>
-
-      {loading ? (
-        <CircularProgress size={100} />
-      ) : tickets.length === 0 ? (
-        <h1>No Tickets</h1>
-      ) : (
-        <TicketAttachmentsGrid data={ticketAttachments} />
-      )}
-      <div className="heading">
-        <div>Ticket Comments</div>
-      </div>
-      {loading ? (
-        <CircularProgress size={100} />
-      ) : tickets.length === 0 ? (
-        <h1>No Tickets</h1>
-      ) : (
-        <TicketCommentsGrid data={ticketComments} />
-      )}
-      <div className="heading">
-        <div>Ticket History</div>
-      </div>
-      {loading ? (
-        <CircularProgress size={100} />
-      ) : tickets.length === 0 ? (
-        <h1>No Tickets</h1>
-      ) : (
-        <TicketHistoriesGrid data={ticketHistories} />
-      )}
     </div>
   );
 };
