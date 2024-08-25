@@ -9,8 +9,9 @@
     gap: 1rem;
 
     .row{
-        @include d-flex(row,center,center);
+        @include d-flex(row,space-evenly,center);
         gap: 1rem;
+        width: 100%;
     }
 }
 
