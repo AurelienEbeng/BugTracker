@@ -9,9 +9,10 @@
     gap: 1rem;
 
     .row{
-        @include d-flex(row,space-evenly,center);
-        gap: 1rem;
+        display: grid;
+        grid-template-columns: auto auto;
         width: 100%;
+        grid-column-gap: 20px;
     }
 }
 
