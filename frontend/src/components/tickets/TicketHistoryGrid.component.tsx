@@ -4,18 +4,18 @@ import { ITicketHistory } from "../../types/global.typing";
 import moment from "moment";
 
 const column: GridColDef[] = [
-  { field: "oldValue", headerName: "Old Value", width: 200 },
-  { field: "newValue", headerName: "New Value", width: 200 },
+  { field: "oldValue", headerName: "Old Value", flex: 1 },
+  { field: "newValue", headerName: "New Value", flex: 1 },
   {
     field: "dateModified",
     headerName: "Modification Time",
-    width: 200,
+    flex: 1,
     renderCell: (params) =>
       moment(params.row.dateModified).format("YYYY-MM--DD"),
   },
-  { field: "property", headerName: "Property", width: 200 },
+  { field: "property", headerName: "Property", flex: 1 },
 
-  { field: "employeeName", headerName: "Employee Name", width: 200 },
+  { field: "employeeName", headerName: "Employee Name", flex: 1 },
 ];
 
 interface ITicketHistoriesGridProps {
