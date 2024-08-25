@@ -4,12 +4,12 @@ import { ITicketComment } from "../../types/global.typing";
 import moment from "moment";
 
 const column: GridColDef[] = [
-  { field: "message", headerName: "Message", width: 200 },
-  { field: "commenterName", headerName: "Commenter Name", width: 200 },
+  { field: "message", headerName: "Message", flex: 1 },
+  { field: "commenterName", headerName: "Commenter Name", flex: 1 },
   {
     field: "dateCreated",
     headerName: "Creation Time",
-    width: 200,
+    flex: 1,
     renderCell: (params) => moment(params.row.dateJoined).format("YYYY-MM--DD"),
   },
 ];
