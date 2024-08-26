@@ -64,12 +64,30 @@ namespace backend.Controllers
 
         [HttpGet]
         [Route("Get/{ticketId}")]
-        public async Task<ActionResult<IEnumerable<TicketGetDto>>> GetTicket(int ticketId)
+        public async Task<ActionResult> GetTicket(int ticketId)
         {
-            var ticket = await _context.Tickets.Include(ticket => ticket.Project)
-                                                .Where(ticket => ticket.Id == ticketId).ToListAsync();
-            var convertedTickets = _mapper.Map<IEnumerable<TicketGetDto>>(ticket);
-            return Ok(convertedTickets);
+            var ticket = from t in _context.Tickets
+                         from p in _context.Projects
+                         from a in _context.Users
+                         from c in _context.Users
+                         where t.Id == ticketId && p.Id == t.ProjectId && a.Id == t.AssignedDeveloperId && c.Id == t.CreatorId
+                         select new
+                         {
+                             id = t.Id,
+                             title = t.Title,
+                             description = t.Description,
+                             dateCreated = t.DateCreated,
+                             status = t.Status,
+                             type = t.Type,
+                             priority = t.Priority,
+                             projectId = t.ProjectId,
+                             projectName = p.Name,
+                             assignedDeveloperId = t.AssignedDeveloperId,
+                             assignedDeveloperName = a.UserName,
+                             creatorId = c.Id,
+                             creatorName = c.UserName,
+                         };
+            return Ok(ticket);
         }
 
         //Update

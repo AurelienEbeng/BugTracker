@@ -30,7 +30,7 @@ const Ticket = () => {
   const { ticketId } = location.state;
   const redirect = useNavigate();
   const jwt = useJwt();
-  /*
+  
   useEffect(() => {
     setLoading(true);
     if (Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) {
@@ -39,11 +39,12 @@ const Ticket = () => {
     }
     let jwtToken = jwt.user.jwtToken;
     httpModule
-      .get<ITicket[]>(`Ticket/Get/${ticketId}`, {
+      .get<ITicket>(`Ticket/Get/${ticketId}`, {
         headers: { Authorization: "Bearer " + jwtToken },
       })
       .then((response) => {
-        setTickets(response.data);
+        setTicket(response.data);
+        console.log(ticket)
         setLoading(false);
       })
       .catch((error) => {
@@ -93,7 +94,7 @@ const Ticket = () => {
         console.log(error);
         setLoading(false);
       });
-  }, []); */
+  }, []); 
   return (
     <div className="content tickets">
       <div className="row">
