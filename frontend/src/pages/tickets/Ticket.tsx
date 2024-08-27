@@ -114,7 +114,7 @@ const Ticket = () => {
         <div className="tickets">
           <div className="row">
             <div className="tickets-details">
-              <TicketDetails ticket={ticket} />
+              <TicketDetails data={ticket} />
             </div>
             <div className="tickets-attachments">
               <div className="heading">

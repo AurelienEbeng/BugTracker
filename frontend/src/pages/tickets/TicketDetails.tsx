@@ -4,11 +4,11 @@ import { ITicket } from "../../types/global.typing";
 import "./tickets.scss";
 
 type TicketDetailsProps={
-    ticket: ITicket
+    data: ITicket
 }
 
-const TicketDetails = ({ticket}: TicketDetailsProps) => {
-
+const TicketDetails = ({data}: TicketDetailsProps) => {
+  const[ticket] = useState<ITicket>(data)
   return (
     <div className="ticket-details">
       <div className="heading">
