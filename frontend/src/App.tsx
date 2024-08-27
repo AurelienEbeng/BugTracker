@@ -35,6 +35,8 @@ const DetailProjectEdit= lazy(()=> import("./pages/projects/DetailProjectEdit"))
 
 const AddTicket = lazy(()=> import("./pages/tickets/AddTicket"))
 
+const TicketDetailsEdit = lazy(()=> import("./pages/tickets/TicketDetailsEdit"))
+
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
 
@@ -77,6 +79,7 @@ const App = () => {
                 <Route path="add" element={<AddUserRoles />} />
               </Route>
               <Route path="/projects/details/addTicket" element={<AddTicket />} />
+              <Route path="/projects/details/editTicket" element= {<TicketDetailsEdit />} />
             </Routes>
           </Suspense>
         </div>
