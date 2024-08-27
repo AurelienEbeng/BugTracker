@@ -93,73 +93,71 @@ namespace backend.Controllers
         //Update
         [HttpPut]
         [Route("Update")]
-        public async Task<IActionResult> Update(int ticketId, string property, string newValue)
+        public async Task<IActionResult> Update(TicketCreateDto ticket)
         {
-            var ticket = _context.Tickets.Where(ticket => ticket.Id == ticketId).First();
-            property = property.ToUpper();
-            newValue = newValue.ToUpper();
-
-            if (ticket.Status.ToString() == newValue)
-            {
-                return Ok($"Ticket status is already {newValue}");
-            }
-            else if (ticket.Priority.ToString() == newValue)
-            {
-                return Ok($"Ticket priority is already {newValue}");
-            }
-
-
+            var oldTicket = _context.Tickets.Where(t => t.Id == ticket.Id).First();
 
             var ticketHistory = new TicketHistory();
-            ticketHistory.Property = property;
-            ticketHistory.NewValue= newValue;
-            ticketHistory.CreatorId = EmployeeId.Id;
-            ticketHistory.TicketId = ticketId;
+            ticketHistory.CreatorId = ticket.CreatorId;
+            ticketHistory.TicketId = ticket.Id;
 
-            
-
-           
-
-            if (property == "STATUS")
+            if (oldTicket.AssignedDeveloperId != ticket.AssignedDeveloperId)
             {
-                if (newValue == "OPEN")
-                {
-                    ticketHistory.OldValue = ticket.Status.ToString();
-                    ticket.Status = TicketStatus.OPEN;
-                    
-                }
-                else if(newValue=="RESOLVED")
-                {
-                    ticketHistory.OldValue = ticket.Status.ToString();
-                    ticket.Status = TicketStatus.RESOLVED;
-                }
-
-               
-            }
-            else if (property == "PRIORITY")
-            {
-                if (newValue == "HIGH")
-                {
-                    ticketHistory.OldValue = ticket.Priority.ToString();
-                    ticket.Priority = TicketPriority.HIGH;
-                }
-                else if (newValue == "MEDIUM")
-                {
-                    ticketHistory.OldValue = ticket.Priority.ToString();
-                    ticket.Priority = TicketPriority.MEDIUM;
-                }
-                else if (newValue == "LOW")
-                {
-                    ticketHistory.OldValue = ticket.Priority.ToString();
-                    ticket.Priority = TicketPriority.LOW;
-                }
+                ticketHistory.OldValue = oldTicket.AssignedDeveloperId;
+                ticketHistory.NewValue = ticket.AssignedDeveloperId;
+                ticketHistory.Property = "Assigned Developer";
+                await _context.TicketHistories.AddAsync(ticketHistory);
+                oldTicket.AssignedDeveloperId = ticket.AssignedDeveloperId;
             }
 
+            if(oldTicket.Status != ticket.Status)
+            {
+                ticketHistory.OldValue = oldTicket.Status.ToString();
+                ticketHistory.NewValue = ticket.Status.ToString();
+                ticketHistory.Property = "Status";
+                await _context.TicketHistories.AddAsync(ticketHistory);
+                oldTicket.Status = ticket.Status;
+            }
+
+            if(oldTicket.Type != ticket.Type)
+            {
+                ticketHistory.OldValue = oldTicket.Type.ToString();
+                ticketHistory.NewValue = ticket.Type.ToString();
+                ticketHistory.Property = "Type";
+                await _context.TicketHistories.AddAsync(ticketHistory);
+                oldTicket.Type = ticket.Type;
+            }
+
+            if(oldTicket.Description != ticket.Description)
+            {
+                ticketHistory.OldValue = oldTicket.Description;
+                ticketHistory.NewValue = ticket.Description;
+                ticketHistory.Property = "Description";
+                await _context.TicketHistories.AddAsync(ticketHistory);
+                oldTicket.Description = ticket.Description;
+            }
+            
+            if(oldTicket.Priority != ticket.Priority)
+            {
+                ticketHistory.OldValue = oldTicket.Priority.ToString();
+                ticketHistory.NewValue = ticket.Priority.ToString();
+                ticketHistory.Property = "Priority";
+                await _context.TicketHistories.AddAsync(ticketHistory);
+                oldTicket.Priority = ticket.Priority;
+            }
+
+            if(oldTicket.Title != ticket.Title)
+            {
+                ticketHistory.OldValue = oldTicket.Title;
+                ticketHistory.NewValue = ticket.Title;
+                ticketHistory.Property = "Title";
+                await _context.TicketHistories.AddAsync(ticketHistory);
+                oldTicket.Title = ticket.Title;
+            }
 
 
             
-            await _context.TicketHistories.AddAsync(ticketHistory);
-            _context.SaveChanges();
+           await _context.SaveChangesAsync();
             
             return Ok("Ticket Updated successfully");
 

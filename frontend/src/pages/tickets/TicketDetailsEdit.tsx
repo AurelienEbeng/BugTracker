@@ -64,8 +64,8 @@ const TicketDetailsEdit = () => {
   
     function handleClickUpdateBtn() {
       if (
-        ticket.title === "" ||
-        ticket.description === "" 
+        updatedTicket.title === "" ||
+        updatedTicket.description === "" 
       ) {
         alert("Fill all fields");
         return;
@@ -100,9 +100,9 @@ const TicketDetailsEdit = () => {
           <TextField
             label="Title"
             variant="outlined"
-            value={ticket.title}
+            value={updatedTicket.title}
             onChange={(e) =>
-              setUpdatedTicket({ ...ticket, title: e.target.value })
+              setUpdatedTicket({ ...updatedTicket, title: e.target.value })
             }
             fullWidth
           />
@@ -110,9 +110,9 @@ const TicketDetailsEdit = () => {
           <TextField
             label="Description"
             variant="outlined"
-            value={ticket.description}
+            value={updatedTicket.description}
             onChange={(e) =>
-              setUpdatedTicket({ ...ticket, description: e.target.value })
+              setUpdatedTicket({ ...updatedTicket, description: e.target.value })
             }
             multiline
             fullWidth
@@ -121,10 +121,10 @@ const TicketDetailsEdit = () => {
           <FormControl fullWidth>
             <InputLabel>Type</InputLabel>
             <Select
-              value={ticket.type}
+              value={updatedTicket.type}
               variant="outlined"
               onChange={(e) =>
-                setUpdatedTicket({ ...ticket, type: e.target.value })
+                setUpdatedTicket({ ...updatedTicket, type: e.target.value })
               }
             >
               {types.map((type) => (
@@ -138,11 +138,11 @@ const TicketDetailsEdit = () => {
           <FormControl fullWidth>
             <InputLabel>Assigned Developer</InputLabel>
             <Select
-              value={ticket.assignedDeveloperId}
+              value={updatedTicket.assignedDeveloperId}
               variant="outlined"
               onChange={(e) =>
                 setUpdatedTicket({
-                  ...ticket,
+                  ...updatedTicket,
                   assignedDeveloperId: e.target.value,
                 })
               }
