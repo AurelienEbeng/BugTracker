@@ -79,7 +79,8 @@ const TicketDetailsEdit = () => {
         })
         .then(() => {
           setLoading(false);
-          redirect("/projects/ticket", { state: { ticket:{...updatedTicket} } });
+          let ticketId = updatedTicket.id;
+          redirect("/projects/ticket", { state: { ticketId } });
         })
         .catch((error) => {
           alert("Error, check console");
