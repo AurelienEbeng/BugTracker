@@ -87,7 +87,7 @@ namespace backend.Controllers
                              creatorId = c.Id,
                              creatorName = c.UserName,
                          };
-            return Ok(ticket);
+            return Ok(ticket.First());
         }
 
         //Update
