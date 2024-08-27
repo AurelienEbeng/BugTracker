@@ -10,7 +10,7 @@ type TicketDetailsProps={
 const TicketDetails = ({data}: TicketDetailsProps) => {
   const[ticket] = useState<ITicket>(data)
   return (
-    <div className="ticket-details">
+    <>
       <div className="heading">
         <h1>Ticket Details</h1>
       </div>
@@ -20,6 +20,7 @@ const TicketDetails = ({data}: TicketDetailsProps) => {
         value={ticket.title}
         disabled
         fullWidth
+        margin = "normal"
       />
 
       <TextField
@@ -29,6 +30,7 @@ const TicketDetails = ({data}: TicketDetailsProps) => {
         multiline
         disabled
         fullWidth
+        margin="normal"
       />
 
       <TextField
@@ -37,6 +39,7 @@ const TicketDetails = ({data}: TicketDetailsProps) => {
         value={ticket.type}
         disabled
         fullWidth
+        margin="normal"
       />
 
       <TextField
@@ -45,6 +48,7 @@ const TicketDetails = ({data}: TicketDetailsProps) => {
         value={ticket.assignedDeveloperName}
         disabled
         fullWidth
+        margin="normal"
       />
 
       <TextField
@@ -53,6 +57,7 @@ const TicketDetails = ({data}: TicketDetailsProps) => {
         value={ticket.status}
         disabled
         fullWidth
+        margin="normal"
       />
 
       <TextField
@@ -61,6 +66,7 @@ const TicketDetails = ({data}: TicketDetailsProps) => {
         value={ticket.priority}
         disabled
         fullWidth
+        margin="normal"
       />
 
       <TextField
@@ -69,6 +75,7 @@ const TicketDetails = ({data}: TicketDetailsProps) => {
         value={ticket.projectName}
         disabled
         fullWidth
+        margin="normal"
       />
 
       <TextField
@@ -77,8 +84,9 @@ const TicketDetails = ({data}: TicketDetailsProps) => {
         value={ticket.creatorName}
         disabled
         fullWidth
+        margin="normal"
       />
-    </div>
+    </>
   );
 };
 
