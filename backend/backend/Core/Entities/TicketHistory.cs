@@ -6,7 +6,7 @@
      
         public string OldValue { get; set; }
         public string NewValue { get; set; }
-        public DateTime DateModified { get; set; }= DateTime.UtcNow;
+        public DateTime DateModified { get; set; }= DateTime.Now;
         public string Property { get; set; }
 
         //Relations

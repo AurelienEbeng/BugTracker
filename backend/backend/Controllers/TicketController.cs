@@ -35,6 +35,7 @@ namespace backend.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateTicket([FromBody] TicketCreateDto dto)
         {
+            dto.DateCreated = DateTime.Now;
             var newTicket = _mapper.Map<Ticket>(dto);
             await _context.Tickets.AddAsync(newTicket);
             await _context.SaveChangesAsync();
