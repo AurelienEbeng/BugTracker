@@ -9,21 +9,18 @@ import {
 } from "../../types/global.typing";
 import { Button, CircularProgress } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import TicketsGrid from "../../components/tickets/TicketsGrid.component";
 import TicketAttachmentsGrid from "../../components/tickets/TicketAttachmentsGrid.component";
-import TicketCommentsGrid from "../../components/tickets/TicketCommentsGrid.component";
 import TicketHistoriesGrid from "../../components/tickets/TicketHistoryGrid.component";
 import { Add } from "@mui/icons-material";
 import { useJwt } from "../../context/Jwt.context";
 import TicketDetails from "./TicketDetails";
+import TicketComment from "./TicketComment";
 
 const Ticket = () => {
   const [ticket, setTicket] = useState<ITicket>({} as ITicket);
-  const [tickets, setTickets] = useState<ITicket[]>([]);
   const [ticketAttachments, setTicketAttachments] = useState<
     ITicketAttachment[]
   >([]);
-  const [ticketComments, setTicketComments] = useState<ITicketComment[]>([]);
   const [ticketHistories, setTicketHistories] = useState<ITicketHistory[]>([]);
   const [loadingTicket, setLoadingTicket] = useState<boolean>(false);
   const location = useLocation();
@@ -32,15 +29,12 @@ const Ticket = () => {
   const jwt = useJwt();
   const [loadingTicketAttachment, setLoadingTicketAttachment] =
     useState<boolean>(false);
-  const [loadingTicketComment, setLoadingTicketComment] =
-    useState<boolean>(false);
   const [loadingTicketHistory, setLoadingTicketHistory] =
     useState<boolean>(false);
 
   useEffect(() => {
     setLoadingTicket(true);
     setLoadingTicketAttachment(true);
-    setLoadingTicketComment(true);
     setLoadingTicketHistory(true);
     if (!jwt.isLoggedIn()) {
       redirect("/signin", { replace: true });
@@ -76,20 +70,6 @@ const Ticket = () => {
       });
 
     httpModule
-      .get<ITicketComment[]>(`TicketComment/Get/${ticketId}`, {
-        headers: { Authorization: "Bearer " + jwtToken },
-      })
-      .then((response) => {
-        setTicketComments(response.data);
-        setLoadingTicketComment(false);
-      })
-      .catch((error) => {
-        alert("Error");
-        console.log(error);
-        setLoadingTicketComment(false);
-      });
-
-    httpModule
       .get<ITicketHistory[]>(`TicketHistory/Get/${ticketId}`, {
         headers: { Authorization: "Bearer " + jwtToken },
       })
@@ -107,7 +87,6 @@ const Ticket = () => {
     <div className="content">
       {loadingTicket ||
       loadingTicketAttachment ||
-      loadingTicketComment ||
       loadingTicketHistory ? (
         <CircularProgress size={100} />
       ) : (
@@ -132,9 +111,9 @@ const Ticket = () => {
           <div className="row">
             <div className="tickets-comments">
               <div className="heading">
-                <div>Ticket Comments</div>
+                <h1>Ticket Comments</h1>
               </div>
-              <TicketCommentsGrid data={ticketComments} />
+              <TicketComment ticketId={ticketId} />
             </div>
             <div className="tickets-history">
               <div className="heading">
