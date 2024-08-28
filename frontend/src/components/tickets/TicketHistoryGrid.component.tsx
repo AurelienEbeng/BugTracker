@@ -11,7 +11,7 @@ const column: GridColDef[] = [
     headerName: "Modification Time",
     flex: 1,
     renderCell: (params) =>
-      moment(params.row.dateModified).format("YYYY-MM--DD"),
+      moment(params.row.dateModified).format("YYYY-MM-DD"),
   },
   { field: "property", headerName: "Property", flex: 1 },
 
