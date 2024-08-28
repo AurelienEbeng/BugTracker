@@ -33,11 +33,8 @@ namespace backend.Controllers
         {
             var newTicketComment = _mapper.Map<TicketComment>(dto);
             newTicketComment.DateCreated = DateTime.Now;
-            newTicketComment.CommenterId = EmployeeId.Id;
             await _context.TicketComments.AddAsync(newTicketComment);
             await _context.SaveChangesAsync();
-
-            var ticket = _context.Tickets.Where(ticket => ticket.Id == newTicketComment.TicketId).First();
 
 
 

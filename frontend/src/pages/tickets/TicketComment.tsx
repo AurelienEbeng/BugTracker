@@ -23,6 +23,10 @@ const TicketComment = ({ ticketId }: ITicketCommentProps) => {
 
   useEffect(() => {
     setLoadingTicketComment(true);
+    getTickets();
+  }, []);
+
+  function getTickets(){
     httpModule
       .get<ITicketComment[]>(`TicketComment/Get/${ticketId}`, {
         headers: { Authorization: "Bearer " + jwt.user.jwtToken },
@@ -36,8 +40,7 @@ const TicketComment = ({ ticketId }: ITicketCommentProps) => {
         console.log(error);
         setLoadingTicketComment(false);
       });
-  }, []);
-
+  }
   function handleClickAddBtn() {
     if (ticketComment.message === "") {
       alert("Fill all fields");
@@ -45,12 +48,15 @@ const TicketComment = ({ ticketId }: ITicketCommentProps) => {
     }
     setLoadingTicketComment(true);
     ticketComment.commenterId = jwt.user.id;
-    ticketComment.dateCreated = "";
     ticketComment.ticketId = ticketId;
 
     httpModule
-      .post<ICreateTicketCommentDto>("/TicketComment/Create", ticketComment, {
+      .post("TicketComment/Create", ticketComment, {
         headers: { Authorization: "Bearer " + jwt.user.jwtToken },
+      })
+      .then(() => {
+        setTicketComment({ ...ticketComment, message: "" });
+        getTickets();
       })
       .catch((error) => {
         alert("Error, check console");
