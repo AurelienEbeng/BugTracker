@@ -36,7 +36,13 @@ const TicketDetailsEdit = () => {
   const [loading, setLoading] = useState<boolean>(false);
 
   const priority = ["HIGH", "MEDIUM", "LOW", "NONE"];
-  const status =["NEW", "OPEN", "IN_PROGRESS", "RESOLVED", "ADDITIONAL_INFO_REQUIRED"]
+  const status = [
+    "NEW",
+    "OPEN",
+    "IN_PROGRESS",
+    "RESOLVED",
+    "ADDITIONAL_INFO_REQUIRED",
+  ];
 
   useEffect(() => {
     setLoading(true);
@@ -61,33 +67,30 @@ const TicketDetailsEdit = () => {
         setLoading(false);
       });
   }, []);
-  
-    function handleClickUpdateBtn() {
-      if (
-        updatedTicket.title === "" ||
-        updatedTicket.description === "" 
-      ) {
-        alert("Fill all fields");
-        return;
-      }
-  
-      setLoading(true);
-  
-      httpModule
-        .put("/Ticket/Update", updatedTicket, {
-          headers: { Authorization: "Bearer " + jwt.user.jwtToken },
-        })
-        .then(() => {
-          setLoading(false);
-          let ticketId = updatedTicket.id;
-          redirect("/projects/ticket", { state: { ticketId } });
-        })
-        .catch((error) => {
-          alert("Error, check console");
-          console.log(error);
-          setLoading(false);
-        });
-    } 
+
+  function handleClickUpdateBtn() {
+    if (updatedTicket.title === "" || updatedTicket.description === "") {
+      alert("Fill all fields");
+      return;
+    }
+
+    setLoading(true);
+
+    httpModule
+      .put("/Ticket/Update", updatedTicket, {
+        headers: { Authorization: "Bearer " + jwt.user.jwtToken },
+      })
+      .then(() => {
+        setLoading(false);
+        let ticketId = updatedTicket.id;
+        redirect("/projects/ticket", { state: { ticketId } });
+      })
+      .catch((error) => {
+        alert("Error, check console");
+        console.log(error);
+        setLoading(false);
+      });
+  }
   return (
     <div className="content">
       {loading ? (
@@ -112,88 +115,92 @@ const TicketDetailsEdit = () => {
             variant="outlined"
             value={updatedTicket.description}
             onChange={(e) =>
-              setUpdatedTicket({ ...updatedTicket, description: e.target.value })
+              setUpdatedTicket({
+                ...updatedTicket,
+                description: e.target.value,
+              })
             }
             multiline
             fullWidth
           />
 
-          <FormControl fullWidth>
-            <InputLabel>Type</InputLabel>
-            <Select
-              value={updatedTicket.type}
-              variant="outlined"
-              onChange={(e) =>
-                setUpdatedTicket({ ...updatedTicket, type: e.target.value })
-              }
-            >
-              {types.map((type) => (
-                <MenuItem key={type} value={type}>
-                  {type}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <TextField
+            label="Type"
+            fullWidth
+            select
+            value={updatedTicket.type}
+            variant="outlined"
+            onChange={(e) =>
+              setUpdatedTicket({ ...updatedTicket, type: e.target.value })
+            }
+          >
+            <MenuItem value={"BUGS"}>BUGS</MenuItem>
+            <MenuItem value={"FEATURES_REQUEST"}>FEATURES_REQUEST</MenuItem>
+            <MenuItem value={"OTHER_COMMENTS"}>OTHER_COMMENTS</MenuItem>
+            <MenuItem value={"DOCUMENTS_REQUEST"}>DOCUMENTS_REQUEST</MenuItem>
+          </TextField>
 
-          <FormControl fullWidth>
-            <InputLabel>Assigned Developer</InputLabel>
-            <Select
-              value={updatedTicket.assignedDeveloperId}
-              variant="outlined"
-              onChange={(e) =>
-                setUpdatedTicket({
-                  ...updatedTicket,
-                  assignedDeveloperId: e.target.value,
-                })
-              }
-            >
-              {projectMembers.map((projectMember) => (
-                <MenuItem
-                  key={projectMember.memberId}
-                  value={projectMember.memberId}
-                >
-                  {projectMember.username}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <TextField
+            label="Assigned Developer"
+            fullWidth
+            select
+            value={updatedTicket.assignedDeveloperId}
+            variant="outlined"
+            onChange={(e) =>
+              setUpdatedTicket({
+                ...updatedTicket,
+                assignedDeveloperId: e.target.value,
+              })
+            }
+          >
+            {projectMembers.map((projectMember) => (
+              <MenuItem
+                key={projectMember.memberId}
+                value={projectMember.memberId}
+              >
+                {projectMember.username}
+              </MenuItem>
+            ))}
+          </TextField>
 
-          <FormControl fullWidth>
-            <InputLabel>Status</InputLabel>
-            <Select
-              variant="outlined"
-              value={updatedTicket.status}
-              onChange={(e) =>
-                setUpdatedTicket({ ...ticket, status: e.target.value })
-              }
-            >
-              {status.map((s) => (
-                <MenuItem key={s} value={s}>
-                  {s}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <TextField
+            label="Status"
+            fullWidth
+            select
+            value={updatedTicket.status}
+            variant="outlined"
+            onChange={(e) =>
+              setUpdatedTicket({ ...updatedTicket, status: e.target.value })
+            }
+          >
+            {status.map((s) => (
+              <MenuItem key={s} value={s}>
+                {s}
+              </MenuItem>
+            ))}
+          </TextField>
 
-          <FormControl fullWidth>
-            <InputLabel>Priority</InputLabel>
-            <Select
-              variant="outlined"
-              value={updatedTicket.priority}
-              onChange={(e) =>
-                setUpdatedTicket({ ...ticket, priority: e.target.value })
-              }
-            >
-              {priority.map((p) => (
-                <MenuItem key={p} value={p}>
-                  {p}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <TextField
+            label="Priority"
+            fullWidth
+            select
+            value={updatedTicket.priority}
+            variant="outlined"
+            onChange={(e) =>
+              setUpdatedTicket({ ...updatedTicket, priority: e.target.value })
+            }
+          >
+            {priority.map((p) => (
+              <MenuItem key={p} value={p}>
+                {p}
+              </MenuItem>
+            ))}
+          </TextField>
 
           <div className="btns">
-            <Button variant="outlined" onClick={handleClickUpdateBtn}>Update</Button>
+            <Button variant="outlined" onClick={handleClickUpdateBtn}>
+              Update
+            </Button>
           </div>
         </div>
       )}
