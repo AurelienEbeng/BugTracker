@@ -10,7 +10,7 @@ const column: GridColDef[] = [
     field: "dateCreated",
     headerName: "Creation Time",
     flex: 1,
-    renderCell: (params) => moment(params.row.dateJoined).format("YYYY-MM--DD"),
+    renderCell: (params) => moment(params.row.dateJoined).format("YYYY-MM-DD"),
   },
 ];
 
