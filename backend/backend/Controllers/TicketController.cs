@@ -104,8 +104,10 @@ namespace backend.Controllers
 
             if (oldTicket.AssignedDeveloperId != ticket.AssignedDeveloperId)
             {
-                ticketHistory.OldValue = oldTicket.AssignedDeveloperId;
-                ticketHistory.NewValue = ticket.AssignedDeveloperId;
+                var newAssignedDeveloper = from u in _context.Users where u.Id == ticket.AssignedDeveloperId select new { name = u.Name };
+                var oldAssignedDeveloper = from u in _context.Users where u.Id == oldTicket.AssignedDeveloperId select new { name = u.Name };
+                ticketHistory.OldValue = oldAssignedDeveloper.First().name;
+                ticketHistory.NewValue = newAssignedDeveloper.First().name;
                 ticketHistory.Property = "Assigned Developer";
                 await _context.TicketHistories.AddAsync(ticketHistory);
                 oldTicket.AssignedDeveloperId = ticket.AssignedDeveloperId;
