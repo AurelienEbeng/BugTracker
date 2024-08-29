@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
-using backend.Core.DataTransfer;
 using backend.Core.Dtos.TicketComment;
 using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
@@ -56,15 +55,6 @@ namespace backend.Controllers
         [Route("Get/{ticketId}")]
         public async Task<ActionResult> GetTicketComment(int ticketId)
         {
-            /*
-            var ticketComment = await _context.TicketComments
-                                              .Include(ticketComment => ticketComment.Ticket)
-                                              .Where(ticketComment=> ticketComment.TicketId==ticketId)
-                                              .ToListAsync();
-            var convertedTicketComment = _mapper.Map<IEnumerable<TicketCommentGetDto>>(ticketComment);
-            
-            return Ok(convertedTicketComment);*/
-
             var ticketComment = from c in _context.TicketComments
                                 from u in _context.Users
                                 where c.TicketId == ticketId && u.Id == c.CommenterId
