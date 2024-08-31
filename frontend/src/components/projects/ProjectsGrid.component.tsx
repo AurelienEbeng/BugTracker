@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, gridClasses, GridColDef } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { IProject } from "../../types/global.typing";
 import moment from "moment";
@@ -55,6 +55,11 @@ const ProjectsGrid = ({ data }: IProjectGridProps) => {
         columns={column}
         getRowId={(row) => row.id}
         getRowHeight={() => "auto"}
+        sx={{
+          [`& .${gridClasses.cell}`]: {
+            py: 2,
+          },
+        }}
       />
     </Box>
   );
