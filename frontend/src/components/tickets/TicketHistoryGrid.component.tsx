@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, gridClasses, GridColDef } from "@mui/x-data-grid";
 import { ITicketHistory } from "../../types/global.typing";
 import moment from "moment";
 
@@ -29,7 +29,12 @@ const TicketHistoriesGrid = ({ data }: ITicketHistoriesGridProps) => {
         rows={data}
         columns={column}
         getRowId={(row) => row.id}
-        rowHeight={50}
+        getRowHeight={()=>'auto'}
+        sx={{
+          [`& .${gridClasses.cell}`]: {
+            py: 2,
+          },
+        }}
       />
     </Box>
   );
