@@ -109,7 +109,16 @@ namespace backend.Controllers
                 ticketHistory.OldValue = oldAssignedDeveloper.First().name;
                 ticketHistory.NewValue = newAssignedDeveloper.First().name;
                 ticketHistory.Property = "Assigned Developer";
-                await _context.TicketHistories.AddAsync(ticketHistory);
+                await _context.TicketHistories.AddAsync(
+                    new TicketHistory
+                    {
+                        OldValue = ticketHistory.OldValue,
+                        NewValue = ticketHistory.NewValue,
+                        Property = ticketHistory.Property,
+                        CreatorId = ticketHistory.CreatorId,
+                        TicketId = ticketHistory.TicketId
+                    }
+                );
                 oldTicket.AssignedDeveloperId = ticket.AssignedDeveloperId;
             }
 
@@ -118,7 +127,16 @@ namespace backend.Controllers
                 ticketHistory.OldValue = oldTicket.Status.ToString();
                 ticketHistory.NewValue = ticket.Status.ToString();
                 ticketHistory.Property = "Status";
-                await _context.TicketHistories.AddAsync(ticketHistory);
+                await _context.TicketHistories.AddAsync(
+                    new TicketHistory
+                    {
+                        OldValue = ticketHistory.OldValue,
+                        NewValue = ticketHistory.NewValue,
+                        Property = ticketHistory.Property,
+                        CreatorId = ticketHistory.CreatorId,
+                        TicketId = ticketHistory.TicketId
+                    }
+                );
                 oldTicket.Status = ticket.Status;
             }
 
@@ -127,7 +145,16 @@ namespace backend.Controllers
                 ticketHistory.OldValue = oldTicket.Type.ToString();
                 ticketHistory.NewValue = ticket.Type.ToString();
                 ticketHistory.Property = "Type";
-                await _context.TicketHistories.AddAsync(ticketHistory);
+                await _context.TicketHistories.AddAsync(
+                    new TicketHistory
+                    {
+                        OldValue = ticketHistory.OldValue,
+                        NewValue = ticketHistory.NewValue,
+                        Property = ticketHistory.Property,
+                        CreatorId = ticketHistory.CreatorId,
+                        TicketId = ticketHistory.TicketId
+                    }
+                );
                 oldTicket.Type = ticket.Type;
             }
 
@@ -136,7 +163,16 @@ namespace backend.Controllers
                 ticketHistory.OldValue = oldTicket.Description;
                 ticketHistory.NewValue = ticket.Description;
                 ticketHistory.Property = "Description";
-                await _context.TicketHistories.AddAsync(ticketHistory);
+                await _context.TicketHistories.AddAsync(
+                    new TicketHistory
+                    {
+                        OldValue = ticketHistory.OldValue,
+                        NewValue = ticketHistory.NewValue,
+                        Property = ticketHistory.Property,
+                        CreatorId = ticketHistory.CreatorId,
+                        TicketId = ticketHistory.TicketId
+                    }
+                );
                 oldTicket.Description = ticket.Description;
             }
             
@@ -145,7 +181,15 @@ namespace backend.Controllers
                 ticketHistory.OldValue = oldTicket.Priority.ToString();
                 ticketHistory.NewValue = ticket.Priority.ToString();
                 ticketHistory.Property = "Priority";
-                await _context.TicketHistories.AddAsync(ticketHistory);
+                await _context.TicketHistories.AddAsync(
+                    new TicketHistory {
+                        OldValue= ticketHistory.OldValue,
+                        NewValue=ticketHistory.NewValue,
+                        Property=ticketHistory.Property,
+                        CreatorId=ticketHistory.CreatorId,
+                        TicketId=ticketHistory.TicketId
+                    }
+                );
                 oldTicket.Priority = ticket.Priority;
             }
 
@@ -154,7 +198,16 @@ namespace backend.Controllers
                 ticketHistory.OldValue = oldTicket.Title;
                 ticketHistory.NewValue = ticket.Title;
                 ticketHistory.Property = "Title";
-                await _context.TicketHistories.AddAsync(ticketHistory);
+                await _context.TicketHistories.AddAsync(
+                    new TicketHistory
+                    {
+                        OldValue = ticketHistory.OldValue,
+                        NewValue = ticketHistory.NewValue,
+                        Property = ticketHistory.Property,
+                        CreatorId = ticketHistory.CreatorId,
+                        TicketId = ticketHistory.TicketId
+                    }
+                );
                 oldTicket.Title = ticket.Title;
             }
 
