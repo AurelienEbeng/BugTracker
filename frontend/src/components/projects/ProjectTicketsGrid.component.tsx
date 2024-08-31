@@ -1,5 +1,5 @@
 import { Box } from "@mui/material";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
+import { DataGrid, gridClasses, GridColDef } from "@mui/x-data-grid";
 import { ITicket } from "../../types/global.typing";
 import moment from "moment";
 import { Link } from "react-router-dom";
@@ -44,7 +44,12 @@ const ProjectTicketsGrid = ({ data }: ITicketsGridProps) => {
         rows={data}
         columns={column}
         getRowId={(row) => row.id}
-        rowHeight={50}
+        getRowHeight={() => "auto"}
+        sx={{
+          [`& .${gridClasses.cell}`]: {
+            py: 2,
+          },
+        }}
       />
     </Box>
   );
