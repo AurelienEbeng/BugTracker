@@ -1,40 +1,31 @@
 import { useEffect, useState } from "react";
 import "./tickets.scss";
 import httpModule from "../../helpers/http.module";
-import {
-  ITicket,
-  ITicketAttachment,
-  ITicketComment,
-  ITicketHistory,
-} from "../../types/global.typing";
+import { ITicket, ITicketHistory } from "../../types/global.typing";
 import { Button, CircularProgress } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
-import TicketAttachmentsGrid from "../../components/tickets/TicketAttachmentsGrid.component";
 import TicketHistoriesGrid from "../../components/tickets/TicketHistoryGrid.component";
 import { Add } from "@mui/icons-material";
 import { useJwt } from "../../context/Jwt.context";
 import TicketDetails from "./TicketDetails";
 import TicketComment from "./TicketComment";
+import TicketAttachment from "./TicketAttachment";
 
 const Ticket = () => {
   const [ticket, setTicket] = useState<ITicket>({} as ITicket);
-  const [ticketAttachments, setTicketAttachments] = useState<
-    ITicketAttachment[]
-  >([]);
+
   const [ticketHistories, setTicketHistories] = useState<ITicketHistory[]>([]);
   const [loadingTicket, setLoadingTicket] = useState<boolean>(false);
   const location = useLocation();
   const { ticketId } = location.state;
   const redirect = useNavigate();
   const jwt = useJwt();
-  const [loadingTicketAttachment, setLoadingTicketAttachment] =
-    useState<boolean>(false);
+
   const [loadingTicketHistory, setLoadingTicketHistory] =
     useState<boolean>(false);
 
   useEffect(() => {
     setLoadingTicket(true);
-    setLoadingTicketAttachment(true);
     setLoadingTicketHistory(true);
     if (!jwt.isLoggedIn()) {
       redirect("/signin", { replace: true });
@@ -56,20 +47,6 @@ const Ticket = () => {
       });
 
     httpModule
-      .get<ITicketAttachment[]>(`TicketAttachment/Get/${ticketId}`, {
-        headers: { Authorization: "Bearer " + jwtToken },
-      })
-      .then((response) => {
-        setTicketAttachments(response.data);
-        setLoadingTicketAttachment(false);
-      })
-      .catch((error) => {
-        alert("Error");
-        console.log(error);
-        setLoadingTicketAttachment(false);
-      });
-
-    httpModule
       .get<ITicketHistory[]>(`TicketHistory/Get/${ticketId}`, {
         headers: { Authorization: "Bearer " + jwtToken },
       })
@@ -85,9 +62,7 @@ const Ticket = () => {
   }, []);
   return (
     <div className="content">
-      {loadingTicket ||
-      loadingTicketAttachment ||
-      loadingTicketHistory ? (
+      {loadingTicket || loadingTicketHistory ? (
         <CircularProgress size={100} />
       ) : (
         <div className="tickets">
@@ -97,15 +72,9 @@ const Ticket = () => {
             </div>
             <div className="tickets-attachments">
               <div className="heading">
-                <div>Ticket Attachment</div>
+                <h1>Ticket Attachment</h1>
               </div>
-              <Button
-                variant="outlined"
-                onClick={() => redirect("/projects/addAttachment")}
-              >
-                <Add />
-              </Button>
-              <TicketAttachmentsGrid data={ticketAttachments} />
+              <TicketAttachment ticketId={ticketId} />
             </div>
           </div>
           <div className="row">
