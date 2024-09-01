@@ -2,19 +2,30 @@ import { Button, TextField } from "@mui/material";
 import { useState } from "react";
 import { ITicket } from "../../types/global.typing";
 import "./tickets.scss";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
-type TicketDetailsProps={
-    data: ITicket
-}
+type TicketDetailsProps = {
+  data: ITicket;
+};
 
-const TicketDetails = ({data}: TicketDetailsProps) => {
-  const[ticket] = useState<ITicket>(data)
+const TicketDetails = ({ data }: TicketDetailsProps) => {
+  const [ticket] = useState<ITicket>(data);
+  const navigate = useNavigate()
+  function handleListOfTicketsBtn(){
+    let project ={
+      id: ticket.projectId,
+      name: ticket.projectName
+    }
+    navigate("/projects/details",{state:{project}} );
+  }
   return (
     <>
       <div className="heading">
         <h1>Ticket Details</h1>
-        <Link to ="/projects/details/editTicket" state={{ticket}}><Button variant ="outlined">Edit Ticket</Button></Link>
+        <Link to="/projects/details/editTicket" state={{ ticket }}>
+          <Button variant="outlined">Edit Ticket</Button>
+        </Link>
+        <Button variant="outlined" onClick={handleListOfTicketsBtn} >List of Tickets</Button>
       </div>
       <TextField
         label="Title"
@@ -22,7 +33,7 @@ const TicketDetails = ({data}: TicketDetailsProps) => {
         value={ticket.title}
         disabled
         fullWidth
-        margin = "normal"
+        margin="normal"
       />
 
       <TextField
