@@ -52,6 +52,11 @@ const DetailProjects = () => {
             Add Ticket
           </Button>
         </Link>
+        <Link to="/projects/myProjects">
+          <Button variant="outlined" color="primary">
+            List of Projects
+          </Button>
+        </Link>
       </div>
 
       {loading ? (
