@@ -41,7 +41,7 @@ const DetailProjects = () => {
   return (
     <div className="content projects">
       <div className="heading">
-        <h1>Project Name: {project.name}</h1>
+        <h1>{project.name}'s Tickets</h1>
         <Link to="/projects/details/edit" state={{ project }}>
           <Button variant="outlined" color="primary">
             Edit Project
