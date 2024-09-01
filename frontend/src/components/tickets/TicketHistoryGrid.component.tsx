@@ -24,7 +24,7 @@ interface ITicketHistoriesGridProps {
 
 const TicketHistoriesGrid = ({ data }: ITicketHistoriesGridProps) => {
   return (
-    <Box sx={{ width: "100%", height: 200 }} className="tickets-grid">
+    <Box sx={{ width: "100%", height: 300 }} className="tickets-grid">
       <DataGrid
         rows={data}
         columns={column}

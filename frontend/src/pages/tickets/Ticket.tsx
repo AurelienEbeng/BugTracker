@@ -86,7 +86,7 @@ const Ticket = () => {
             </div>
             <div className="tickets-history">
               <div className="heading">
-                <div>Ticket History</div>
+                <h1>Ticket History</h1>
               </div>
               <TicketHistoriesGrid data={ticketHistories} />
             </div>
