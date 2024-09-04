@@ -36,7 +36,7 @@ const column: GridColDef[] = [
         >
           Details
         </Link>
-        <Link to="/">Manage Users</Link>
+        <Link to="/">Manage Assigned Personnel</Link>
         </div>
       );
     },
