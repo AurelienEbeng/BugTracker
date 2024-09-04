@@ -23,6 +23,7 @@ const Sidebar = () => {
   const jwt = useJwt();
   const { openSidebarState } = useSidebarContext();
   const sidebar = openSidebarState ? "sidebar open" : "sidebar";
+  const sidebarContext = useSidebarContext();
 
   return (
     <div className={sidebar}>
@@ -34,7 +35,7 @@ const Sidebar = () => {
       <div className="menu">
         <ul>
           {links.map((item) => (
-            <li key={item.href}>
+            <li key={item.href} onClick={sidebarContext.toggleSidebarState}>
               <Link to={item.href}>
                 {item.icon}
                 {item.label}
