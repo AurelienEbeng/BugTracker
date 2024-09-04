@@ -23,13 +23,13 @@ const SignIn = () => {
   const jwt = useJwt()
   const redirect = useNavigate()
 
-  const handleClickSignInBtn = () => {
+  const handleClickSignInBtn = async () => {
     if (signIn.username === "" || signIn.password === "") {
       alert("Fill  all fields");
       return;
     }
-    jwt.login(signIn.username,signIn.password); 
-    redirect("/projects")
+    await jwt.login(signIn.username,signIn.password); 
+    redirect("/projects/myProjects")
   };
 
   
