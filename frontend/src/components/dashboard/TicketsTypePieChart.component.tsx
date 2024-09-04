@@ -9,24 +9,24 @@ type ChartData = {
 
 function fillChartData(data: ITicket[]) {
   let obj = [
-    { type: "Bugs/Errors", value: 0, label: "Bugs/Errors" },
-    { type: "Feature Request", value: 0, label: "Feature Request" },
-    { type: "Other Comments", value: 0, label: "Other Comments" },
+    { type: "BUGS", value: 0, label: "Bugs" },
+    { type: "FEATURES_REQUEST", value: 0, label: "Feature Request" },
+    { type: "OTHER_COMMENTS", value: 0, label: "Other Comments" },
     {
-      type: "Training/Document Requests",
+      type: "DOCUMENTS_REQUEST",
       value: 0,
-      label: "Training/Document Requests",
+      label: "Document Requests",
     },
   ];
 
   data.map((ticket) => {
-    if (ticket.type.toLowerCase() === "bugs/errors") {
+    if (ticket.type === "BUGS") {
       obj[0].value = obj[0].value + 1;
-    } else if (ticket.type.toLowerCase() === "feature request") {
+    } else if (ticket.type === "FEATURES_REQUEST") {
       obj[1].value = obj[1].value + 1;
-    } else if (ticket.type.toLowerCase() === "other comments") {
+    } else if (ticket.type === "OTHER_COMMENTS") {
       obj[2].value = obj[2].value + 1;
-    } else if (ticket.type.toLowerCase() === "training/document requests") {
+    } else if (ticket.type=== "DOCUMENTS_REQUEST") {
       obj[3].value = obj[3].value + 1;
     }
   });
