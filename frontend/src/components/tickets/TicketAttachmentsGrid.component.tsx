@@ -53,7 +53,7 @@ const TicketAttachmentsGrid = ({ data }: ITicketAttachmentsGridProps) => {
     },
   ];
   return (
-    <Box sx={{ width: "100%", height: "60%" }} className="tickets-grid">
+    <Box sx={{ width: "100%", height: 400 }} className="tickets-grid">
       <DataGrid
         rows={data}
         columns={column}
