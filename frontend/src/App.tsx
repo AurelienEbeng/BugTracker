@@ -29,13 +29,21 @@ const ManageUserRoles = lazy(
 const AddUserRoles = lazy(
   () => import("./pages/manageUserRoles/AddUserRoles.page")
 );
-const MyProjects = lazy(()=>(import("./pages/projects/MyProjects.page")))
+const MyProjects = lazy(() => import("./pages/projects/MyProjects.page"));
 
-const DetailProjectEdit= lazy(()=> import("./pages/projects/DetailProjectEdit"))
+const DetailProjectEdit = lazy(
+  () => import("./pages/projects/DetailProjectEdit")
+);
 
-const AddTicket = lazy(()=> import("./pages/tickets/AddTicket"))
+const AddTicket = lazy(() => import("./pages/tickets/AddTicket"));
 
-const TicketDetailsEdit = lazy(()=> import("./pages/tickets/TicketDetailsEdit"))
+const TicketDetailsEdit = lazy(
+  () => import("./pages/tickets/TicketDetailsEdit")
+);
+
+const ManageAssignedPersonnel = lazy(
+  () => import("./pages/manageAssignedPersonnel/ManageAssignedPersonnel")
+);
 
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -68,7 +76,7 @@ const App = () => {
                 <Route path="details" element={<DetailProjects />} />
                 <Route path="ticket" element={<Ticket />} />
                 <Route path="addAttachment" element={<AddTicketAttachment />} />
-                <Route path="myProjects" element= {<MyProjects />} />
+                <Route path="myProjects" element={<MyProjects />} />
                 <Route path="details/edit" element={<DetailProjectEdit />} />
               </Route>
               <Route path="/signIn" element={<SignIn />} />
@@ -78,8 +86,18 @@ const App = () => {
                 <Route index element={<ManageUserRoles />} />
                 <Route path="add" element={<AddUserRoles />} />
               </Route>
-              <Route path="/projects/details/addTicket" element={<AddTicket />} />
-              <Route path="/projects/details/editTicket" element= {<TicketDetailsEdit />} />
+              <Route
+                path="/projects/details/addTicket"
+                element={<AddTicket />}
+              />
+              <Route
+                path="/projects/details/editTicket"
+                element={<TicketDetailsEdit />}
+              />
+              <Route
+                path="/projects/manageAssignedPersonnel"
+                element={<ManageAssignedPersonnel />}
+              />
             </Routes>
           </Suspense>
         </div>
