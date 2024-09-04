@@ -31,11 +31,11 @@ function fillChartData(data: ITicket[]) {
       obj[0].numOfTickets = obj[0].numOfTickets + 1;
     } else if (ticket.status.toLowerCase() === "open") {
       obj[1].numOfTickets = obj[1].numOfTickets + 1;
-    } else if (ticket.status.toLowerCase() === "in progress") {
+    } else if (ticket.status.toLowerCase() === "in_progress") {
       obj[2].numOfTickets = obj[2].numOfTickets + 1;
     } else if (ticket.status.toLowerCase() === "resolved") {
       obj[3].numOfTickets = obj[3].numOfTickets + 1;
-    } else if (ticket.status.toLowerCase() === "additional info required") {
+    } else if (ticket.status.toLowerCase() === "additional_info_required") {
       obj[3].numOfTickets = obj[3].numOfTickets + 1;
     }
   });
