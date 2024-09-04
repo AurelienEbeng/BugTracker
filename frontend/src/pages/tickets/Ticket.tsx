@@ -2,10 +2,9 @@ import { useEffect, useState } from "react";
 import "./tickets.scss";
 import httpModule from "../../helpers/http.module";
 import { ITicket, ITicketHistory } from "../../types/global.typing";
-import { Button, CircularProgress } from "@mui/material";
+import { CircularProgress } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import TicketHistoriesGrid from "../../components/tickets/TicketHistoryGrid.component";
-import { Add } from "@mui/icons-material";
 import { useJwt } from "../../context/Jwt.context";
 import TicketDetails from "./TicketDetails";
 import TicketComment from "./TicketComment";
@@ -66,30 +65,29 @@ const Ticket = () => {
         <CircularProgress size={100} />
       ) : (
         <div className="tickets">
-          <div className="row">
-            <div className="tickets-details">
-              <TicketDetails data={ticket} />
-            </div>
-            <div className="tickets-attachments">
-              <div className="heading">
-                <h1>Ticket Attachment</h1>
-              </div>
-              <TicketAttachment ticketId={ticketId} />
-            </div>
+          <div className="tickets-details">
+            <TicketDetails data={ticket} />
           </div>
-          <div className="row">
-            <div className="tickets-comments">
-              <div className="heading">
-                <h1>Ticket Comments</h1>
-              </div>
-              <TicketComment ticketId={ticketId} />
+
+          <div className="tickets-attachments">
+            <div className="heading">
+              <h1>Ticket Attachment</h1>
             </div>
-            <div className="tickets-history">
-              <div className="heading">
-                <h1>Ticket History</h1>
-              </div>
-              <TicketHistoriesGrid data={ticketHistories} />
+            <TicketAttachment ticketId={ticketId} />
+          </div>
+
+          <div className="tickets-comments">
+            <div className="heading">
+              <h1>Ticket Comments</h1>
             </div>
+            <TicketComment ticketId={ticketId} />
+          </div>
+
+          <div className="tickets-history">
+            <div className="heading">
+              <h1>Ticket History</h1>
+            </div>
+            <TicketHistoriesGrid data={ticketHistories} />
           </div>
         </div>
       )}
