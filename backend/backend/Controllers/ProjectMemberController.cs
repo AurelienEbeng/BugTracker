@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.ComponentModel;
+using System.Data;
 using System.Net.Sockets;
 
 namespace backend.Controllers
@@ -81,6 +82,27 @@ namespace backend.Controllers
             return Ok(projectMembers);
         }
 
+
+        [HttpGet]
+        [Route("GetAssignedPersonnel")]
+        public async Task<ActionResult> GetAssignedPersonnel(int projectId)
+        {
+            var assignedPersonnel = from u in _context.Users
+                                    from r in _context.Roles
+                                    from pm in _context.ProjectMembers
+                                    from ur in _context.UserRoles
+                                    where pm.ProjectId == projectId && pm.MemberId == u.Id
+                                    && ur.RoleId == r.Id && ur.UserId == pm.MemberId
+                                    select new
+                                    {
+                                        userId = u.Id,
+                                        username = u.Name,
+                                        email = u.Email,
+                                        rolename = r.Name
+                                    };
+
+            return Ok(assignedPersonnel);
+        }
 
         //Update
 
