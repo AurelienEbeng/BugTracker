@@ -3,7 +3,7 @@ import { DataGrid, gridClasses, GridColDef } from "@mui/x-data-grid";
 import { Link } from "react-router-dom";
 import { IProject } from "../../types/global.typing";
 import moment from "moment";
-import "./projects-grid.scss"
+import "./projects-grid.scss";
 
 const column: GridColDef[] = [
   { field: "name", headerName: "Name", width: 200, flex: 1 },
@@ -22,21 +22,31 @@ const column: GridColDef[] = [
     renderCell: (params) => {
       return (
         <div className="links">
-        <Link
-          to="/projects/details"
-          state={{
-            project:{
-              id:`${params.row.id}`,
-              name:`${params.row.name}`,
-              description:`${params.row.description}`,
-              dateCreated:`${params.row.dateCreated}`,
-              managerName:`${params.row.managerName}`
-            }
-          }}
-        >
-          Details
-        </Link>
-        <Link to="/projects/manageAssignedPersonnel">Manage Assigned Personnel</Link>
+          <Link
+            to="/projects/details"
+            state={{
+              project: {
+                id: `${params.row.id}`,
+                name: `${params.row.name}`,
+                description: `${params.row.description}`,
+                dateCreated: `${params.row.dateCreated}`,
+                managerName: `${params.row.managerName}`,
+              },
+            }}
+          >
+            Details
+          </Link>
+          <Link
+            to="/projects/manageAssignedPersonnel"
+            state={{
+              project: {
+                id: `${params.row.id}`,
+                name: `${params.row.name}`,
+              },
+            }}
+          >
+            Manage Assigned Personnel
+          </Link>
         </div>
       );
     },
