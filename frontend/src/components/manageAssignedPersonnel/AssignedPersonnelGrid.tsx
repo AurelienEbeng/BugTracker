@@ -13,7 +13,7 @@ interface AssignedPersonnelProps {
 const column: GridColDef[] = [
   { field: "username", headerName: "User Name", flex: 1 },
   { field: "email", headerName: "Email", flex: 1 },
-  { field: "roleName", headerName: "Role", flex: 1 },
+  { field: "rolename", headerName: "Role", flex: 1 },
 ];
 
 const AssignedPersonnelGrid = ({ data }: AssignedPersonnelProps) => {
@@ -22,7 +22,7 @@ const AssignedPersonnelGrid = ({ data }: AssignedPersonnelProps) => {
       <DataGrid
         columns={column}
         rows={data}
-        getRowId={(row) => row.id}
+        getRowId={(row) => row.userId}
         getRowHeight={() => "auto"}
         sx={{
           [`& .${gridClasses.cell}`]: {
