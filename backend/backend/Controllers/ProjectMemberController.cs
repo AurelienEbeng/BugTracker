@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
+using AutoMapper.Execution;
 using backend.Core.Context;
 using backend.Core.DataTransfer;
 using backend.Core.Dtos.ProjectMember;
 using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using System.ComponentModel;
@@ -104,6 +106,44 @@ namespace backend.Controllers
             return Ok(assignedPersonnel);
         }
 
+
+        [HttpGet]
+        [Route("GetUnassignedPersonnel")]
+        public async Task<ActionResult> GetUnassignedPersonnel(int projectId)
+        {
+            SqlConnectionStringBuilder cs = new SqlConnectionStringBuilder();
+            cs.DataSource = "(local)";
+            cs.InitialCatalog = "BugTracker";
+            cs.UserID = "sa";
+            cs.Password = "sysadm";
+            cs.TrustServerCertificate = true;
+            SqlConnection con = new SqlConnection();
+            con.ConnectionString = cs.ConnectionString;
+            con.Open();
+            SqlCommand cmd = con.CreateCommand();
+            cmd.CommandText = "select * from Users\r\nleft join\r\n" +
+                "(select ProjectMembers.ProjectId \"ProjectId\", ProjectMembers.MemberId \"MemberId\" \r\nfrom ProjectMembers " +
+                "where ProjectMembers.ProjectId="+projectId+") \r\nProjectMember on ProjectMember.MemberId=Users.Id\r\n" +
+                "where ProjectMember.MemberId is null\r\n";
+            List<object> unassignedDevelopers = new List<object>();
+            try
+            {
+
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    unassignedDevelopers.Add(new { id=reader["Id"], name = reader["Name"], email = reader["Email"] });
+                }
+                reader.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            con.Close();
+
+            return Ok(unassignedDevelopers);
+        }
         //Update
 
         //Delete
