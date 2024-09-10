@@ -33,16 +33,38 @@ namespace backend.Controllers
 
         //Create
         [HttpPost]
-        [Route("AssignEmployeesToProject")]
-        public async Task<IActionResult> AssignEmployeesToProject([FromBody] ProjectMemberCreateDto dto)
+        [Route("AssignEmployeesToProject/{userId}")]
+        public async Task<IActionResult> AssignEmployeesToProject([FromBody] ProjectMemberCreateDto dto, string userId)
         {
             var project = _context.Projects.Where(p => p.Id == dto.ProjectId).First();
-            if(project.ManagerId == EmployeeId.Id || "bb1c27a0-38fb-4594-abcb-bd8620a03306"==EmployeeId.Id)
+
+            var admins = from r in _context.Roles
+                         from ur in _context.UserRoles
+                         where r.NormalizedName == "ADMIN"
+                         select new
+                         {
+                             id = ur.UserId
+                         };
+
+            bool isAdmin = false;
+
+            foreach (var admin in admins)
+            {
+                if (admin.id == userId)
+                {
+                    isAdmin = true;
+                    break;
+                }
+            }
+
+
+
+            if (project.ManagerId == userId || isAdmin == true)
             {
                 //Only the admin or the project manager can add an employee to a project
                 var newProjectMember = new ProjectMember() { MemberId = dto.MemberId, ProjectId = dto.ProjectId };
 
-                
+
 
                 await _context.ProjectMembers.AddAsync(newProjectMember);
                 await _context.SaveChangesAsync();
@@ -52,7 +74,7 @@ namespace backend.Controllers
             return Ok("You are not an admin or a project manager");
 
 
-            
+
         }
 
 
