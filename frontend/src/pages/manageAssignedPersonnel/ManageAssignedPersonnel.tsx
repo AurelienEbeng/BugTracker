@@ -31,10 +31,34 @@ const ManageAssignedPersonnel = () => {
       navigate("/signIn", { replace: true });
       return;
     }
-    setLoading(true);
-    setLoadingUnassignedDeveloper(true);
+
     setProjectMember({ ...projectMember, projectId: project.id });
 
+    getAssignedPersonnel();
+
+    getUnassignedPersonnel();
+  }, []);
+
+  function handleClickAddBtn() {
+    httpModule
+      .post(
+        "/ProjectMember/AssignEmployeesToProject/" + jwt.user.id,
+        projectMember,
+        { headers: { Authorization: "Bearer " + jwt.user.jwtToken } }
+      )
+      .then(() => {
+        getAssignedPersonnel();
+        getUnassignedPersonnel();
+        setProjectMember({ ...projectMember, memberId: "" });
+      })
+      .catch((error) => {
+        alert("Error, check console");
+        console.log(error.response);
+      });
+  }
+
+  function getAssignedPersonnel() {
+    setLoading(true);
     let params = new URLSearchParams();
     params.append("projectId", project.id);
     httpModule
@@ -50,7 +74,12 @@ const ManageAssignedPersonnel = () => {
         console.log(error.response);
         setLoading(false);
       });
+  }
 
+  function getUnassignedPersonnel() {
+    setLoadingUnassignedDeveloper(true);
+    let params = new URLSearchParams();
+    params.append("projectId", project.id);
     httpModule
       .get("/ProjectMember/GetUnassignedPersonnel?" + params, {
         headers: { Authorization: "Bearer " + jwt.user.jwtToken },
@@ -64,9 +93,7 @@ const ManageAssignedPersonnel = () => {
         console.log(error.response);
         setLoadingUnassignedDeveloper(false);
       });
-  }, []);
-
-  function handleClickAddBtn() {}
+  }
   return (
     <div>
       {loading || loadingUnassignedDeveloper ? (
@@ -91,7 +118,9 @@ const ManageAssignedPersonnel = () => {
                 </MenuItem>
               ))}
             </TextField>
-            <Button variant="outlined" onClick={handleClickAddBtn}>Add</Button>
+            <Button variant="outlined" onClick={handleClickAddBtn}>
+              Add
+            </Button>
           </div>
           <AssignedPersonnelGrid data={assignedPersonnel} />
         </>
