@@ -40,7 +40,7 @@ const AssignedPersonnelGrid = ({
   ];
 
   return (
-    <Box sx={{ width: "100%", height: 450 }}>
+    <Box sx={{ width: "100%", height: 350 }}>
       <DataGrid
         columns={column}
         rows={data}

@@ -5,6 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import httpModule from "../../helpers/http.module";
 import { Button, CircularProgress, MenuItem, TextField } from "@mui/material";
 import { IEmployee } from "../../types/global.typing";
+import "./manageAssignedPersonnel.scss";
 
 type ProjectMember = {
   projectId: string;
@@ -113,12 +114,12 @@ const ManageAssignedPersonnel = () => {
       });
   }
   return (
-    <div>
+    <div className="content manageAssignedPersonnel">
       {loading || loadingUnassignedDeveloper ? (
         <CircularProgress size={100} />
       ) : (
         <>
-          <div className="heading">{project.name}'s Personnel</div>
+          <h1>{project.name}'s Personnel</h1>
           <div className="unassignedPersonnel">
             <TextField
               variant="outlined"
