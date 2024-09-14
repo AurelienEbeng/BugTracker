@@ -170,10 +170,10 @@ namespace backend.Controllers
 
         //Delete
         [HttpDelete]
-        [Route("Delete/{userId}")]
-        public async Task<IActionResult> Delete(ProjectMemberCreateDto dto, string userId)
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(string userId, int projectId, string memberId)
         {
-            var project = _context.Projects.Where(p => p.Id == dto.ProjectId).First();
+            var project = _context.Projects.Where(p => p.Id == projectId).First();
 
             var admins = from r in _context.Roles
                          from ur in _context.UserRoles
@@ -197,7 +197,7 @@ namespace backend.Controllers
             if (project.ManagerId == userId || isAdmin == true)
             {
                 //Only the admin or the project manager can add an employee to a project
-                await _context.ProjectMembers.Where(p => p.ProjectId == dto.ProjectId && p.MemberId == dto.MemberId).ExecuteDeleteAsync();
+                await _context.ProjectMembers.Where(p => p.ProjectId == projectId && p.MemberId == memberId).ExecuteDeleteAsync();
                 return Ok("Deleted");
             }
 

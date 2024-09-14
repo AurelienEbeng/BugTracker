@@ -94,6 +94,24 @@ const ManageAssignedPersonnel = () => {
         setLoadingUnassignedDeveloper(false);
       });
   }
+  function handleBtnDelete(memberId: any) {
+    let params = new URLSearchParams();
+    params.append("userId", jwt.user.id);
+    params.append("projectId", project.id);
+    params.append("memberId", memberId);
+    httpModule
+      .delete("/ProjectMember/Delete?" + params, {
+        headers: { Authorization: "Bearer " + jwt.user.jwtToken },
+      })
+      .then(() => {
+        getAssignedPersonnel();
+        getUnassignedPersonnel();
+      })
+      .catch((error) => {
+        alert("Error, check console");
+        console.log(error.response);
+      });
+  }
   return (
     <div>
       {loading || loadingUnassignedDeveloper ? (
@@ -122,7 +140,10 @@ const ManageAssignedPersonnel = () => {
               Add
             </Button>
           </div>
-          <AssignedPersonnelGrid data={assignedPersonnel} />
+          <AssignedPersonnelGrid
+            data={assignedPersonnel}
+            handleBtnDelete={handleBtnDelete}
+          />
         </>
       )}
     </div>
