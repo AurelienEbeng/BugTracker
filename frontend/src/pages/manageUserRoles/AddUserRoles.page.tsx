@@ -12,10 +12,10 @@ import {
 } from "@mui/material";
 import "./manageUserRoles.scss";
 
-interface UserRole  {
+interface UserRole {
   userId: string;
   roleName: string;
-};
+}
 const AddUserRoles = () => {
   const [roles, setRoles] = useState<IRole[]>([]);
   const [employees, setEmployees] = useState<IEmployee[]>([]);
@@ -65,8 +65,8 @@ const AddUserRoles = () => {
       return;
     }
     httpModule
-      .post<UserRole>("Employee/AddRoleToEmployee", userRole,{
-        headers: { Authorization: "Bearer " + jwt.user.jwtToken},
+      .post<UserRole>("Employee/AddRoleToEmployee", userRole, {
+        headers: { Authorization: "Bearer " + jwt.user.jwtToken },
       })
       .then(() => redirect("/manageUserRoles"))
       .catch((error) => {
@@ -76,51 +76,59 @@ const AddUserRoles = () => {
   }
 
   return (
-    <div className="content addUserRole">
-      <h2>Add New User Role</h2>
+    <div className="content">
+      <div className="addUserRole">
+        <h2>Add New User Role</h2>
 
-      <FormControl fullWidth>
-        <InputLabel>Role</InputLabel>
-        <Select
-          value={userRole.roleName}
-          label="Role"
-          onChange={(e) =>
-            setUserRole({ ...userRole, roleName: e.target.value })
-          }
-        >
-          {roles.map((role) => (
-            <MenuItem key={role.id} value={role.name}>
-              {role.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+        <FormControl fullWidth>
+          <InputLabel>Role</InputLabel>
+          <Select
+            value={userRole.roleName}
+            label="Role"
+            onChange={(e) =>
+              setUserRole({ ...userRole, roleName: e.target.value })
+            }
+          >
+            {roles.map((role) => (
+              <MenuItem key={role.id} value={role.name}>
+                {role.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
 
-      <FormControl fullWidth>
-        <InputLabel>User</InputLabel>
-        <Select
-          value={userRole.userId}
-          label="UserId"
-          onChange={(e) => setUserRole({ ...userRole, userId: e.target.value })}
-        >
-          {employees.map((user) => (
-            <MenuItem key={user.id} value={user.id}>
-              {user.name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
-      <div className="btns">
-        <Button variant="outlined" color="primary" onClick={handleClickSaveBtn}>
-          Save
-        </Button>
-        <Button
-          variant="outlined"
-          color="secondary"
-          onClick={handleClickBackBtn}
-        >
-          Back
-        </Button>
+        <FormControl fullWidth>
+          <InputLabel>User</InputLabel>
+          <Select
+            value={userRole.userId}
+            label="UserId"
+            onChange={(e) =>
+              setUserRole({ ...userRole, userId: e.target.value })
+            }
+          >
+            {employees.map((user) => (
+              <MenuItem key={user.id} value={user.id}>
+                {user.name}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+        <div className="btns">
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={handleClickSaveBtn}
+          >
+            Save
+          </Button>
+          <Button
+            variant="outlined"
+            color="secondary"
+            onClick={handleClickBackBtn}
+          >
+            Back
+          </Button>
+        </div>
       </div>
     </div>
   );
