@@ -91,6 +91,39 @@ namespace backend.Controllers
             return Ok(ticket.First());
         }
 
+
+        [HttpGet]
+        [Route("GetMyTickets")]
+        public async Task<ActionResult> GetMyTickets(string userId)
+        {
+            var myTickets = from t in _context.Tickets
+                            from p in _context.Projects
+                            from a in _context.Users
+                            from c in _context.Users
+                            where p.Id == t.ProjectId && a.Id == t.AssignedDeveloperId && c.Id == t.CreatorId
+                            && (t.AssignedDeveloperId==userId || t.CreatorId==userId)
+                            select new
+                            {
+                                id = t.Id,
+                                title = t.Title,
+                                description = t.Description,
+                                dateCreated = t.DateCreated,
+                                status = t.Status,
+                                type = t.Type,
+                                priority = t.Priority,
+                                projectId = t.ProjectId,
+                                projectName = p.Name,
+                                assignedDeveloperId = t.AssignedDeveloperId,
+                                assignedDeveloperName = a.UserName,
+                                creatorId = c.Id,
+                                creatorName = c.UserName,
+                            };
+
+            return Ok(myTickets);
+        }
+
+
+
         //Update
         [HttpPut]
         [Route("Update")]

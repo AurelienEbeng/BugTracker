@@ -4,6 +4,7 @@ using backend.Core.Dtos.Project;
 using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -30,7 +31,7 @@ namespace backend.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateProject([FromBody] ProjectCreateDto dto)
         {
-            var newProject = _mapper.Map<Project>(dto);
+            var newProject = _mapper.Map<Core.Entities.Project>(dto);
             newProject.DateCreated = DateTime.Now;
             await _context.Projects.AddAsync(newProject);
             await _context.SaveChangesAsync();
