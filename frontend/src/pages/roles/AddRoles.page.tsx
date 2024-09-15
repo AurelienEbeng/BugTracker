@@ -12,7 +12,7 @@ const AddRoles = () => {
   const jwt = useJwt();
 
   useEffect(() => {
-    if (Object.keys(jwt.user).length === 0 && jwt.user.constructor === Object) {
+    if (!jwt.isLoggedIn()) {
       redirect("/signin", { replace: true });
       return;
     }
