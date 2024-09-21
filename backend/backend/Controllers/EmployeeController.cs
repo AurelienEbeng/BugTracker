@@ -102,8 +102,30 @@ namespace backend.Controllers
         }
 
 
+        [HttpGet]
+        [Route("GetUser")]
+        public async Task<ActionResult> GetUser(string userId)
+        {
+            var user = from e in _context.Users
+                        from ur in _context.UserRoles
+                        from r in _context.Roles
+                        where e.Id == ur.UserId && userId==e.Id
+                        where ur.RoleId == r.Id 
+                        select new
+                        {
+                            username = e.UserName,
+                            email = e.Email,
+                            roleName = r.Name,
+                            id=userId,
+                            dateJoinded = e.DateJoined
+                        };
+
+            return Ok(user);
+        }
+
+
         //Update
-        
+
 
 
         //Delete
