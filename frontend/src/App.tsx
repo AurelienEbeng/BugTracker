@@ -45,9 +45,9 @@ const ManageAssignedPersonnel = lazy(
   () => import("./pages/manageAssignedPersonnel/ManageAssignedPersonnel")
 );
 
-const GetMyTickets=lazy(
-  () => import("./pages/tickets/GetMyTickets")
-);
+const GetMyTickets = lazy(() => import("./pages/tickets/GetMyTickets"));
+
+const UserProfile = lazy(() => import("./pages/userProfile/UserProfile"));
 
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
@@ -103,6 +103,7 @@ const App = () => {
                 element={<ManageAssignedPersonnel />}
               />
               <Route path="/getMyTickets" element={<GetMyTickets />} />
+              <Route path="/userProfile" element={<UserProfile />} />
             </Routes>
           </Suspense>
         </div>
