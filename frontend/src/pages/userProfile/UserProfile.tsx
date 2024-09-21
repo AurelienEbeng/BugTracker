@@ -8,6 +8,7 @@ type User = {
   email: string;
   id: string;
   dateJoined: string;
+  role: string;
 };
 const UserProfile = () => {
   const jwt = useJwt();
@@ -50,6 +51,14 @@ const UserProfile = () => {
               variant="outlined"
               value={user.dateJoined}
               label="Date Joined"
+              disabled
+              fullWidth
+              margin="normal"
+            />
+            <TextField
+              variant="outlined"
+              value={user.role}
+              label="Role"
               disabled
               fullWidth
               margin="normal"
