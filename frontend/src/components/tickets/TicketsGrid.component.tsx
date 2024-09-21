@@ -5,16 +5,16 @@ import moment from "moment";
 import { Link } from "react-router-dom";
 
 const column: GridColDef[] = [
-  { field: "title", headerName: "Title", width: 200, flex:1 },
+  { field: "title", headerName: "Title", flex:1 },
   {
     field: "dateCreated",
     headerName: "Creation Time",
-    width: 200,
     renderCell: (params) => moment(params.row.dateCreated).format("YYYY-MM-DD"),
     flex:1
   },
-  { field: "priority", headerName: "Priority", width: 200, flex:1 },
-  { field: "projectName", headerName: "Project Name", width: 200, flex:1 },
+  { field: "assignedDeveloperName", headerName: "Assigned Developer", flex:1 },
+  {field: "creatorName", headerName:"Creator", flex:1},
+  { field: "projectName", headerName: "Project Name", flex:1 },
   {
     field: "",
     flex:1,
