@@ -16,7 +16,7 @@ const links = [
   { href: "/projects", label: "Manage Projects Users", icon: <GroupAddIcon /> },
   { href: "/manageUserRoles", label: "Manage Role Assignment", icon: <GroupIcon /> },
   { href: "/projects/myProjects", label: "My Projects", icon: <ReorderIcon /> },
-  { href: "/", label: "My Tickets", icon: <ViewListIcon /> },
+  { href: "/getMyTickets", label: "My Tickets", icon: <ViewListIcon /> },
   { href: "/", label: "User Profile", icon: <PersonIcon /> },
 ];
 const Sidebar = () => {
