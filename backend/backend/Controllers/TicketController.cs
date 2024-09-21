@@ -114,9 +114,9 @@ namespace backend.Controllers
                                 projectId = t.ProjectId,
                                 projectName = p.Name,
                                 assignedDeveloperId = t.AssignedDeveloperId,
-                                assignedDeveloperName = a.UserName,
+                                assignedDeveloperName = a.Name,
                                 creatorId = c.Id,
-                                creatorName = c.UserName,
+                                creatorName = c.Name,
                             };
 
             return Ok(myTickets);
