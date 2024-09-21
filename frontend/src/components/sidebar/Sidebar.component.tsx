@@ -17,7 +17,7 @@ const links = [
   { href: "/manageUserRoles", label: "Manage Role Assignment", icon: <GroupIcon /> },
   { href: "/projects/myProjects", label: "My Projects", icon: <ReorderIcon /> },
   { href: "/getMyTickets", label: "My Tickets", icon: <ViewListIcon /> },
-  { href: "/", label: "User Profile", icon: <PersonIcon /> },
+  { href: "/userProfile", label: "User Profile", icon: <PersonIcon /> },
 ];
 const Sidebar = () => {
   const jwt = useJwt();
