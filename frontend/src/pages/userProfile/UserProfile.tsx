@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { useJwt } from "../../context/Jwt.context";
 import { useNavigate } from "react-router-dom";
 import { CircularProgress, TextField } from "@mui/material";
+import httpModule from "../../helpers/http.module";
+import moment from "moment";
 
 type User = {
   name: string;
@@ -13,13 +15,32 @@ type User = {
 const UserProfile = () => {
   const jwt = useJwt();
   const navigate = useNavigate();
-  const [user, setUser] = useState({} as User);
+  const [user, setUser] = useState<User>({} as User);
   const [loading, setLoading] = useState<boolean>(false);
 
   useEffect(() => {
     if (!jwt.isLoggedIn()) {
       navigate("/signIn", { replace: true });
+      return;
     }
+
+    setLoading(true);
+    let params = new URLSearchParams();
+    params.append("userId", jwt.user.id);
+    httpModule
+      .get("/Employee/GetUser?" + params, {
+        headers: { Authorization: "Bearer " + jwt.user.jwtToken },
+      })
+      .then((response) => {
+        setUser(response.data);
+        setUser({...user, dateJoined:moment(user.dateJoined).format("YYYY-MM-DD")})
+        setLoading(false);
+      })
+      .catch((error) => {
+        alert("Error, check console");
+        console.log(error.response);
+        setLoading(false);
+      });
   }, []);
   return (
     <div className="content">

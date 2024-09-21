@@ -113,14 +113,14 @@ namespace backend.Controllers
                         where ur.RoleId == r.Id 
                         select new
                         {
-                            username = e.UserName,
+                            name = e.Name,
                             email = e.Email,
-                            roleName = r.Name,
+                            role = r.Name,
                             id=userId,
-                            dateJoinded = e.DateJoined
+                            dateJoined = e.DateJoined
                         };
 
-            return Ok(user);
+            return Ok(user.First());
         }
 
 
