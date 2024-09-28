@@ -11,6 +11,7 @@ type UserRole = {
   email: string;
   username: string;
   roleName: string;
+  name:string;
 };
 
 const ManageUserRoles = () => {

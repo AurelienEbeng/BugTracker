@@ -93,6 +93,7 @@ namespace backend.Controllers
                             username = e.UserName,
                             email = e.Email,
                             roleName = r.Name,
+                            name = e.Name,
                         };
 
 

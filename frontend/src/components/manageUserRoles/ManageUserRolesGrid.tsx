@@ -6,10 +6,11 @@ type UserRole = {
   email: string;
   username: string;
   roleName: string;
+  name: string;
 };
 
 const column: GridColDef[] = [
-  { field: "username", headerName: "Username", flex:1},
+  { field: "name", headerName: "Name", flex:1},
   { field: "email", headerName: "Email", flex:1 },
   { field: "roleName", headerName: "Role", flex:1},
 ];
