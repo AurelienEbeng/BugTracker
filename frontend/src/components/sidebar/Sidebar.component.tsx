@@ -13,7 +13,6 @@ import { useSidebarContext } from "../../context/sidebar.context";
 
 const links = [
   { href: "/", label: "Dashboard", icon: <DashboardIcon /> },
-  { href: "/projects", label: "Manage Projects Users", icon: <GroupAddIcon /> },
   { href: "/manageUserRoles", label: "Manage Role Assignment", icon: <GroupIcon /> },
   { href: "/projects/myProjects", label: "My Projects", icon: <ReorderIcon /> },
   { href: "/getMyTickets", label: "My Tickets", icon: <ViewListIcon /> },
