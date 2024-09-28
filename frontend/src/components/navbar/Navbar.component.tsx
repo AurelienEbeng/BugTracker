@@ -8,11 +8,6 @@ import { useSidebarContext } from "../../context/sidebar.context";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/employees", label: "Employees" },
-  { href: "/projects", label: "Projects" },
-  { href: "/roles", label: "Roles" },
-  { href: "/signIn", label: "Sign In" },
   { href: "/logout", label: "Logout" },
 ];
 const Navbar = () => {
