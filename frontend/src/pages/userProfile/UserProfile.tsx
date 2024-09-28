@@ -32,8 +32,9 @@ const UserProfile = () => {
         headers: { Authorization: "Bearer " + jwt.user.jwtToken },
       })
       .then((response) => {
-        setUser(response.data);
-        setUser({...user, dateJoined:moment(user.dateJoined).format("YYYY-MM-DD")})
+        let newUser = response.data;
+        newUser.dateJoined = moment(newUser.dateJoined).format("YYYY-MM-DD");
+        setUser({...newUser})
         setLoading(false);
       })
       .catch((error) => {
