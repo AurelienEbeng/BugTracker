@@ -96,7 +96,6 @@ const DetailProjectEdit = () => {
             InputProps={{
               readOnly: true,
             }}
-            disabled
             fullWidth
           />
 
@@ -131,7 +130,6 @@ const DetailProjectEdit = () => {
             InputProps={{
               readOnly: true,
             }}
-            disabled
             fullWidth
           />
 

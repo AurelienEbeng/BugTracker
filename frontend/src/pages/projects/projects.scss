@@ -26,4 +26,7 @@
     padding-top: 20px;
     @include d-flex(column, flex-start,center);
     gap: 1rem;
+    *{
+        color: var(--text-color1);
+    }
 }
