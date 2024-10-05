@@ -6,6 +6,7 @@ import { IProject } from "../../types/global.typing";
 import { Button, CircularProgress } from "@mui/material";
 import ProjectsGrid from "../../components/projects/ProjectsGrid.component";
 import { Add } from "@mui/icons-material";
+import "./projects.scss";
 
 const MyProjects = () => {
   const [loading, setLoading] = useState<boolean>(false);
