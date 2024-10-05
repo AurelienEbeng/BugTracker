@@ -1,0 +1,10 @@
+@import "../../mixins";
+.userProfile{
+    *{
+        color: var(--text-color1)
+    }
+    .heading {
+        @include d-flex(row, center, center);
+        width: 100%;
+      }
+}
