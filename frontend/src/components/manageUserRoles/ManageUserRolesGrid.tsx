@@ -1,6 +1,7 @@
 import Box from "@mui/material/Box";
 import { DataGrid, GridColDef } from "@mui/x-data-grid";
 import { useState } from "react";
+import "./manage-user-roles-grid.scss";
 
 type UserRole = {
   email: string;
@@ -10,9 +11,9 @@ type UserRole = {
 };
 
 const column: GridColDef[] = [
-  { field: "name", headerName: "Name", flex:1},
-  { field: "email", headerName: "Email", flex:1 },
-  { field: "roleName", headerName: "Role", flex:1},
+  { field: "name", headerName: "Name", flex: 1 },
+  { field: "email", headerName: "Email", flex: 1 },
+  { field: "roleName", headerName: "Role", flex: 1 },
 ];
 
 type ManageUserRolesGridProps = {
@@ -31,7 +32,7 @@ const ManageUserRolesGrid = ({ data }: ManageUserRolesGridProps) => {
     return list;
   });
   return (
-    <Box sx={{ width: "100%", height: 450 }} className="roles-grid">
+    <Box sx={{ width: "100%", height: 450 }} className="manage-user-roles-grid">
       <DataGrid
         rows={dataWithId}
         columns={column}
