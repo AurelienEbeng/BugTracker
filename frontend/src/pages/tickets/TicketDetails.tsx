@@ -31,9 +31,9 @@ const TicketDetails = ({ data }: TicketDetailsProps) => {
         label="Title"
         variant="outlined"
         value={ticket.title}
-        disabled
         fullWidth
         margin="normal"
+        inputProps={{ readOnly: true }}
       />
 
       <TextField
@@ -41,63 +41,63 @@ const TicketDetails = ({ data }: TicketDetailsProps) => {
         variant="outlined"
         value={ticket.description}
         multiline
-        disabled
         fullWidth
         margin="normal"
+        inputProps={{ readOnly: true }}
       />
 
       <TextField
         label="Type"
         variant="outlined"
         value={ticket.type}
-        disabled
         fullWidth
         margin="normal"
+        inputProps={{ readOnly: true }}
       />
 
       <TextField
         label="Assigned Developer"
         variant="outlined"
         value={ticket.assignedDeveloperName}
-        disabled
         fullWidth
         margin="normal"
+        inputProps={{ readOnly: true }}
       />
 
       <TextField
         label="Status"
         variant="outlined"
         value={ticket.status}
-        disabled
         fullWidth
         margin="normal"
+        inputProps={{ readOnly: true }}
       />
 
       <TextField
         label="Priority"
         variant="outlined"
         value={ticket.priority}
-        disabled
         fullWidth
         margin="normal"
+        inputProps={{ readOnly: true }}
       />
 
       <TextField
         label="Project"
         variant="outlined"
         value={ticket.projectName}
-        disabled
         fullWidth
         margin="normal"
+        inputProps={{ readOnly: true }}
       />
 
       <TextField
         label="Creator"
         variant="outlined"
         value={ticket.creatorName}
-        disabled
         fullWidth
         margin="normal"
+        inputProps={{ readOnly: true }}
       />
     </>
   );

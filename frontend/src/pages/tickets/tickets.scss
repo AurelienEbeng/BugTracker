@@ -12,6 +12,9 @@
   grid-row-gap: 10px;
   padding-bottom: 20px;
   padding-top: 20px;
+  * {
+    color: var(--text-color1);
+  }
 }
 
 .add-ticket {
