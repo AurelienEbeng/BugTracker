@@ -3,6 +3,7 @@ import { DataGrid, gridClasses, GridColDef } from "@mui/x-data-grid";
 import { ITicket } from "../../types/global.typing";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import "./tickets-grid.scss";
 
 const column: GridColDef[] = [
   { field: "title", headerName: "Title", flex:1 },
