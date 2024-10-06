@@ -6,6 +6,7 @@ import { ToggleButton } from "@mui/material";
 import { ThemeContext } from "../../context/theme.context";
 import { useSidebarContext } from "../../context/sidebar.context";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
+import NotificationsIcon from '@mui/icons-material/Notifications';
 
 const links = [
   { href: "/logout", label: "Logout" },
@@ -22,6 +23,10 @@ const Navbar = () => {
     <div className="navbar">
       <div className="brand">
         <span>Bug Tracker</span>
+      </div>
+      <div className="notifications">
+        <NotificationsIcon />
+        <div className="counter">3</div>
       </div>
       <div className={menuStyles}>
         <ul>

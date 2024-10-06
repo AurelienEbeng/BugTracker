@@ -39,6 +39,25 @@
       color: var(--blue);
     }
   }
+
+  .notifications{
+    position: relative;
+    margin-right: 7px;
+  }
+  .counter {
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 50%;
+    padding: 8px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+  }
 }
 
 @media (max-width: 960px) {
