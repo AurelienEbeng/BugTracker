@@ -2,6 +2,7 @@
 using backend.Core.Context;
 using backend.Core.Dtos.TicketComment;
 using backend.Core.Entities;
+using backend.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -33,8 +34,11 @@ namespace backend.Controllers
             var newTicketComment = _mapper.Map<TicketComment>(dto);
             newTicketComment.DateCreated = DateTime.Now;
             await _context.TicketComments.AddAsync(newTicketComment);
+            var notificationHelper = new NotificationHelper(_context);
+            notificationHelper.CommentAddedNotificationForProjectMembers(dto.TicketId);
             await _context.SaveChangesAsync();
 
+            
 
 
             return Ok("Ticket Comment Created successfully");
