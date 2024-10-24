@@ -24,6 +24,7 @@ namespace backend.Core.Context
         public DbSet<Project> Projects { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<ProjectMember> ProjectMembers { get; set; }
+        public DbSet<Notification> Notifications { get; set; }
         
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -34,7 +35,7 @@ namespace backend.Core.Context
 
 
             //Many to many relationship
-            //An employee can work on several projects and a project can have several employees
+            // A user can work on several projects and a project can have several users
             modelBuilder.Entity<User>()
                 .HasMany(employee => employee.Projects)
                 .WithMany(project => project.Members)
@@ -92,12 +93,17 @@ namespace backend.Core.Context
                 .WithMany(ticket => ticket.TicketAttachments)
                 .HasForeignKey(ticketAttachment => ticketAttachment.TicketId);
 
-            //ticket attachment to employee
+            //ticket attachment to user
             modelBuilder.Entity<TicketAttachment>()
                 .HasOne(ticketAttachment => ticketAttachment.Uploader)
                 .WithMany(employee => employee.TicketAttachments)
                 .HasForeignKey(ticketAttachment => ticketAttachment.UploaderId);
 
+            // notification to user
+            modelBuilder.Entity<Notification>()
+                .HasOne(notification => notification.Receiver)
+                .WithMany(user => user.Notifications)
+                .HasForeignKey(notification =>  notification.ReceiverId);
 
             modelBuilder.Entity<User>(b =>
             {

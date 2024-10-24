@@ -16,5 +16,6 @@ namespace backend.Core.Entities
         public ICollection<UserRole> UserRoles { get; set; }
         public ICollection<Ticket> AssignedTickets { get; set; }
         public ICollection<Ticket> CreatedTickets { get; set; }
+        public ICollection<Notification> Notifications { get; set; }
     }
 }
