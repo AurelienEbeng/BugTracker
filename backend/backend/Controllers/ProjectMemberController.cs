@@ -4,6 +4,7 @@ using backend.Core.Context;
 using backend.Core.DataTransfer;
 using backend.Core.Dtos.ProjectMember;
 using backend.Core.Entities;
+using Humanizer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
@@ -61,7 +62,7 @@ namespace backend.Controllers
 
             if (project.ManagerId == userId || isAdmin == true)
             {
-                //Only the admin or the project manager can add an employee to a project
+                
                 var newProjectMember = new ProjectMember() { MemberId = dto.MemberId, ProjectId = dto.ProjectId };
                 var notification = new Notification();
                 notification.AddedToProject(project.Name, dto.MemberId);
@@ -198,8 +199,12 @@ namespace backend.Controllers
 
             if (project.ManagerId == userId || isAdmin == true)
             {
-                //Only the admin or the project manager can add an employee to a project
+                
                 await _context.ProjectMembers.Where(p => p.ProjectId == projectId && p.MemberId == memberId).ExecuteDeleteAsync();
+                var notification = new Notification();
+                notification.RemovedFromProject(project.Name, memberId);
+                await _context.Notifications.AddAsync(notification);
+                await _context.SaveChangesAsync();
                 return Ok("Deleted");
             }
 

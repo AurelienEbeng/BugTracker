@@ -13,6 +13,11 @@
             this.ReceiverId = receiverId;
             this.Message = "You've been added to project " + projectName;
         }
-        // You've been added to project ...
+        
+        public void RemovedFromProject(string projectName, string receiverId)
+        {
+            this.ReceiverId = receiverId;
+            this.Message = "You've been removed from project " + projectName;
+        }
     }
 }
