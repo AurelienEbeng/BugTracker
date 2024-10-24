@@ -63,10 +63,12 @@ namespace backend.Controllers
             {
                 //Only the admin or the project manager can add an employee to a project
                 var newProjectMember = new ProjectMember() { MemberId = dto.MemberId, ProjectId = dto.ProjectId };
-
+                var notification = new Notification();
+                notification.AddedToProject(project.Name, dto.MemberId);
 
 
                 await _context.ProjectMembers.AddAsync(newProjectMember);
+                await _context.Notifications.AddAsync(notification);
                 await _context.SaveChangesAsync();
                 return Ok("Project Member added successfully");
             }

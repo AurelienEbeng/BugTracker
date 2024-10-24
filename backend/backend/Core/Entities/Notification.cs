@@ -9,5 +9,10 @@
         public string ReceiverId { get; set; }
         public User Receiver { get; set; }
 
+        public void AddedToProject(string projectName, string receiverId) {
+            this.ReceiverId = receiverId;
+            this.Message = "You've been added to project " + projectName;
+        }
+        // You've been added to project ...
     }
 }
