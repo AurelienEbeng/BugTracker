@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import "./navbar.scss";
 import { Link } from "react-router-dom";
 import { Menu, LightMode, DarkMode } from "@mui/icons-material";
@@ -29,9 +29,14 @@ const Navbar = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [openNotification, setOpenNotification] = useState<boolean>(false);
   const jwt = useJwt();
+
+  useEffect(() => {
+    getUnreadNotifications();
+  }, []);
+
   function handleRead() {
     httpModule
-      .put("/Notification/MarkAsRead",notifications, {
+      .put("/Notification/MarkAsRead", notifications, {
         headers: { Authorization: "Bearer " + jwt.user.jwtToken },
       })
       .then(() => {
