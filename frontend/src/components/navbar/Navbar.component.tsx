@@ -30,8 +30,18 @@ const Navbar = () => {
   const [openNotification, setOpenNotification] = useState<boolean>(false);
   const jwt = useJwt();
   function handleRead() {
-    setNotifications([]);
-    setOpenNotification(!openNotification);
+    httpModule
+      .put("/Notification/MarkAsRead",notifications, {
+        headers: { Authorization: "Bearer " + jwt.user.jwtToken },
+      })
+      .then(() => {
+        setNotifications([]);
+        setOpenNotification(!openNotification);
+      })
+      .catch((error) => {
+        alert("Error, check the console");
+        console.log(error.response);
+      });
   }
   function getUnreadNotifications() {
     httpModule

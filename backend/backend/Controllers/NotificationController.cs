@@ -1,5 +1,5 @@
 ﻿using backend.Core.Context;
-using backend.Core.Entities;
+using backend.Core.Dtos.Notification;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -37,7 +37,7 @@ namespace backend.Controllers
         // Update
         [HttpPut]
         [Route("MarkAsRead")]
-        public async void MarkAsRead(Notification[] notifications)
+        public async Task<ActionResult> MarkAsRead(NotificationDto[] notifications)
         {
             foreach(var item in notifications)
             {
@@ -46,6 +46,8 @@ namespace backend.Controllers
             }
 
             await _context.SaveChangesAsync();
+            
+            return Ok("Notifications updated");
         }
     }
 }
