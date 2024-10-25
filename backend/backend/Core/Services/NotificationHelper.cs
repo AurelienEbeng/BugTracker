@@ -52,5 +52,18 @@ namespace backend.Core.Services
             }
 
         }
+
+        public async void ChangeAssignedDeveloperNotification(string title, string oldAssignedDeveloperId, string newAssignedDeveloperId) {
+            var notification1 = new Notification();
+            notification1.ReceiverId = oldAssignedDeveloperId;
+            notification1.Message = "You've been unassigned from ticket: " + title;
+
+            var notification2 = new Notification();
+            notification2.ReceiverId = newAssignedDeveloperId;
+            notification2.Message = "You've been assigned to ticket: " + title;
+
+            await _context.Notifications.AddAsync(notification1);
+            await _context.Notifications.AddAsync(notification2);
+        }
     }
 }

@@ -1,15 +1,11 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
-using backend.Core.Dtos.Employee;
 using backend.Core.Dtos.Ticket;
 using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using backend.Core.Enums;
-using Microsoft.AspNetCore.Identity;
-using backend.Core.DataTransfer;
+using backend.Core.Services;
 
 namespace backend.Controllers
 {
@@ -152,6 +148,10 @@ namespace backend.Controllers
                         TicketId = ticketHistory.TicketId
                     }
                 );
+
+                var notificationHelper = new NotificationHelper(_context);
+                notificationHelper.ChangeAssignedDeveloperNotification(ticket.Title, oldTicket.AssignedDeveloperId, ticket.AssignedDeveloperId);
+
                 oldTicket.AssignedDeveloperId = ticket.AssignedDeveloperId;
             }
 
@@ -245,8 +245,8 @@ namespace backend.Controllers
             }
 
 
-            
-           await _context.SaveChangesAsync();
+
+                await _context.SaveChangesAsync();
             
             return Ok("Ticket Updated successfully");
 
