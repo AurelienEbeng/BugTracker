@@ -18,7 +18,7 @@ namespace backend.Controllers
 
         // Read
         [HttpGet]
-        [Route("GetMyNotifications")]
+        [Route("GetMyNotifications/{userId}")]
         public async Task<ActionResult> GetMyNotfications(string userId)
         {
             var notifications = from n in _context.Notifications

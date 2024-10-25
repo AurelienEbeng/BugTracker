@@ -7,6 +7,8 @@ import { ThemeContext } from "../../context/theme.context";
 import { useSidebarContext } from "../../context/sidebar.context";
 import ViewSidebarIcon from "@mui/icons-material/ViewSidebar";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import httpModule from "../../helpers/http.module";
+import { useJwt } from "../../context/Jwt.context";
 
 interface Notification {
   id: string;
@@ -26,11 +28,24 @@ const Navbar = () => {
   const sidebarContext = useSidebarContext();
   const [notifications, setNotifications] = useState<Notification[]>([]);
   const [openNotification, setOpenNotification] = useState<boolean>(false);
+  const jwt = useJwt();
   function handleRead() {
     setNotifications([]);
     setOpenNotification(!openNotification);
   }
-  // getUnreadNotifications()
+  function getUnreadNotifications() {
+    httpModule
+      .get("Notification/GetMyNotifications/" + jwt.user.id, {
+        headers: { Authorization: "Bearer " + jwt.user.jwtToken },
+      })
+      .then((response) => {
+        setNotifications(response.data);
+      })
+      .catch((error) => {
+        alert("Error, check the console");
+        console.log(error.response);
+      });
+  }
   return (
     <div className="navbar">
       <div className="brand">
@@ -38,7 +53,10 @@ const Navbar = () => {
       </div>
       <div className="notificationsGroup">
         <NotificationsIcon
-          onClick={() => setOpenNotification(!openNotification)}
+          onClick={() => {
+            setOpenNotification(!openNotification);
+            getUnreadNotifications();
+          }}
         />
         {notifications.length > 0 && (
           <div
