@@ -25,7 +25,28 @@ namespace backend.Core.Services
             foreach(var member in members)
             {
                 var notification = new Notification();
-                notification.Message = "A comment has been added to ticket" + ticket.Title;
+                notification.Message = "A comment has been added to ticket: " + ticket.Title;
+                notification.ReceiverId = member.id;
+                await _context.Notifications.AddAsync(notification);
+            }
+
+        }
+
+        public async void AttachmentAddedNotificationForProjectMembers(int ticketId)
+        {
+            var ticket = _context.Tickets.Where(t => t.Id == ticketId).FirstOrDefault();
+
+            var members = from pm in _context.ProjectMembers
+                          where pm.ProjectId == ticket.ProjectId
+                          select new
+                          {
+                              id = pm.MemberId
+                          };
+
+            foreach (var member in members)
+            {
+                var notification = new Notification();
+                notification.Message = "A file has been added to ticket: " + ticket.Title;
                 notification.ReceiverId = member.id;
                 await _context.Notifications.AddAsync(notification);
             }

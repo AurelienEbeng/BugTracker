@@ -1,11 +1,10 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
 using backend.Core.DataTransfer;
-using backend.Core.Dtos.Project;
 using backend.Core.Dtos.TicketAttachment;
 using backend.Core.Entities;
+using backend.Core.Services;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -53,16 +52,11 @@ namespace backend.Controllers
             newTicketAttachment.DateUploaded = DateTime.Now;
             newTicketAttachment.UploaderId = EmployeeId.Id;
             await _context.TicketAttachments.AddAsync(newTicketAttachment);
+
+            var notifictionHelper = new NotificationHelper(_context);
+            notifictionHelper.AttachmentAddedNotificationForProjectMembers(dto.TicketId);
+
             await _context.SaveChangesAsync();
-
-
-
-            var ticket = _context.Tickets.Where(ticket => ticket.Id == newTicketAttachment.TicketId).First();
-
-            
-
-
-
 
             return Ok("Ticket Attachment Created successfully");
         }
