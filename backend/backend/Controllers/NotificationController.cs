@@ -1,4 +1,5 @@
 ﻿using backend.Core.Context;
+using backend.Core.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,6 +32,20 @@ namespace backend.Controllers
                                     message = n.Message
                                 };
             return Ok(notifications);
+        }
+
+        // Update
+        [HttpPut]
+        [Route("MarkAsRead")]
+        public async void MarkAsRead(Notification[] notifications)
+        {
+            foreach(var item in notifications)
+            {
+                var notification = _context.Notifications.Where(n => n.Id == item.Id).FirstOrDefault();
+                notification.IsRead = true;
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }
