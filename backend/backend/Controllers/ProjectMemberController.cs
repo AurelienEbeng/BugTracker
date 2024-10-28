@@ -1,24 +1,19 @@
 ﻿using AutoMapper;
-using AutoMapper.Execution;
 using backend.Core.Context;
-using backend.Core.DataTransfer;
 using backend.Core.Dtos.ProjectMember;
 using backend.Core.Entities;
-using Humanizer;
+using backend.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-using System.ComponentModel;
 using System.Data;
-using System.Net.Sockets;
 
 namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,Developer")]
+    [Authorize(Roles = "Admin,Developer,DemoAdmin,DemoDeveloper")]
     public class ProjectMemberController : ControllerBase
     {
         public ApplicationDBContext _context { get; }
@@ -39,26 +34,7 @@ namespace backend.Controllers
         {
             var project = _context.Projects.Where(p => p.Id == dto.ProjectId).First();
 
-            var admins = from r in _context.Roles
-                         from ur in _context.UserRoles
-                         where r.NormalizedName == "ADMIN"
-                         select new
-                         {
-                             id = ur.UserId
-                         };
-
-            bool isAdmin = false;
-
-            foreach (var admin in admins)
-            {
-                if (admin.id == userId)
-                {
-                    isAdmin = true;
-                    break;
-                }
-            }
-
-
+            bool isAdmin = CheckUsers.CheckAdmin(_context,userId);
 
             if (project.ManagerId == userId || isAdmin == true)
             {
@@ -178,24 +154,7 @@ namespace backend.Controllers
         {
             var project = _context.Projects.Where(p => p.Id == projectId).First();
 
-            var admins = from r in _context.Roles
-                         from ur in _context.UserRoles
-                         where r.NormalizedName == "ADMIN"
-                         select new
-                         {
-                             id = ur.UserId
-                         };
-
-            bool isAdmin = false;
-
-            foreach (var admin in admins)
-            {
-                if (admin.id == userId)
-                {
-                    isAdmin = true;
-                    break;
-                }
-            }
+            bool isAdmin = CheckUsers.CheckAdmin(_context, userId);
 
             if (project.ManagerId == userId || isAdmin == true)
             {
