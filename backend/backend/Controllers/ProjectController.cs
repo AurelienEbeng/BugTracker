@@ -29,14 +29,31 @@ namespace backend.Controllers
         //Create
         [HttpPost]
         [Route("Create")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> CreateProject([FromBody] ProjectCreateDto dto)
         {
             var newProject = _mapper.Map<Core.Entities.Project>(dto);
             newProject.DateCreated = DateTime.Now;
+
+
+
             await _context.Projects.AddAsync(newProject);
-            await _context.SaveChangesAsync();
+
+            await _context.SaveChangesAsync().ContinueWith(async task =>
+            {
+                var project = _context.Projects.Where(p => p.ManagerId == newProject.ManagerId && p.Name == newProject.Name
+                                                       && p.Description == newProject.Description
+                                                       && p.DateCreated == newProject.DateCreated).FirstOrDefault();
+
+                var newProjectMember = new ProjectMember();
+                newProjectMember.ProjectId = project.Id;
+                newProjectMember.MemberId = newProject.ManagerId;
+                await _context.ProjectMembers.AddAsync(newProjectMember);
+                await _context.SaveChangesAsync();
+            });
             return Ok("Project Created successfully");
         }
+
 
         //Read
         [HttpGet]
