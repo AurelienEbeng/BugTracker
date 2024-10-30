@@ -35,7 +35,7 @@ namespace backend.Controllers
             var project = _context.Projects.Where(p => p.Id == dto.ProjectId).First();
 
             bool isAdmin = CheckUsers.CheckAdmin(_context,userId);
-
+            
             if (project.ManagerId == userId || isAdmin == true)
             {
                 
@@ -52,7 +52,7 @@ namespace backend.Controllers
 
             return Ok("You are not an admin or a project manager");
 
-
+            
 
         }
 
@@ -166,7 +166,7 @@ namespace backend.Controllers
                 await _context.SaveChangesAsync();
                 return Ok("Deleted");
             }
-
+            
             return Ok("You are not an admin or a project manager");
 
             

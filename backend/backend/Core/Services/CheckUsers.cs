@@ -11,13 +11,13 @@ namespace backend.Core.Services
         {
             var admins = from r in _context.Roles
                          from ur in _context.UserRoles
-                         where r.NormalizedName == "ADMIN"
+                         where r.NormalizedName == "ADMIN" && ur.RoleId == r.Id
                          select new
                          {
                              id = ur.UserId
                          };
 
-
+            
             foreach (var admin in admins)
             {
                 if (admin.id == userId)
