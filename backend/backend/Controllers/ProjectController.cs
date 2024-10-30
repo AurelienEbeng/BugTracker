@@ -72,7 +72,7 @@ namespace backend.Controllers
             var myProjects = from p in _context.Projects
                              from e in _context.Users
                              from pm in _context.ProjectMembers
-                             where p.Id== pm.ProjectId && e.Id==pm.MemberId && pm.MemberId == userId
+                             where p.Id == pm.ProjectId && e.Id == p.ManagerId && pm.MemberId == userId
                              select new
                              {
                                  id = p.Id,
