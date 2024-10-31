@@ -11,7 +11,7 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,Developer,QualityAssurance")]
+    [Authorize(Roles = "Admin,Developer,DemoAdmin,DemoDeveloper")]
     public class TicketController : ControllerBase
     {
         private ApplicationDBContext _context { get; }
@@ -122,37 +122,45 @@ namespace backend.Controllers
 
         //Update
         [HttpPut]
-        [Route("Update")]
-        public async Task<IActionResult> Update(TicketCreateDto ticket)
+        [Route("Update/{userId}")]
+        public async Task<IActionResult> Update(TicketCreateDto ticket,string userId)
         {
             var oldTicket = _context.Tickets.Where(t => t.Id == ticket.Id).First();
-
+            bool isAdmin = CheckUsers.CheckAdmin(_context, userId);
+            bool isProjectManager = CheckUsers.CheckProjectManager(_context, userId, oldTicket.ProjectId);
+            if(oldTicket.AssignedDeveloperId!=userId && isAdmin == false && isProjectManager == false)
+            {
+                return Ok("You can't modify the ticket");
+            }
             var ticketHistory = new TicketHistory();
             ticketHistory.CreatorId = ticket.CreatorId;
             ticketHistory.TicketId = ticket.Id;
 
-            if (oldTicket.AssignedDeveloperId != ticket.AssignedDeveloperId)
+            if(isProjectManager==true || isAdmin == true)
             {
-                var newAssignedDeveloper = from u in _context.Users where u.Id == ticket.AssignedDeveloperId select new { name = u.Name };
-                var oldAssignedDeveloper = from u in _context.Users where u.Id == oldTicket.AssignedDeveloperId select new { name = u.Name };
-                ticketHistory.OldValue = oldAssignedDeveloper.First().name;
-                ticketHistory.NewValue = newAssignedDeveloper.First().name;
-                ticketHistory.Property = "Assigned Developer";
-                await _context.TicketHistories.AddAsync(
-                    new TicketHistory
-                    {
-                        OldValue = ticketHistory.OldValue,
-                        NewValue = ticketHistory.NewValue,
-                        Property = ticketHistory.Property,
-                        CreatorId = ticketHistory.CreatorId,
-                        TicketId = ticketHistory.TicketId
-                    }
-                );
+                if (oldTicket.AssignedDeveloperId != ticket.AssignedDeveloperId)
+                {
+                    var newAssignedDeveloper = from u in _context.Users where u.Id == ticket.AssignedDeveloperId select new { name = u.Name };
+                    var oldAssignedDeveloper = from u in _context.Users where u.Id == oldTicket.AssignedDeveloperId select new { name = u.Name };
+                    ticketHistory.OldValue = oldAssignedDeveloper.First().name;
+                    ticketHistory.NewValue = newAssignedDeveloper.First().name;
+                    ticketHistory.Property = "Assigned Developer";
+                    await _context.TicketHistories.AddAsync(
+                        new TicketHistory
+                        {
+                            OldValue = ticketHistory.OldValue,
+                            NewValue = ticketHistory.NewValue,
+                            Property = ticketHistory.Property,
+                            CreatorId = ticketHistory.CreatorId,
+                            TicketId = ticketHistory.TicketId
+                        }
+                    );
 
-                var notificationHelper = new NotificationHelper(_context);
-                notificationHelper.ChangeAssignedDeveloperNotification(ticket.Title, oldTicket.AssignedDeveloperId, ticket.AssignedDeveloperId);
+                    var notificationHelper = new NotificationHelper(_context);
+                    notificationHelper.ChangeAssignedDeveloperNotification(ticket.Title, oldTicket.AssignedDeveloperId, ticket.AssignedDeveloperId);
 
-                oldTicket.AssignedDeveloperId = ticket.AssignedDeveloperId;
+                    oldTicket.AssignedDeveloperId = ticket.AssignedDeveloperId;
+                }
             }
 
             if(oldTicket.Status != ticket.Status)
