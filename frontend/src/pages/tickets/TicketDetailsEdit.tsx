@@ -77,7 +77,7 @@ const TicketDetailsEdit = () => {
     setLoading(true);
 
     httpModule
-      .put("/Ticket/Update", updatedTicket, {
+      .put("/Ticket/Update/"+jwt.user.id, updatedTicket, {
         headers: { Authorization: "Bearer " + jwt.user.jwtToken },
       })
       .then(() => {
