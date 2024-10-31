@@ -50,7 +50,7 @@ const AddProjects = () => {
     }
     let jwtToken = jwt.user.jwtToken;
     httpModule
-      .post("Project/Create", project, {
+      .post("Project/Create/"+jwt.user.id, project, {
         headers: { Authorization: "Bearer " + jwtToken },
       })
       .then((response) => redirect("/projects/myProjects"))
