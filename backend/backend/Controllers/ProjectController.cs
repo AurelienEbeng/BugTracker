@@ -2,6 +2,7 @@
 using backend.Core.Context;
 using backend.Core.Dtos.Project;
 using backend.Core.Entities;
+using backend.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.CodeAnalysis;
@@ -12,7 +13,7 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin")]
+    [Authorize(Roles = "Admin,Developer,DemoAdmin,DemoDeveloper")]
     public class ProjectController : ControllerBase
     {
         private ApplicationDBContext _context { get; }
@@ -28,10 +29,14 @@ namespace backend.Controllers
 
         //Create
         [HttpPost]
-        [Route("Create")]
-        [Authorize(Roles = "Admin")]
-        public async Task<IActionResult> CreateProject([FromBody] ProjectCreateDto dto)
+        [Route("Create/{userId}")]
+        public async Task<IActionResult> CreateProject([FromBody] ProjectCreateDto dto, string userId)
         {
+            bool isAdmin = CheckUsers.CheckAdmin(_context, userId);
+            if (isAdmin == false)
+            {
+                return Ok("You're not allowed");
+            }
             var newProject = _mapper.Map<Core.Entities.Project>(dto);
             newProject.DateCreated = DateTime.Now;
 
