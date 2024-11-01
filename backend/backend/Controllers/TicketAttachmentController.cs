@@ -31,6 +31,12 @@ namespace backend.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateTicketAttachment([FromForm] TicketAttachmentCreateDto dto, IFormFile pdfFile)
         {
+            bool isAdmin = CheckUsers.CheckAdmin(_context, dto.UploaderId);
+            bool isProjectMember = CheckUsers.CheckProjectMember(_context, dto.TicketId, dto.UploaderId);
+            if(isProjectMember == false && isAdmin == false)
+            {
+                return Ok("You're not a member of the project");
+            }
             //First => save pdf to server
             // Then => save url into our entity
             var fiveMegaByte = 5 * 1024 * 1024;
