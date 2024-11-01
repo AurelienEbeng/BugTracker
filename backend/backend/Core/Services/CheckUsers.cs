@@ -3,6 +3,7 @@ using backend.Core.Dtos.Project;
 using backend.Core.Entities;
 using Humanizer;
 using Microsoft.EntityFrameworkCore;
+using System.Net.Sockets;
 
 namespace backend.Core.Services
 {
@@ -45,6 +46,16 @@ namespace backend.Core.Services
             var ticket = _context.Tickets.Where(t => t.Id == ticketId).FirstOrDefault();
 
             var projectMember = _context.ProjectMembers.Where(pm => pm.ProjectId == ticket.ProjectId && pm.MemberId == userId).FirstOrDefault();
+            if (projectMember == null)
+            {
+                return false;
+            }
+            return true;
+        }
+
+        public static bool CheckProjectMember(ApplicationDBContext _context, string userId, int projectId)
+        {
+            var projectMember = _context.ProjectMembers.Where(pm => pm.ProjectId == projectId && pm.MemberId == userId).FirstOrDefault();
             if (projectMember == null)
             {
                 return false;

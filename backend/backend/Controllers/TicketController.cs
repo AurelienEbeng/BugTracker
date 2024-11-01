@@ -31,6 +31,12 @@ namespace backend.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateTicket([FromBody] TicketCreateDto dto)
         {
+            bool isAdmin = CheckUsers.CheckAdmin(_context, dto.CreatorId);
+            bool isProjectMember = CheckUsers.CheckProjectMember(_context, dto.CreatorId, dto.ProjectId);
+            if(isProjectMember == false && isAdmin == false)
+            {
+                return Ok("You're not allowed");
+            }
             dto.DateCreated = DateTime.Now;
             var newTicket = _mapper.Map<Ticket>(dto);
             await _context.Tickets.AddAsync(newTicket);
