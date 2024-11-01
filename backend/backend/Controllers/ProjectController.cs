@@ -93,10 +93,14 @@ namespace backend.Controllers
 
         //Update
         [HttpPut]
-        [Route("Update")]
-        public async Task<IActionResult> UpdateProject(ProjectCreateDto updatedProject) {
+        [Route("Update/{userId}")]
+        public async Task<IActionResult> UpdateProject(ProjectCreateDto updatedProject, String userId) {
             var project = _context.Projects.Where(p => p.Id == updatedProject.Id).FirstOrDefault();
-
+            bool isAdmin = CheckUsers.CheckAdmin(_context, userId);
+            if(project.ManagerId != userId && isAdmin == false)
+            {
+                return Ok("You're not allowed");
+            }
             project.ManagerId = updatedProject.ManagerId;
             project.Name = updatedProject.Name;
             project.Description = updatedProject.Description;
