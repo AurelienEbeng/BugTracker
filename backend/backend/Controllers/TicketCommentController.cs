@@ -6,13 +6,14 @@ using backend.Core.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Protocol;
 
 
 namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Admin,Developer,QualityAssurance")]
+    [Authorize(Roles = "Admin,Developer,DemoAdmin,DemoDeveloper")]
     public class TicketCommentController : ControllerBase
     {
         private ApplicationDBContext _context { get; }
@@ -31,6 +32,13 @@ namespace backend.Controllers
         [Route("Create")]
         public async Task<IActionResult> CreateTicketComment([FromBody] TicketCommentCreateDto dto)
         {
+            bool isProjectMember = CheckUsers.CheckProjectMember(_context, dto.TicketId, dto.CommenterId);
+            bool isAdmin = CheckUsers.CheckAdmin(_context, dto.CommenterId);
+            if(isProjectMember == false && isAdmin == false)
+            {
+                return Ok("You're not a member of the project");
+            }
+            
             var newTicketComment = _mapper.Map<TicketComment>(dto);
             newTicketComment.DateCreated = DateTime.Now;
             await _context.TicketComments.AddAsync(newTicketComment);

@@ -44,13 +44,7 @@ namespace backend.Core.Services
         {
             var ticket = _context.Tickets.Where(t => t.Id == ticketId).FirstOrDefault();
 
-            var projectMember = from pm in _context.ProjectMembers
-                                where pm.ProjectId == ticket.ProjectId && pm.MemberId == userId
-                                select new
-                                {
-                                    projectId = pm.ProjectId,
-                                    memberId = pm.MemberId
-                                };
+            var projectMember = _context.ProjectMembers.Where(pm => pm.ProjectId == ticket.ProjectId && pm.MemberId == userId).FirstOrDefault();
             if (projectMember == null)
             {
                 return false;
