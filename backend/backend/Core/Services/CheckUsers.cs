@@ -40,6 +40,23 @@ namespace backend.Core.Services
             return false;
         }
 
+        public static bool CheckProjectMember(ApplicationDBContext _context, int ticketId, string userId)
+        {
+            var ticket = _context.Tickets.Where(t => t.Id == ticketId).FirstOrDefault();
+
+            var projectMember = from pm in _context.ProjectMembers
+                                where pm.ProjectId == ticket.ProjectId && pm.MemberId == userId
+                                select new
+                                {
+                                    projectId = pm.ProjectId,
+                                    memberId = pm.MemberId
+                                };
+            if (projectMember == null)
+            {
+                return false;
+            }
+            return true;
+        }
 
     }
 }
