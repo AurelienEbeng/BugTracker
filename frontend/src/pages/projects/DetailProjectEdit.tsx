@@ -70,7 +70,7 @@ const DetailProjectEdit = () => {
 
     setLoading(true);
     httpModule
-      .put("/Project/Update", updatedProject, {
+      .put("/Project/Update/" + jwt.user.id, updatedProject, {
         headers: { Authorization: "Bearer " + jwt.user.jwtToken },
       })
       .then(() => {
@@ -133,26 +133,25 @@ const DetailProjectEdit = () => {
             fullWidth
           />
 
-          <FormControl fullWidth>
-            <InputLabel>Manager</InputLabel>
-            <Select
-              value={updatedProject.managerId}
-              variant="outlined"
-              label="Manager"
-              onChange={(e) =>
-                setUpdatedProject({
-                  ...updatedProject,
-                  managerId: e.target.value,
-                })
-              }
-            >
-              {users.map((user) => (
-                <MenuItem key={user.id} value={user.id}>
-                  {user.name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+          <TextField
+            select
+            fullWidth
+            value={updatedProject.managerId}
+            variant="outlined"
+            label="Manager"
+            onChange={(e) => {
+              setUpdatedProject({
+                ...updatedProject,
+                managerId: e.target.value,
+              });
+            }}
+          >
+            {users.map((user) => (
+              <MenuItem key={user.id} value={user.id}>
+                {user.name}
+              </MenuItem>
+            ))}
+          </TextField>
           <div className="btns">
             <Link to="/projects/details" state={{ project }}>
               <Button variant="outlined" color="primary">
