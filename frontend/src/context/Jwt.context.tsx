@@ -19,20 +19,17 @@ const JwtContext = createContext<UserContext>({} as UserContext);
 type JwtProviderProps = PropsWithChildren;
 
 export default function JwtProvider({ children }: JwtProviderProps) {
-  const [user, setUser] = useState<User>(() => {
-    let userStored = sessionStorage.getItem("User");
-    if (userStored === "" || userStored === null) {
-      return {} as User;
-    }
-    return JSON.parse(userStored);
-  });
+  const [user, setUser] = useState<User>({} as User);
 
   const login = async (username: string, password: string) => {
     await httpModule
       .post("SignInSignOut/Login", { username, password, rememberMe: false })
       .then((response) => {
-        setUser({ username: username, jwtToken: response.data.tokenString, id: response.data.userId });
-        sessionStorage.setItem("User", JSON.stringify(user));
+        setUser({
+          username: username,
+          jwtToken: response.data.tokenString,
+          id: response.data.userId,
+        });
       })
       .catch((error) => console.log(error));
   };
@@ -43,12 +40,11 @@ export default function JwtProvider({ children }: JwtProviderProps) {
         headers: { Authorization: "Bearer " + user.jwtToken },
       })
       .catch((error) => console.log(error));
-    sessionStorage.removeItem("User");
     setUser({} as User);
   };
 
   const isLoggedIn = () => {
-    if (Object.keys(user).length === 0 && user.constructor === Object) {
+    if (user.id === undefined || user.jwtToken === undefined) {
       return false;
     }
     return true;
