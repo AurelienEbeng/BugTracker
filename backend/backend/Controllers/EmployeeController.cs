@@ -10,7 +10,6 @@ namespace backend.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles ="Admin")]
     public class EmployeeController : ControllerBase
     {
         private readonly SignInManager<User> _signInManager;
@@ -56,6 +55,7 @@ namespace backend.Controllers
 
         [HttpPost]
         [Route("AddRoleToEmployee")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> AddRoleToEmployee(UserRoleCreateForm userRole)
         {
 
@@ -70,6 +70,7 @@ namespace backend.Controllers
         //Read
         [HttpGet]
         [Route("GetEmployees")]
+        [Authorize(Roles = "Admin,Developer,DemoAdmin,DemoDeveloper")]
         public async Task<ActionResult> GetEmployees()
         {
             return Ok(await _context.Users.ToListAsync());
@@ -77,6 +78,7 @@ namespace backend.Controllers
 
         [HttpGet]
         [Route("GetManageUserRolesData")]
+        [Authorize(Roles = "Admin,Developer,DemoAdmin,DemoDeveloper")]
         public async Task<ActionResult> GetManageUserRolesData()
         {
 
@@ -105,6 +107,7 @@ namespace backend.Controllers
 
         [HttpGet]
         [Route("GetUser")]
+        [Authorize(Roles = "Admin,Developer,DemoAdmin,DemoDeveloper")]
         public async Task<ActionResult> GetUser(string userId)
         {
             var user = from e in _context.Users
