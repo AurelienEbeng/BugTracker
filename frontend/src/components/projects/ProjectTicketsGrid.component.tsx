@@ -14,7 +14,7 @@ const column: GridColDef[] = [
     flex:1
   },
   { field: "priority", headerName: "Priority", width: 200, flex:1 },
-  { field: "projectName", headerName: "Project Name", width: 200, flex:1 },
+  { field: "status", headerName: "Status", width: 200, flex:1 },
   {
     field: "",
     flex:1,
