@@ -40,7 +40,12 @@ namespace backend.Controllers
             dto.DateCreated = DateTime.Now;
             var newTicket = _mapper.Map<Ticket>(dto);
             await _context.Tickets.AddAsync(newTicket);
-            await _context.SaveChangesAsync();
+            await _context.SaveChangesAsync().ContinueWith(async task =>
+            {
+                var notificationHelper = new NotificationHelper(_context);
+                notificationHelper.TicketCreatedNotification(dto.ProjectId, dto.Title);
+                await _context.SaveChangesAsync();
+            });
             return Ok("Ticket Created successfully");
         }
 

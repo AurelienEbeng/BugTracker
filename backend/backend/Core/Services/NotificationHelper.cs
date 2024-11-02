@@ -1,5 +1,7 @@
 ﻿using backend.Core.Context;
 using backend.Core.Entities;
+using Humanizer;
+using System.Net.Sockets;
 
 namespace backend.Core.Services
 {
@@ -64,6 +66,24 @@ namespace backend.Core.Services
 
             await _context.Notifications.AddAsync(notification1);
             await _context.Notifications.AddAsync(notification2);
+        }
+
+        public async void TicketCreatedNotification(int projectId, string title)
+        {
+            var members = from pm in _context.ProjectMembers
+                          where pm.ProjectId == projectId
+                          select new
+                          {
+                              id = pm.MemberId
+                          };
+
+            foreach (var member in members)
+            {
+                var notification = new Notification();
+                notification.Message = "A new ticket has been created with title: "+title;
+                notification.ReceiverId = member.id;
+                await _context.Notifications.AddAsync(notification);
+            }
         }
     }
 }
