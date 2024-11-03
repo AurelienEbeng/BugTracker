@@ -97,7 +97,7 @@ const SignIn = () => {
             Forgot your <Link to="/">password?</Link>
           </p>
           <p>
-            Create an account? <Link to="/">Sign Up</Link>
+            Create an account? <Link to="/signUp">Sign Up</Link>
           </p>
           <p>
             Sign In as <Link to="/demoUsersLogin">Demo User</Link>
