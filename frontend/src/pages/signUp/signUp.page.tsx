@@ -7,20 +7,7 @@ type User = {
     password:string,
     confirmPassword:string
 }
-/*
 
-[Required]
-public string? Name { get; set; }
-[Required]
-[DataType(DataType.EmailAddress)]
-public string? Email { get; set; }
-[Required]
-[DataType(DataType.Password)]
-public string? Password { get; set; }
-[Compare("Password", ErrorMessage = "Passwords don't match.")]
-public string? ConfirmPassword { get; set; }
-
-*/
 const SignUp = () => {
     const [user,setUser] = useState<User>({} as User);
   return (
@@ -30,6 +17,26 @@ const SignUp = () => {
         variant="outlined"
         label="Name"
         onChange={e=> setUser({...user,name:e.target.value})}
+        />
+        <TextField
+        fullWidth
+        variant="outlined"
+        label="Email"
+        onChange={e=> setUser({...user,email:e.target.value})}
+        />
+        <TextField
+        fullWidth
+        variant="outlined"
+        label="Password"
+        onChange={e=> setUser({...user,password:e.target.value})}
+        type="password"
+        />
+        <TextField
+        fullWidth
+        variant="outlined"
+        label="Confirm Password"
+        onChange={e=> setUser({...user,confirmPassword:e.target.value})}
+        type="password"
         />
     </div>
   )
