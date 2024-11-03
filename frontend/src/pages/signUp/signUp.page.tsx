@@ -19,12 +19,16 @@ const SignUp = () => {
         variant="outlined"
         label="Name"
         onChange={(e) => setUser({ ...user, name: e.target.value })}
+        value={user.name}
+        autoComplete="off"
       />
       <TextField
         fullWidth
         variant="outlined"
         label="Email"
         onChange={(e) => setUser({ ...user, email: e.target.value })}
+        value={user.email}
+        autoComplete="off"
       />
       <TextField
         fullWidth
@@ -32,6 +36,8 @@ const SignUp = () => {
         label="Password"
         onChange={(e) => setUser({ ...user, password: e.target.value })}
         type="password"
+        value={user.password}
+        autoComplete="off"
       />
       <TextField
         fullWidth
@@ -39,6 +45,8 @@ const SignUp = () => {
         label="Confirm Password"
         onChange={(e) => setUser({ ...user, confirmPassword: e.target.value })}
         type="password"
+        value={user.confirmPassword}
+        autoComplete="off"
       />
       <div className="btns">
         <Button variant="outlined">
