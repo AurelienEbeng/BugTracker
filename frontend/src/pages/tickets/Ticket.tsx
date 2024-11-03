@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./tickets.scss";
 import httpModule from "../../helpers/http.module";
-import { ITicket, ITicketHistory } from "../../types/global.typing";
+import { ITicketHistory } from "../../types/global.typing";
 import { CircularProgress } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 import TicketHistoriesGrid from "../../components/tickets/TicketHistoryGrid.component";
@@ -11,10 +11,10 @@ import TicketComment from "./TicketComment";
 import TicketAttachment from "./TicketAttachment";
 
 const Ticket = () => {
-  const [ticket, setTicket] = useState<ITicket>({} as ITicket);
+  
 
   const [ticketHistories, setTicketHistories] = useState<ITicketHistory[]>([]);
-  const [loadingTicket, setLoadingTicket] = useState<boolean>(false);
+  
   const location = useLocation();
   const { ticketId } = location.state;
   const redirect = useNavigate();
@@ -24,27 +24,14 @@ const Ticket = () => {
     useState<boolean>(false);
 
   useEffect(() => {
-    setLoadingTicket(true);
+    
     setLoadingTicketHistory(true);
     if (!jwt.isLoggedIn()) {
       redirect("/signin", { replace: true });
       return;
     }
     let jwtToken = jwt.user.jwtToken;
-    httpModule
-      .get<ITicket>(`Ticket/Get/${ticketId}`, {
-        headers: { Authorization: "Bearer " + jwtToken },
-      })
-      .then((response) => {
-        setTicket(response.data);
-        setLoadingTicket(false);
-      })
-      .catch((error) => {
-        alert("Error");
-        console.log(error);
-        setLoadingTicket(false);
-      });
-
+    
     httpModule
       .get<ITicketHistory[]>(`TicketHistory/Get/${ticketId}`, {
         headers: { Authorization: "Bearer " + jwtToken },
@@ -61,12 +48,12 @@ const Ticket = () => {
   }, []);
   return (
     <div className="content">
-      {loadingTicket || loadingTicketHistory ? (
+      {loadingTicketHistory ? (
         <CircularProgress size={100} />
       ) : (
         <div className="tickets">
           <div className="tickets-details">
-            <TicketDetails data={ticket} />
+            <TicketDetails ticketId={ticketId} />
           </div>
 
           <div className="tickets-attachments">
