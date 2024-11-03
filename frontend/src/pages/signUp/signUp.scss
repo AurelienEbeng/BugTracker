@@ -1,0 +1,32 @@
+@import "../../mixins";
+
+.signUp {
+  width: 350px;
+  max-width: 100%;
+  * {
+    color: var(--text-color1);
+  }
+  border: 1px solid black;
+  border-radius: 5%;
+  padding-top: 40px;
+  padding-bottom: 40px;
+
+  .heading{
+    text-align: center;
+  }
+  .formFields {
+    @include d-flex(column, flex-start, center);
+    gap: 1rem;
+    padding: 10px;
+  }
+
+  .btns {
+    width: 100%;
+    display: flex;
+    @include d-flex(row, space-around, center);
+  }
+
+  &.dark {
+    background-color: rgb(56, 53, 53);
+  }
+}
