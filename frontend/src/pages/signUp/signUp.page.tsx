@@ -1,4 +1,5 @@
-import { Button, TextField } from "@mui/material";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import { Button, InputAdornment, TextField } from "@mui/material";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -11,7 +12,17 @@ type User = {
 
 const SignUp = () => {
   const [user, setUser] = useState<User>({} as User);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   function handleCreateBtn() {}
+  const handleClickShowPassword = () => {
+    setShowPassword((prevState: boolean) => {
+      return !prevState;
+    });
+  };
+
+  const handleMouseDownPassword = (event: any) => {
+    event.preventDefault();
+  };
   return (
     <div>
       <TextField
@@ -35,18 +46,40 @@ const SignUp = () => {
         variant="outlined"
         label="Password"
         onChange={(e) => setUser({ ...user, password: e.target.value })}
-        type="password"
+        type={showPassword ? "text" : "password"}
         value={user.password}
         autoComplete="off"
+        InputProps={{
+            endAdornment: (
+              <InputAdornment position="end"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                
+              </InputAdornment>
+            ),
+          }}
       />
       <TextField
         fullWidth
         variant="outlined"
         label="Confirm Password"
         onChange={(e) => setUser({ ...user, confirmPassword: e.target.value })}
-        type="password"
+        type={showPassword ? "text" : "password"}
         value={user.confirmPassword}
         autoComplete="off"
+        InputProps={{
+            endAdornment: (
+              <InputAdornment position="end"
+                  onClick={handleClickShowPassword}
+                  onMouseDown={handleMouseDownPassword}
+                >
+                  {showPassword ? <Visibility /> : <VisibilityOff />}
+                
+              </InputAdornment>
+            ),
+          }}
       />
       <div className="btns">
         <Button variant="outlined">
