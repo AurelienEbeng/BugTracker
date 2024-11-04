@@ -58,6 +58,13 @@ const SignUp = () => {
       .catch((error) => {
         alert("Error, check console");
         console.log(error.response);
+        setLoading(false);
+        setUser({
+          name: "",
+          email: "",
+          password: "",
+          confirmPassword: "",
+        });
       });
   }
   const handleClickShowPassword = () => {

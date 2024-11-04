@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileSystemGlobbing.Internal;
+using System.Text.RegularExpressions;
 
 namespace backend.Controllers
 {
@@ -34,20 +36,26 @@ namespace backend.Controllers
         [Route("Create")]
         public async Task<IActionResult> Create(CreateUserForm submittedInfo)
         {
-            User user = new()
+            var user = _context.Users.Where(u => u.Email == submittedInfo.Email).FirstOrDefault();
+            if(user != null)
+            {
+                throw new Exception("That email is already taken");
+            }
+            
+            User newUser = new()
             {
                 Name = submittedInfo.Name,
                 UserName = submittedInfo.Email,
                 Email = submittedInfo.Email
             };
-            var result = await _employeeManager.CreateAsync(user, submittedInfo.Password);
+            var result = await _employeeManager.CreateAsync(newUser, submittedInfo.Password);
 
             if (result.Succeeded)
             {
                 return Ok("User Created");
             }
 
-
+            
             return Ok("Error");
         }
 
