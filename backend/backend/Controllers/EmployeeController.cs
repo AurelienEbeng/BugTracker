@@ -44,8 +44,7 @@ namespace backend.Controllers
 
             if (result.Succeeded)
             {
-                await _signInManager.SignInAsync(user, false);
-                return Ok("Logged in");
+                return Ok("User Created");
             }
 
 
