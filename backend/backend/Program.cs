@@ -2,6 +2,7 @@ using backend.Core.AutoMapperConfig;
 using backend.Core.Context;
 using backend.Core.Entities;
 using backend.Core.Services;
+using backend.Core.Services.EmailService;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 
 // Add services to the container.
+
+// Adding Email Service
+builder.Services.AddScoped<IEmailService,EmailService>();
 
 //DB Configuration
 builder.Services.AddDbContext<ApplicationDBContext>(options =>
