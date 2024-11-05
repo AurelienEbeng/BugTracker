@@ -55,6 +55,10 @@ const ForgotPassword = lazy(
   () => import("./pages/passwordRecovery/forgotPassword")
 );
 
+const ResetPassword = lazy(
+  () => import("./pages/passwordRecovery/resetPassword")
+);
+
 const App = () => {
   const { darkMode } = useContext(ThemeContext);
 
@@ -112,6 +116,7 @@ const App = () => {
               <Route path="/userProfile" element={<UserProfile />} />
               <Route path="/signUp" element={<SignUp />} />
               <Route path="/forgotPassword" element={<ForgotPassword />} />
+              <Route path="/resetPassword" element={<ResetPassword />} />
             </Routes>
           </Suspense>
         </div>
