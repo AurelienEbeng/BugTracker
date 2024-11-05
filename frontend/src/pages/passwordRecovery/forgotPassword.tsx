@@ -1,6 +1,7 @@
 import { Button, TextField } from "@mui/material";
 import { useState } from "react";
-import "./forgotPassword.scss"
+import "./forgotPassword.scss";
+import httpModule from "../../helpers/http.module";
 
 const ForgotPassword = () => {
   const href = window.location;
@@ -10,7 +11,27 @@ const ForgotPassword = () => {
   });
 
   function handleBtnSubmit() {
-    
+    if (forgotPassword.email == "") {
+      alert("Fill all fields");
+      return;
+    }
+
+    const emailPattern = /^[a-z0-9]+@[a-z]+.[a-z]+$/;
+    if (!emailPattern.test(forgotPassword.email)) {
+      alert("Verify your email");
+      return;
+    }
+
+    httpModule
+      .post("/forgotPassword", forgotPassword)
+      .then(() => {
+        alert("You have been sent an email with recovery options");
+        setForgotPassword({ ...forgotPassword, email: "" });
+      })
+      .catch((error) => {
+        alert("Error, check console");
+        console.log(error.response);
+      });
   }
 
   return (
