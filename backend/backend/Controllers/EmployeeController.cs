@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
-using backend.Core.Dtos.Email;
 using backend.Core.Entities;
-using backend.Core.Services.EmailService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -18,18 +16,16 @@ namespace backend.Controllers
         private readonly SignInManager<User> _signInManager;
         private readonly UserManager<User> _employeeManager;
         private ApplicationDBContext _context { get; }
-        private IEmailService _emailService;
 
         public static string employeeId;
         public EmployeeController(SignInManager<User>
             signInManager, UserManager<User> userManager,
             ApplicationDBContext context, RoleManager<Role> roleManager,
-            IMapper mapper, IEmailService emailService)
+            IMapper mapper)
         {
             _signInManager = signInManager;
             _context = context;
             _employeeManager = userManager;
-            _emailService = emailService;
         }
 
 
@@ -140,15 +136,6 @@ namespace backend.Controllers
 
         //Update
 
-        [HttpPost]
-        [Route("Z")]
-        public IActionResult SendEmail(EmailDto dto)
-        {
-
-            _emailService.SendEmail(dto);
-
-            return Ok();
-        }
 
 
         //Delete
