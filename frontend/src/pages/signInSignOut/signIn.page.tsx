@@ -94,7 +94,7 @@ const SignIn = () => {
         </div>
         <div className="extra">
           <p>
-            Forgot your <Link to="/">password?</Link>
+            Forgot your <Link to="/forgotPassword">password?</Link>
           </p>
           <p>
             Create an account? <Link to="/signUp">Sign Up</Link>
