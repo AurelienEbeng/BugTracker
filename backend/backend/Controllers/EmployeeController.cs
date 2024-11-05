@@ -2,6 +2,7 @@
 using backend.Core.Context;
 using backend.Core.Dtos.Email;
 using backend.Core.Dtos.ForgotPassword;
+using backend.Core.Dtos.ResetPassword;
 using backend.Core.Entities;
 using backend.Core.Services.EmailService;
 using Microsoft.AspNetCore.Authorization;
@@ -166,6 +167,25 @@ namespace backend.Controllers
             return Ok();
         }
 
+        [HttpPut]
+        [Route("ResetPassword")]
+        public async Task<ActionResult> ResetPassword(ResetPasswordDto dto)
+        {
+            var user = await _userManager.FindByEmailAsync(dto.Email);
+            if (user == null)
+            {
+                return BadRequest("Invalid Request");
+            }
+
+            var result = await _userManager.ResetPasswordAsync(user, dto.Token, dto.Password);
+
+            if (!result.Succeeded)
+            {
+                var errors = result.Errors.Select(e => e.Description);
+                return BadRequest(new { Errors = errors });
+            }
+            return Ok();
+        }
 
         //Delete
 
