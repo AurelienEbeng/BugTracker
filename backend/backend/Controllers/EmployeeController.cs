@@ -1,11 +1,17 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
+using backend.Core.Dtos.Email;
+using backend.Core.Dtos.ForgotPassword;
 using backend.Core.Entities;
+using backend.Core.Services.EmailService;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 
+// I think a better name for this controller is AccountController or UserController.
+// If you change the name of the Controller, you will lose the git changes
 
 namespace backend.Controllers
 {
@@ -13,19 +19,17 @@ namespace backend.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly SignInManager<User> _signInManager;
-        private readonly UserManager<User> _employeeManager;
+        private readonly UserManager<User> _userManager;
         private ApplicationDBContext _context { get; }
-
-        public static string employeeId;
-        public EmployeeController(SignInManager<User>
-            signInManager, UserManager<User> userManager,
+        private readonly IEmailService _emailService;
+        
+        public EmployeeController( UserManager<User> userManager,
             ApplicationDBContext context, RoleManager<Role> roleManager,
-            IMapper mapper)
+            IMapper mapper, IEmailService emailService)
         {
-            _signInManager = signInManager;
             _context = context;
-            _employeeManager = userManager;
+            _userManager = userManager;
+            _emailService = emailService;
         }
 
 
@@ -47,7 +51,7 @@ namespace backend.Controllers
                 UserName = submittedInfo.Email,
                 Email = submittedInfo.Email
             };
-            var result = await _employeeManager.CreateAsync(newUser, submittedInfo.Password);
+            var result = await _userManager.CreateAsync(newUser, submittedInfo.Password);
 
             if (result.Succeeded)
             {
@@ -65,8 +69,8 @@ namespace backend.Controllers
         public async Task<ActionResult> AddRoleToEmployee(UserRoleCreateForm userRole)
         {
 
-            User user = await _employeeManager.FindByIdAsync(userRole.userId);
-            await _employeeManager.AddToRoleAsync(user, userRole.roleName);
+            User user = await _userManager.FindByIdAsync(userRole.userId);
+            await _userManager.AddToRoleAsync(user, userRole.roleName);
 
             return Ok("Role Added");
         }
@@ -135,7 +139,32 @@ namespace backend.Controllers
 
 
         //Update
+        [HttpPut]
+        [Route("ForgotPassword")]
+        public async Task<ActionResult> ForgotPassword(ForgotPasswordDto dto)
+        {
+            var user = await _userManager.FindByEmailAsync(dto.Email);
+            if (user == null)
+            {
+                return BadRequest("Invalid Request");
+            }
 
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var param = new Dictionary<string, string?>
+            {
+                { "token", token },
+                { "email", dto.Email}
+            };
+
+            var callback = QueryHelpers.AddQueryString(dto.ClientUrl, param);
+
+            EmailDto email = new EmailDto();
+            email.To = dto.Email;
+            email.Subject = "Reset Password";
+            email.Body = callback;
+            _emailService.SendEmail(email);
+            return Ok();
+        }
 
 
         //Delete

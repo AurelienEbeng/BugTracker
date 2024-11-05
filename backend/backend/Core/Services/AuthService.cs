@@ -10,13 +10,13 @@ namespace backend.Core.Services
 {
     public class AuthService : IAuthService
     {
-        //private readonly UserManager<Creator> _employeeManager;
+        //private readonly UserManager<Creator> _userManager;
         private readonly IConfiguration _config;
 
         public AuthService(//UserManager<Creator> userManager, 
             IConfiguration config)
         {
-            //_employeeManager = userManager;
+            //_userManager = userManager;
             _config = config;
         }
 
