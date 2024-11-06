@@ -23,7 +23,7 @@ const ForgotPassword = () => {
     }
 
     httpModule
-      .put("EmployeeController/ForgotPassword", forgotPassword)
+      .put("Employee/ForgotPassword", forgotPassword)
       .then(() => {
         alert("You have been sent an email with recovery procedure");
         setForgotPassword({ ...forgotPassword, email: "" });
