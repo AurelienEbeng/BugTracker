@@ -36,8 +36,10 @@ export default function JwtProvider({ children }: JwtProviderProps) {
   };
 
   const loginDemoUser = async (username: string) => {
+    let params = new URLSearchParams();
+    params.append("username",username);
     await httpModule
-      .post("SignInSignOut/LoginDemoUser", username)
+      .post("SignInSignOut/LoginDemoUser?"+params)
       .then((response) => {
         setUser({
           username: username,
