@@ -10,6 +10,7 @@ type User = {
 type UserContext = {
   user: User;
   login: (username: string, password: string) => void;
+  loginDemoUser: (username: string) => void;
   logout: () => void;
   isLoggedIn: () => boolean;
 };
@@ -24,6 +25,19 @@ export default function JwtProvider({ children }: JwtProviderProps) {
   const login = async (username: string, password: string) => {
     await httpModule
       .post("SignInSignOut/Login", { username, password, rememberMe: false })
+      .then((response) => {
+        setUser({
+          username: username,
+          jwtToken: response.data.tokenString,
+          id: response.data.userId,
+        });
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const loginDemoUser = async (username: string) => {
+    await httpModule
+      .post("SignInSignOut/LoginDemoUser", username)
       .then((response) => {
         setUser({
           username: username,
@@ -51,7 +65,7 @@ export default function JwtProvider({ children }: JwtProviderProps) {
   };
 
   return (
-    <JwtContext.Provider value={{ user, login, logout, isLoggedIn }}>
+    <JwtContext.Provider value={{ user, login, logout, isLoggedIn, loginDemoUser }}>
       {children}
     </JwtContext.Provider>
   );
