@@ -50,6 +50,10 @@ const SignUp = () => {
       alert("Passwords do not match");
       return;
     }
+    if (user.password.length != 8) {
+      alert("Password should be 8 characters long");
+      return;
+    }
     setLoading(true);
 
     httpModule
