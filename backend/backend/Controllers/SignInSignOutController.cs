@@ -53,7 +53,7 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        [Route("Logout"),Authorize(Roles = "Admin")]
+        [Route("Logout"),Authorize(Roles = "Admin,Developer,DemoAdmin,DemoDeveloper")]
         public async Task<IActionResult> Logout()
         {
             await _signInManager.SignOutAsync();
