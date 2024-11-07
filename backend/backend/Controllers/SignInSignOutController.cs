@@ -50,6 +50,31 @@ namespace backend.Controllers
             return "Unsuccess";
         }
 
+        [HttpPost]
+        [Route("LoginDemoUser")]
+        public async Task<object> LoginAsyncDemoUser(string username)
+        {
+            Login login = new Login();
+            login.Username = username!;
+            login.Password = "12345678";
+            login.RememberMe = false;
+
+            var result = await _signInManager.PasswordSignInAsync(login.Username, login.Password, login.RememberMe, false);
+
+
+            if (result.Succeeded)
+            {
+                var userId = _employeeManager.GetUserId(HttpContext.User);
+
+                var tokenString = _authService.GenerateTokenString(login);
+
+                return new { tokenString, userId };
+
+
+            }
+            return "Unsuccess";
+        }
+
         [HttpGet]
         [Route("Logout"),Authorize(Roles = "Admin,Developer,DemoAdmin,DemoDeveloper")]
         public async Task<IActionResult> Logout()
