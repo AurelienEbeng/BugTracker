@@ -41,6 +41,10 @@ const ResetPassword = () => {
       alert("Passwords do not match");
       return;
     }
+    if (resetPassword.password.length != 8) {
+      alert("Password should be 8 characters");
+      return;
+    }
 
     httpModule
       .put("Employee/ResetPassword", resetPassword)
