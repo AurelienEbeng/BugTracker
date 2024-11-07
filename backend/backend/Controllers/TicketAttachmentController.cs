@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
-using backend.Core.DataTransfer;
 using backend.Core.Dtos.TicketAttachment;
 using backend.Core.Entities;
 using backend.Core.Services;
@@ -56,7 +55,7 @@ namespace backend.Controllers
             var newTicketAttachment = _mapper.Map<TicketAttachment>(dto);
             newTicketAttachment.fileUrl = fileUrl;
             newTicketAttachment.DateUploaded = DateTime.Now;
-            newTicketAttachment.UploaderId = EmployeeId.Id;
+            newTicketAttachment.UploaderId = dto.UploaderId;
             await _context.TicketAttachments.AddAsync(newTicketAttachment);
 
             var notifictionHelper = new NotificationHelper(_context);

@@ -1,5 +1,4 @@
-﻿using backend.Core.DataTransfer;
-
+﻿
 namespace backend.Core.Entities
 {
     public class TicketComment
@@ -13,7 +12,7 @@ namespace backend.Core.Entities
         public int TicketId { get; set; }
         public Ticket Ticket { get; set; }
 
-        public string CommenterId { get; set; } = EmployeeId.Id;
+        public string CommenterId { get; set; }
         public User Commenter{ get; set; }
 
 

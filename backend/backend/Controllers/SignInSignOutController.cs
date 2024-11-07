@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using backend.Core.Context;
-using backend.Core.DataTransfer;
 using backend.Core.Entities;
 using backend.Core.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -41,7 +40,6 @@ namespace backend.Controllers
             if (result.Succeeded)
             {
                 var userId = _employeeManager.GetUserId(HttpContext.User);
-                EmployeeId.Id = userId.ToString();
 
                 var tokenString = _authService.GenerateTokenString(submittedInfo);
                 

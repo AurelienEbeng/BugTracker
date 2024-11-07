@@ -1,5 +1,4 @@
-﻿using backend.Core.DataTransfer;
-
+﻿
 namespace backend.Core.Dtos.TicketComment
 {
     public class TicketCommentCreateDto
@@ -12,6 +11,6 @@ namespace backend.Core.Dtos.TicketComment
 
         public int TicketId { get; set; }
 
-        public string CommenterId { get; set; } = EmployeeId.Id;
+        public string CommenterId { get; set; }
     }
 }

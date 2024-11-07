@@ -1,5 +1,4 @@
-﻿using backend.Core.DataTransfer;
-using backend.Core.Entities;
+﻿using backend.Core.Entities;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
