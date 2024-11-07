@@ -21,30 +21,46 @@ const DemoUserLogin = () => {
         <h1>Demo Users Login</h1>
         <div className="row">
           <div className="demoUser">
-            <Button onClick={()=>{handleClick("demoadmin1@gmail.com")}}>
+            <Button
+              onClick={() => {
+                handleClick("demoadmin1@gmail.com");
+              }}
+            >
               <PersonIcon color="secondary" style={{ fontSize: "100px" }} />
             </Button>
-            <p>Admin</p>
+            <p>Demo Admin</p>
           </div>
           <div className="demoUser">
-            <Link to="/">
+            <Button
+              onClick={() => {
+                handleClick("demoprojectmanager@gmail.com");
+              }}
+            >
               <PersonIcon color="warning" style={{ fontSize: "100px" }} />
-            </Link>
-            <p>Project Manager</p>
+            </Button>
+            <p>Demo Project Manager</p>
           </div>
         </div>
         <div className="row">
           <div className="demoUser">
-            <Link to="/">
+            <Button
+              onClick={() => {
+                handleClick("demodeveloper1@gmail.com");
+              }}
+            >
               <PersonIcon color="success" style={{ fontSize: "100px" }} />
-            </Link>
-            <p>Developer</p>
+            </Button>
+            <p>Demo Developer 1</p>
           </div>
           <div className="demoUser">
-            <Link to="/">
+            <Button
+              onClick={() => {
+                handleClick("demodeveloper2@gmail.com");
+              }}
+            >
               <PersonIcon color="primary" style={{ fontSize: "100px" }} />
-            </Link>
-            <p>Quality Assurance</p>
+            </Button>
+            <p>Demo Developer 2</p>
           </div>
         </div>
         <div className="extra">
