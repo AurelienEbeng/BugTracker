@@ -112,36 +112,19 @@ namespace backend.Controllers
         [Route("GetUnassignedPersonnel")]
         public async Task<ActionResult> GetUnassignedPersonnel(int projectId)
         {
-            SqlConnectionStringBuilder cs = new SqlConnectionStringBuilder();
-            cs.DataSource = "(local)";
-            cs.InitialCatalog = "BugTracker";
-            cs.UserID = "sa";
-            cs.Password = "sysadm";
-            cs.TrustServerCertificate = true;
-            SqlConnection con = new SqlConnection();
-            con.ConnectionString = cs.ConnectionString;
-            con.Open();
-            SqlCommand cmd = con.CreateCommand();
-            cmd.CommandText = "select * from Users\r\nleft join\r\n" +
-                "(select ProjectMembers.ProjectId \"ProjectId\", ProjectMembers.MemberId \"MemberId\" \r\nfrom ProjectMembers " +
-                "where ProjectMembers.ProjectId="+projectId+") \r\nProjectMember on ProjectMember.MemberId=Users.Id\r\n" +
-                "where ProjectMember.MemberId is null\r\n";
-            List<object> unassignedDevelopers = new List<object>();
-            try
-            {
+            var members = _context.ProjectMembers.Where(p => p.ProjectId == projectId).ToList();
 
-                SqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
-                {
-                    unassignedDevelopers.Add(new { id=reader["Id"], name = reader["Name"], email = reader["Email"] });
-                }
-                reader.Close();
-            }
-            catch (Exception e)
+            var allUsers = _context.Users.ToList();
+
+
+            allUsers.RemoveAll(u => members.Any(m => m.MemberId == u.Id));
+
+            var unassignedDevelopers = new List<UnassignedDeveloperDto>();
+
+            foreach (var u in allUsers)
             {
-                Console.WriteLine(e.Message);
+                unassignedDevelopers.Add(new UnassignedDeveloperDto { Id = u.Id, Name = u.Name, Email = u.Email });
             }
-            con.Close();
 
             return Ok(unassignedDevelopers);
         }
