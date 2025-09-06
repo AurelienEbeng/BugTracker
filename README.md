@@ -1,26 +1,54 @@
-I built this project to help me track my progress with other projects.
+# Functional Requirements for Bug Tracker
 
-This is the Sign in page.
+## User Authentication & Access
+- The system must allow users to sign up for an account.
+- The system must allow users to sign in with their credentials.
+- The system must allow users to reset their password if forgotten.
+- The system must allow visitors to sign in as demo users (Admin, Project Manager, or Developer).
+
+## User Permissions & Roles
+- Users can only view projects they have been assigned to.
+- Only Admins can create new projects.
+- Only Admins and Project Managers can update project details.
+- Only Admins and Project Managers can assign or unassign users from a project.
+- Only Admins and Project Managers can change the developer assigned to a ticket.
+- Only the assigned Developer, Admin, or Project Manager can update a ticket.
+- Only project members and Admins can:
+  - Comment on project tickets
+  - Add attachments to project tickets
+  - Create new tickets within a project
+
+## User Features
+- Users must have access to a personal profile.
+- Users must be able to view all their tickets across projects.
+- Users must see notifications
+- Users must have a dashboard displaying:
+  - A graph of tickets by priority
+  - A graph of tickets by type
+  - A graph of tickets by status
+
+# Working Website
+Sign in page.
 ![image](https://github.com/user-attachments/assets/4ec325fb-83d0-4206-926b-59bc8fe524ac)
 
-This is the Projects page. It shows all the projects that a user is part of.
+Projects page. It shows all the projects that a user is part of.
 ![image](https://github.com/user-attachments/assets/8612e12e-6c44-43e6-8e34-f5457a73617e)
 
-This a Project Tickets page. It shows all the tickets belonging to a project.
+Project Tickets page. It shows all the tickets belonging to a project.
 ![image](https://github.com/user-attachments/assets/80448a19-bc9f-4181-b891-f67d15e818d9)
 
-This is the Ticket details page.
+Ticket details page.
 ![image](https://github.com/user-attachments/assets/3a035220-1d0d-42ef-a3aa-7b537bc924a1)
 
 ![image](https://github.com/user-attachments/assets/12ad7aec-bdc2-45ac-9954-dadc6354c14a)
 
-This is the Dashboard.
+Dashboard page
 ![image](https://github.com/user-attachments/assets/76fa7841-b3d0-4884-899f-f09139c16ae8)
 
-This is the My Tickets page. It shows all the tickets that a user has created in the system.
+My Tickets page. It shows all the tickets that a user has created in the system.
 ![image](https://github.com/user-attachments/assets/5da303b9-4a8a-4fe8-8909-67782e0a43c6)
 
-This is the Profile page.
+Profile page.
 ![image](https://github.com/user-attachments/assets/36ab669a-428c-4e31-ac69-499117cf1e7e)
 
 Clicking on Manage Role Assignment shows the Personnel page.
