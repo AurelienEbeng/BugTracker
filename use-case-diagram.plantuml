@@ -1,0 +1,60 @@
+@startuml
+left to right direction
+actor User
+actor Visitor
+actor Admin
+actor "Project Manager" as PM
+actor Developer
+
+rectangle "Bug Tracker System" {
+  
+  (Sign Up) as UC1
+  (Sign In) as UC2
+  (Reset Password) as UC3
+  (Sign In as Demo User) as UC4
+  (View Profile) as UC5
+  (View Assigned Projects) as UC6
+  (View My Tickets) as UC7
+  (Dashboard with Graphs) as UC8
+  
+  (Create Project) as UC9
+  (Update Project) as UC10
+  (Assign/Unassign Users to Project) as UC11
+
+  (Create Ticket) as UC12
+  (Update Ticket) as UC13
+  (Change Assigned Developer) as UC14
+  (Comment on Ticket) as UC15
+  (Add Attachments to Ticket) as UC16
+}
+
+' General user actions
+User --> UC1
+User --> UC2
+User --> UC3
+Visitor --> UC4
+User --> UC5
+User --> UC6
+User --> UC7
+User --> UC8
+
+' Project management
+Admin --> UC9
+Admin --> UC10
+PM --> UC10
+Admin --> UC11
+PM --> UC11
+
+' Ticket management
+User --> UC12
+User --> UC15
+User --> UC16
+
+Developer --> UC13
+Admin --> UC13
+PM --> UC13
+
+Admin --> UC14
+PM --> UC14
+
+@enduml
