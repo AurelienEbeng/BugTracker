@@ -26,6 +26,11 @@
   - A graph of tickets by priority
   - A graph of tickets by type
   - A graph of tickets by status
+<br>
+
+# Use Case Diagram
+<img width="450" height="1204" alt="use-case-diagram" src="https://github.com/user-attachments/assets/2e701c0e-efb0-4a35-bce0-ee85316792f0" />
+<br>
 
 # Working Website
 Sign in page.
