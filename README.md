@@ -32,6 +32,11 @@
 <img width="450" height="1204" alt="use-case-diagram" src="https://github.com/user-attachments/assets/2e701c0e-efb0-4a35-bce0-ee85316792f0" />
 <br>
 
+# Database Entity Relationship Diagram
+<img width="1140" height="2526" alt="db-entity-diagram" src="https://github.com/user-attachments/assets/28a78e94-2b3e-47fd-9e7e-9b4a4fd522ed" />
+<br/>
+<br/>
+
 # Working Website
 Sign in page.
 ![image](https://github.com/user-attachments/assets/4ec325fb-83d0-4206-926b-59bc8fe524ac)
