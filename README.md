@@ -37,4 +37,4 @@
 <br/>
 <br/>
 
-Checkout the demo on [LinkedIn](https://www.linkedin.com/feed/update/urn:li:activity:7414349699564040192/)
+Checkout the demo on [LinkedIn](https://www.linkedin.com/posts/aurelien-ebeng_one-of-the-projects-i-worked-on-was-the-bug-activity-7414704595983110144-hgcD?utm_source=share&utm_medium=member_desktop&rcm=ACoAADozW_MBcloz7HwSCOFgmv6v6Oq8u5oY1Xk)
